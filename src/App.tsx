@@ -8,7 +8,7 @@ const App: FC = () => {
       <AppRouter />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={1000}
         limit={2}
         hideProgressBar={false}
         newestOnTop={false}

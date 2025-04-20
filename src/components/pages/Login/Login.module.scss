@@ -1,0 +1,48 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--welcomeScreenSubText);
+  margin-bottom: 16px;
+}
+
+.loginBtn {
+  width: 90%;
+  margin-top: 28px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+.loginBtnText {
+  font-size: 28px;
+  color: var(--subTextMainScreenPopup);
+  font-weight: 600;
+}
+
+.forgotBtnText {
+  font-size: 20px;
+  line-height: 32px;
+  color: var(--subTextMainScreenPopup);
+  text-decoration: underline;
+  transition: 0.3s;
+  margin-top: 8px;
+
+  &:hover {
+    color: var(--mainText);
+  }
+}

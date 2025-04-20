@@ -69,6 +69,17 @@
   --modalBtn: #4b74dd;
   --trashItemImageBg: #bcbcbc;
   --datePickerBg: rgba(0, 0, 0, 0.2);
+
+  /* Btns-hover */
+  --welcomeScreenSubBtn-hover: #0d60be;
+  --welcomeScreenContrastBtn-hover: #13b5e2;
+  --red-hover: #c64343;
+  --anyBtnOnBgSubScreen-hover: #2c59c9;
+  --darkBlue-hover: #15378d;
+  --edgeBtnBg-hover: #3184ff;
+  --textFieldInFolderBg-hover: #4e78e4;
+  --blueTransparent-hover: rgba(1, 95, 202, 0.6);
+  --modalBtns-hover: #789eff;
 }
 
 html,
@@ -81,15 +92,16 @@ body,
   overflow-x: hidden;
   flex-direction: column;
   background-color: var(--layout-background-color);
+  box-sizing: border-box;
 }
 
 div {
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
 }
 
 span {
-  font-family: segoe-ui, sans-serif;
+  font-family: "Segoe UI";
+  font-style: normal;
   font-size: 14px;
   line-height: 1;
   font-weight: 400;

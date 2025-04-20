@@ -1,0 +1,65 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--welcomeScreenSubText);
+  margin-bottom: 12px;
+}
+
+.codeWrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.codeBtn {
+  height: 40px;
+  border-radius: 12px;
+  margin-top: 27px;
+}
+
+.codeBtnText {
+  font-size: 20px;
+  color: var(--subTextMainScreenPopup);
+}
+
+.createBtn {
+  width: 90%;
+  margin-top: 12px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+.createBtnText {
+  font-size: 28px;
+  color: var(--subTextMainScreenPopup);
+  font-weight: 600;
+}
+
+.loginBtnText {
+  font-size: 20px;
+  line-height: 32px;
+  color: var(--subTextMainScreenPopup);
+  text-decoration: underline;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--mainText);
+  }
+}

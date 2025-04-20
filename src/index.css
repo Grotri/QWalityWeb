@@ -1,68 +1,97 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --white: #ffffff;
+  --black: #000000;
+  --brightBlue: #00c8ff;
+  --blue: #1574e0;
+  --blue2: #4e80ff;
+  --blue3: #416edf;
+  --darkBlue: #2c4c9b;
+  --red: #ec4f4f;
+  --blueTransparent: rgba(21, 116, 224, 0.6);
+  --brightBlueTransparent: rgba(0, 200, 255, 0.85);
+  --error: rgb(255, 0, 0);
+  --info: rgb(255, 136, 0);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Welcome Screens Section */
+  --welcomeScreenPoint: rgba(0, 229, 255, 0.8);
+  --welcomeScreenContrastBtn: var(--brightBlue);
+  --welcomeScreenSubBtn: var(--blue);
+  --welcomeScreenSubText: rgba(255, 255, 255, 0.8);
+  --welcomeScreenMainText: var(--white);
+  --welcomeScreenScrollNonActivePoint: rgba(159, 159, 159, 0.7);
+  --welcomeScreenScrollActivePoint: rgba(255, 255, 255, 0.8);
+  --welcomeScreenImproveText: rgba(255, 255, 255, 0.7);
+  --welcomeScreenGradientDark: rgba(5, 5, 5, 0.4);
+  --welcomeScreenGradientLight: rgba(107, 107, 107, 0);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Main Screens Section */
+  --bg: #042555;
+  --menuBg: var(--blue2);
+  --mainOnlineOfflineBg: var(--blue3);
+  --subBg: #375ebf;
+  --subFolderBg: var(--darkBlue);
+  --searchBarBg: #83a6ff;
+  --splitBar: #4f81ff;
+  --edgeBtnBg: #4e95fd;
+  --mainText: var(--white);
+  --gradientLightBlue: #4dedff;
+  --gradientBlue: #053d8f;
+  --subscriptionCardBg: rgba(0, 0, 0, 0.4);
+  --greenOnline: #33c558;
+
+  /* Main Screen Popups Section */
+  --bgMainScreenPopup: var(--blue2);
+  --textFieldBgMainScreenPopup: #8daeff;
+  --activePointMainScreenPopup: var(--brightBlue);
+  --pointBgMainScreenPopup: var(--blue);
+  --selectFieldBgMainScreenPopup: var(--blue3);
+  --warningBtnBgMainScreenPopup: var(--red);
+  --textMainScreenPopup: var(--white);
+  --subTextMainScreenPopup: rgba(255, 255, 255, 0.8);
+
+  /* Sub-Screens Section */
+  --anyBtnOnBgSubScreen: var(--blue3);
+  --warningBtnBg: var(--red);
+  --subScreenPopupBg: #3054ae;
+  --dateAndListSelectsPopupBg: #5481f0;
+  --dateAndListBtnsPopupBg: #5481f0;
+  --folderOrHighlightedSectionBg: var(--darkBlue);
+  --textFieldInFolderBg: #6289ed;
+  --modalBtns: #8daeff;
+  --sectionTransparentText: rgba(255, 255, 255, 0.75);
+  --supportTransparentText: rgba(255, 255, 255, 0.6);
+  --codeTransparentText: rgba(255, 255, 255, 0.7);
+  --labelTransparentText: rgba(255, 255, 255, 0.5);
+  --dropdownBgTransparent: rgb(65, 110, 223);
+  --dropdownListBgTransparent: rgba(65, 110, 223, 0.7);
+  --subDropdownListBgTransparent: rgba(65, 110, 223, 0.8);
+  --dashBg: #b5caff;
+  --modalBtn: #4b74dd;
+  --trashItemImageBg: #bcbcbc;
+  --datePickerBg: rgba(0, 0, 0, 0.2);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+html,
+body,
+#root {
+  height: 100%;
+  letter-spacing: normal;
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  flex-direction: column;
+  background-color: var(--layout-background-color);
+}
+
+div {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+span {
+  font-family: segoe-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--mainText);
 }

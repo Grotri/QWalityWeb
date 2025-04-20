@@ -1,0 +1,13 @@
+.wrapper {
+  background-color: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.main-wrapper {
+  width: 1440px;
+  margin: 0 auto;
+  flex: 1;
+}

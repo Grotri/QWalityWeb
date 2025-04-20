@@ -3,19 +3,22 @@ import { ERoutes } from "./routes";
 import PageTemplate from "../components/templates/PageTemplate";
 import Registration from "../components/pages/Registration";
 import Login from "../components/pages/Login";
+import ForgotPassword from "../components/pages/ForgotPassword";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    // element
+    // TODO: добавить элемент ошибки
     children: [
-      {
-        index: true,
-        element: (
-          <PageTemplate>
-            <Registration />
-          </PageTemplate>
-        ),
-      },
+      // {
+      //   index: true,
+      //   element: (
+      //     <PageHeaderProvider header="Главная">
+      //       <PrivateRoute element={<Dashboard />} />
+      //     </PageHeaderProvider>
+      //   ),
+      // },
       {
         path: ERoutes.register,
         element: (
@@ -27,8 +30,16 @@ const router = createBrowserRouter([
       {
         path: ERoutes.login,
         element: (
-          <PageTemplate>
+          <PageTemplate backPath={ERoutes.register}>
             <Login />
+          </PageTemplate>
+        ),
+      },
+      {
+        path: ERoutes.passwordRecovery,
+        element: (
+          <PageTemplate backPath={ERoutes.login}>
+            <ForgotPassword />
           </PageTemplate>
         ),
       },

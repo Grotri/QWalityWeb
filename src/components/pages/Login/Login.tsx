@@ -9,6 +9,7 @@ import styles from "./Login.module.scss";
 import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
+import { ERoutes } from "../../../router/routes";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Login = () => {
         <Button color="blue" style={styles.loginBtn} onPress={handleLogin}>
           <span className={styles.loginBtnText}>Войти</span>
         </Button>
-        <Button onPress={() => navigate("ForgotPassword")}>
+        <Button onPress={() => navigate(ERoutes.passwordRecovery)}>
           <span className={styles.forgotBtnText}>Забыли пароль?</span>
         </Button>
       </div>

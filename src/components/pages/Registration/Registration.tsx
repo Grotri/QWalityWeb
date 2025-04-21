@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import useAuthStore from "../../../store/useAuthStore";
 import Input from "../../atoms/Input/Input";
 import styles from "./Registration.module.scss";
@@ -20,18 +20,21 @@ const Registration = () => {
   } = useAuthStore();
 
   const [code, setCode] = useState<string>("");
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    register(code);
+  };
 
   useEffect(() => {
     clearUser();
     setCode("");
-    setIsChecked(false);
     clearErrors();
   }, []);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <span className={styles.title}>Регистрация</span>
         <Input
           label="ИНН"
@@ -78,17 +81,13 @@ const Registration = () => {
             <span className={styles.codeBtnText}>Получить код</span>
           </Button>
         </div>
-        <Button
-          color="blue"
-          style={styles.createBtn}
-          onPress={() => register(code, isChecked)}
-        >
+        <Button color="blue" style={styles.createBtn} type="submit">
           <span className={styles.createBtnText}>Зарегистрироваться</span>
         </Button>
         <Button onPress={() => navigate(ERoutes.login)}>
           <span className={styles.loginBtnText}>Уже есть аккаунт?</span>
         </Button>
-      </div>
+      </form>
     </div>
   );
 };

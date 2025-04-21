@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./ForgotPassword.module.scss";
 import { IErrors, initialErrors } from "./types";
 import { emailPattern } from "../../../constants/patterns";
@@ -36,7 +36,8 @@ const ForgotPassword = () => {
     return Object.values(newErrors).every((error) => !error);
   };
 
-  const changePassword = () => {
+  const changePassword = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (validate()) {
       navigate(ERoutes.login);
       onSuccess("Пароль сменен, зайдите с новыми данными", 5000);
@@ -47,7 +48,7 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={changePassword}>
         <span className={styles.title}>Восстановление пароля</span>
         <div className={styles.fields}>
           <Input
@@ -86,10 +87,10 @@ const ForgotPassword = () => {
             errorText={errors.password}
           />
         </div>
-        <Button color="blue" style={styles.changeBtn} onPress={changePassword}>
+        <Button color="blue" style={styles.changeBtn} type="submit">
           <span className={styles.changeBtnText}>Восстановить пароль</span>
         </Button>
-      </div>
+      </form>
     </div>
   );
 };

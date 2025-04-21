@@ -9,14 +9,14 @@ const Button: FC<IButton> = ({
   style,
   color,
   customColor,
-  disabled,
+  type = "button",
 }) => {
   const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
 
   return (
     <button
       onClick={onPress}
-      disabled={disabled}
+      type={type}
       className={clsx(
         styles.btn,
         buttonColorStyle,

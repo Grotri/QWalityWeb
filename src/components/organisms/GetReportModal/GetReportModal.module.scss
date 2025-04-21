@@ -1,0 +1,87 @@
+.modals {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  gap: 12px;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  background-color: var(--subScreenPopupBg);
+  padding: 12px;
+  width: 100%;
+  gap: 12px;
+}
+
+.crossIconWrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.crossIcon {
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+}
+
+.modalTitle {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 700;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty {
+  width: 16px;
+}
+
+.dash {
+  width: 16px;
+  height: 3px;
+  border-radius: 50px;
+  background-color: var(--dashBg);
+}
+
+.flex {
+  flex: 1;
+}
+
+.btnModal,
+.btnModalBold {
+  flex: 1;
+  border-radius: 8px;
+  height: 27px;
+  color: var(--mainText);
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+}
+
+.btnModalBold {
+  font-weight: 700;
+}
+
+.subModalTitle {
+  font-size: 18px;
+  line-height: 21px;
+  font-weight: 700;
+}

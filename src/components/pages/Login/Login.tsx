@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/useAuthStore";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern } from "../../../constants/patterns";
@@ -9,6 +9,7 @@ import styles from "./Login.module.scss";
 import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
+import { ERoutes } from "../../../router/routes";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,7 +36,8 @@ const Login = () => {
     return Object.values(newErrors).every((error) => !error);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (validate()) {
       login(email, password);
     } else {
@@ -45,7 +47,7 @@ const Login = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.form}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <span className={styles.title}>Войти</span>
         <Input
           label="Почта / логин"
@@ -67,13 +69,13 @@ const Login = () => {
           }}
           errorText={errors.password}
         />
-        <Button color="blue" style={styles.loginBtn} onPress={handleLogin}>
+        <Button color="blue" style={styles.loginBtn} type="submit">
           <span className={styles.loginBtnText}>Войти</span>
         </Button>
-        <Button onPress={() => navigate("ForgotPassword")}>
+        <Button onPress={() => navigate(ERoutes.passwordRecovery)}>
           <span className={styles.forgotBtnText}>Забыли пароль?</span>
         </Button>
-      </div>
+      </form>
     </div>
   );
 };

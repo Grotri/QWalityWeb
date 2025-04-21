@@ -1,18 +1,18 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const onSuccess = (message: string) => {
-  toast.success(message);
+export const onSuccess = (message: string, autoClose?: number) => {
+  toast.success(message, { autoClose });
 };
 
-export const onError = (message: string) => {
-  toast.error(message);
+export const onError = (message: string, autoClose?: number) => {
+  toast.error(message, { autoClose });
 };
 
-export const onWarning = (message: string) => {
-  toast.warning(message);
+export const onWarning = (message: string, autoClose?: number) => {
+  toast.warning(message, { autoClose });
 };
 
-export const onInfo = (message: string) => {
-  toast.info(message);
+export const onInfo = (message: string, autoClose?: number) => {
+  toast.info(message, { autoClose });
 };

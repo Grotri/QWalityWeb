@@ -1,5 +1,7 @@
 export enum ERoutes {
-  dashboard = "/",
+  main = "/",
   register = "/register",
   login = "/login",
+  passwordRecovery = "/password-recovery",
+  subscription = "/subscription",
 }

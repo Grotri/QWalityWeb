@@ -3,17 +3,10 @@ import { IIcon } from "./types";
 
 const ProfileIcon: FC<IIcon> = ({
   width = 116,
-  height = 116,
   color = "var(--white)",
   stroke = 6,
 }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={width}
-    height={height}
-    viewBox="0 0 116 116"
-    fill="none"
-  >
+  <svg width={width} height={width} viewBox="0 0 116 116" fill="none">
     <path
       stroke={color}
       strokeLinecap="round"

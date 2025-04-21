@@ -56,7 +56,6 @@ const Login = () => {
             setEmail(email);
             setErrors({ ...errors, email: "" });
           }}
-          type="email"
           maxLength={254}
           errorText={errors.email}
         />

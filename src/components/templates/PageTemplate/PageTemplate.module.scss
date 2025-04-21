@@ -1,24 +1,27 @@
 .wrapper {
   background-color: var(--bg);
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 .main-wrapper {
   width: 1440px;
   margin: 0 auto;
   flex: 1;
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  justify-content: center;
 }
 
 .header {
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  right: 0;
+  box-sizing: content-box;
+  padding-top: 32px;
+  padding-left: 32px;
   display: flex;
   align-items: center;
+  min-height: 38px;
 }
 
 .backIcon {
@@ -47,4 +50,10 @@
 .title {
   font-size: 32px;
   font-weight: 700;
+}
+
+@media (max-width: 1440px) {
+  .main-wrapper {
+    width: 100vw;
+  }
 }

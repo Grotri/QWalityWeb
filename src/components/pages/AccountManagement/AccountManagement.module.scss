@@ -1,0 +1,75 @@
+.managerWrapper {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin-top: 40px;
+  margin-left: 90px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerText {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 600;
+}
+
+.content {
+  background-color: var(--folderOrHighlightedSectionBg);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 50%;
+}
+
+.input {
+  height: 24px;
+  border-radius: 6px;
+}
+
+.inputLabel {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 400;
+  color: var(--labelTransparentText);
+}
+
+.inputError {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.inputField {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.btns {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.btn {
+  height: 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--subTextMainScreenPopup);
+  padding: 0 24px;
+}

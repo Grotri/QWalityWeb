@@ -15,6 +15,7 @@ import Slider from "../../atoms/Slider";
 import Dropdown from "../../atoms/Dropdown";
 import { roles } from "../../../constants/roles";
 import GetReportModal from "../../organisms/GetReportModal";
+import { ERoutes } from "../../../router/routes";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -136,7 +137,7 @@ const Admin = () => {
         <Button
           color="blue"
           style={styles.btn}
-          onPress={() => navigate("AccountManagement")}
+          onPress={() => navigate(ERoutes.accountManagement)}
         >
           Управлять аккаунтами
         </Button>

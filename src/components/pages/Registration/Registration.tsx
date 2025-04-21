@@ -30,7 +30,7 @@ const Registration = () => {
     clearUser();
     setCode("");
     clearErrors();
-  }, []);
+  }, [clearErrors, clearUser]);
 
   return (
     <div className={styles.wrapper}>
@@ -53,7 +53,6 @@ const Registration = () => {
             setUserField("email", email);
             setErrorsField("email", "");
           }}
-          type="email"
           maxLength={254}
           errorText={errors.email}
         />

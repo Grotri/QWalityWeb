@@ -62,9 +62,13 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
     setUser: (newUser) => set({ user: { ...newUser } }),
 
     setUserField: (field, value) =>
-      set((state) => ({
-        user: { ...state.user, [field]: value },
-      })),
+      set((state) => {
+        const updatedUser = { ...state.user, [field]: value };
+        if (field === "subscription") {
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+        }
+        return { user: updatedUser };
+      }),
 
     logout: () => {
       localStorage.removeItem("user");
@@ -118,7 +122,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             loading: true,
             user: newUser,
           });
-          onSuccess("Вы успешно зарегистрировались!");
+          onSuccess("Вы успешно зарегистрировались!", 5000);
         } catch (error) {
           console.log(error);
           onError("Произошла ошибка при регистрации");
@@ -145,7 +149,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           loading: true,
           user: newUser,
         });
-        onSuccess("Вы успешно вошли в аккаунт!");
+        onSuccess("Вы успешно вошли в аккаунт!", 5000);
       } catch (error) {
         console.log(error);
         onError("Произошла ошибка при входе в аккаунт");

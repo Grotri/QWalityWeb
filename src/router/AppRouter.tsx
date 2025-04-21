@@ -8,6 +8,7 @@ import PrivateRoute from "../components/atoms/PrivateRoute";
 import Main from "../components/pages/Main";
 import PublicRoute from "../components/atoms/PublicRoute";
 import Subscription from "../components/pages/Subscription";
+import SubscriptionChange from "../components/pages/SubscriptionChange";
 
 const router = createBrowserRouter([
   {
@@ -69,8 +70,23 @@ const router = createBrowserRouter([
           <PrivateRoute
             allowUnsubscribed
             element={
-              <PageTemplate>
+              <PageTemplate headerTitle="Выберите уровень подписки">
                 <Subscription />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: ERoutes.subscriptionEdit,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate
+                headerTitle="Выберите уровень подписки"
+                backPath={ERoutes.main}
+              >
+                <SubscriptionChange />
               </PageTemplate>
             }
           />

@@ -4,4 +4,5 @@ export enum ERoutes {
   login = "/login",
   passwordRecovery = "/password-recovery",
   subscription = "/subscription",
+  subscriptionEdit = "/subscription-edit",
 }

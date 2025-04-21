@@ -21,8 +21,8 @@ const PrivateRoute = ({
     return <Navigate to={ERoutes.subscription} replace />;
   }
 
-  if (user.subscription && location.pathname.startsWith(ERoutes.subscription)) {
-    return <Navigate to={ERoutes.main} replace />;
+  if (user.subscription && location.pathname === ERoutes.subscription) {
+    return <Navigate to={ERoutes.subscriptionEdit} replace />;
   }
 
   return element;

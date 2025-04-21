@@ -60,6 +60,7 @@ const ForgotPassword = () => {
             }}
             maxLength={254}
             errorText={errors.email}
+            inputFieldClassName={styles.input}
           />
           <div className={styles.confirmationWrapper}>
             <Input
@@ -71,6 +72,7 @@ const ForgotPassword = () => {
               }}
               maxLength={6}
               errorText={errors.code}
+              inputFieldClassName={styles.input}
             />
             <Button style={styles.codeBtn} color="blue">
               <span className={styles.codeBtnText}>Получить код</span>
@@ -84,6 +86,7 @@ const ForgotPassword = () => {
               setErrors({ ...errors, password: "" });
             }}
             errorText={errors.password}
+            inputFieldClassName={styles.input}
           />
         </div>
         <Button color="blue" style={styles.changeBtn} type="submit">

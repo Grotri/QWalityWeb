@@ -45,6 +45,7 @@ const Registration = () => {
             setErrorsField("inn", "");
           }}
           errorText={errors.inn}
+          inputFieldClassName={styles.input}
         />
         <Input
           label="Почта"
@@ -55,6 +56,7 @@ const Registration = () => {
           }}
           maxLength={254}
           errorText={errors.email}
+          inputFieldClassName={styles.input}
         />
         <InputPassword
           label="Пароль"
@@ -64,6 +66,7 @@ const Registration = () => {
             setErrorsField("password", "");
           }}
           errorText={errors.password}
+          inputFieldClassName={styles.input}
         />
         <div className={styles.codeWrapper}>
           <Input
@@ -75,6 +78,7 @@ const Registration = () => {
             }}
             maxLength={6}
             errorText={errors.code}
+            inputFieldClassName={styles.input}
           />
           <Button style={styles.codeBtn} color="blue">
             <span className={styles.codeBtnText}>Получить код</span>

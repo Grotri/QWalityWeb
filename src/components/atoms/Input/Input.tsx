@@ -8,6 +8,7 @@ const Input: FC<IInput> = ({
   labelClassName,
   inputClassName,
   inputFieldClassName,
+  errorClassName,
   label,
   placeholder,
   errorText,
@@ -42,7 +43,9 @@ const Input: FC<IInput> = ({
         {iconRight && <span className={styles["icon-right"]}>{iconRight}</span>}
       </div>
       {errorText && (
-        <span className={styles["error-message"]}>{errorText}</span>
+        <span className={clsx(styles["error-message"], errorClassName)}>
+          {errorText}
+        </span>
       )}
     </div>
   );

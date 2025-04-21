@@ -59,7 +59,10 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
     clearUser: () => set({ user: { ...initialUser } }),
 
-    setUser: (newUser) => set({ user: { ...newUser } }),
+    setUser: (newUser) => {
+      localStorage.setItem("user", JSON.stringify(newUser));
+      set({ user: { ...newUser } });
+    },
 
     setUserField: (field, value) =>
       set((state) => {

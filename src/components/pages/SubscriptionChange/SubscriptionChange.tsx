@@ -26,8 +26,7 @@ const SubscriptionChange = () => {
             price={slider.price}
             onPress={() => {
               setUserField("subscription", slider.id.toString());
-              // TODO: изменить путь на профиль
-              navigate(ERoutes.main);
+              navigate(ERoutes.profile);
               onSuccess("Вы успешно поменяли уровень подписки", 2000);
             }}
           />

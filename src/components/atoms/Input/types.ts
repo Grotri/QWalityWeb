@@ -10,6 +10,7 @@ export interface IInput {
   labelClassName?: string;
   inputClassName?: string;
   inputFieldClassName?: string;
+  errorClassName?: string;
   placeholder?: string;
   label?: string | JSX.Element;
   errorText?: string;

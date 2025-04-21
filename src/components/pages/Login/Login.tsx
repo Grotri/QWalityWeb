@@ -58,6 +58,7 @@ const Login = () => {
           }}
           maxLength={254}
           errorText={errors.email}
+          inputFieldClassName={styles.input}
         />
         <InputPassword
           label="Пароль"
@@ -67,6 +68,7 @@ const Login = () => {
             setErrors({ ...errors, password: "" });
           }}
           errorText={errors.password}
+          inputFieldClassName={styles.input}
         />
         <Button color="blue" style={styles.loginBtn} type="submit">
           <span className={styles.loginBtnText}>Войти</span>

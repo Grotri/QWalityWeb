@@ -16,6 +16,9 @@ const Main: FC = () => {
       <Button color="blue" onPress={() => navigate(ERoutes.subscriptionEdit)}>
         Subs
       </Button>
+      <Button color="blue" onPress={() => navigate(ERoutes.profile)}>
+        profile
+      </Button>
     </div>
   );
 };

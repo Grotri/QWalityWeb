@@ -8,6 +8,7 @@ const InputPassword: FC<IInputPassword> = ({
   labelClassName,
   inputClassName,
   inputFieldClassName,
+  errorClassName,
   label,
   placeholder,
   errorText,
@@ -26,6 +27,7 @@ const InputPassword: FC<IInputPassword> = ({
       labelClassName={labelClassName}
       inputClassName={inputClassName}
       inputFieldClassName={inputFieldClassName}
+      errorClassName={errorClassName}
       label={label}
       placeholder={placeholder}
       errorText={errorText}

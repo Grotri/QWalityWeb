@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { IIcon } from "./types";
+import { v4 as uuidv4 } from "uuid";
 
 const EyeIcon: FC<IIcon> = ({
   color = "var(--mainText)",
@@ -8,8 +9,10 @@ const EyeIcon: FC<IIcon> = ({
   stroke = 2,
   onClick,
   isActive,
-}) =>
-  isActive ? (
+}) => {
+  const clipId = uuidv4();
+
+  return isActive ? (
     <svg
       width={width}
       height={height}
@@ -40,7 +43,7 @@ const EyeIcon: FC<IIcon> = ({
       viewBox="0 0 24 24"
       onClick={onClick}
     >
-      <g clipPath="url(#a)">
+      <g clipPath={`url(#${clipId})`}>
         <path
           stroke={color}
           strokeLinecap="round"
@@ -50,11 +53,12 @@ const EyeIcon: FC<IIcon> = ({
         />
       </g>
       <defs>
-        <clipPath id="a">
+        <clipPath id={clipId}>
           <path fill="#fff" d="M0 0h24v24H0z" />
         </clipPath>
       </defs>
     </svg>
   );
+};
 
 export default EyeIcon;

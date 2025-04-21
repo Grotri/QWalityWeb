@@ -6,7 +6,7 @@ import { ERoutes } from "../../../router/routes";
 const PublicRoute = ({ element }: { element: ReactNode }) => {
   const { user } = useAuthStore();
 
-  return !!user.id ? <Navigate to={ERoutes.main} replace /> : element;
+  return user.id ? <Navigate to={ERoutes.main} replace /> : element;
 };
 
 export default PublicRoute;

@@ -6,4 +6,5 @@ export enum ERoutes {
   subscription = "/subscription",
   subscriptionEdit = "/subscription-edit",
   profile = "/profile",
+  admin = "/admin",
 }

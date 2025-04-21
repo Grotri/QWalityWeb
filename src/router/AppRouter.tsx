@@ -10,6 +10,7 @@ import PublicRoute from "../components/atoms/PublicRoute";
 import Subscription from "../components/pages/Subscription";
 import SubscriptionChange from "../components/pages/SubscriptionChange";
 import Profile from "../components/pages/Profile";
+import Admin from "../components/pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +101,21 @@ const router = createBrowserRouter([
             element={
               <PageTemplate headerTitle="Профиль" backPath={ERoutes.main}>
                 <Profile />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: ERoutes.admin,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate
+                headerTitle="Админ панель"
+                backPath={ERoutes.profile}
+              >
+                <Admin />
               </PageTemplate>
             }
           />

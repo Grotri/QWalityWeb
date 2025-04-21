@@ -1,0 +1,71 @@
+.adminWrapper {
+  width: 24%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding-bottom: 42px;
+}
+
+.subTitle {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 600;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.confirmationInputWrapper {
+  height: 29px;
+  border-radius: 6px;
+}
+
+.confirmationInput {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.confirmationInputLabel {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.btn {
+  width: 80%;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 20px;
+  line-height: 27px;
+  color: var(--mainText);
+  font-weight: 700;
+}
+
+.statistics {
+  font-size: 16px;
+  line-height: 21px;
+  color: var(--supportTransparentText);
+}

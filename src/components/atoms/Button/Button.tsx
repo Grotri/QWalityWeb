@@ -8,7 +8,6 @@ const Button: FC<IButton> = ({
   onPress,
   style,
   color,
-  customColor,
   type = "button",
 }) => {
   const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
@@ -17,12 +16,7 @@ const Button: FC<IButton> = ({
     <button
       onClick={onPress}
       type={type}
-      className={clsx(
-        styles.btn,
-        buttonColorStyle,
-        customColor && { backgroundColor: customColor },
-        style
-      )}
+      className={clsx(styles.btn, buttonColorStyle, style)}
     >
       {children}
     </button>

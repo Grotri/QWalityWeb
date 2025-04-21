@@ -14,6 +14,5 @@ export interface IButton {
     | "management"
     | "blueTransparent"
     | "modal";
-  customColor?: string;
   type?: "button" | "reset" | "submit";
 }

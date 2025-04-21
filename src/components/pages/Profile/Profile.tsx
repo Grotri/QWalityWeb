@@ -6,7 +6,7 @@ import { EErrors } from "../../../constants/errors";
 import { emailPattern } from "../../../constants/patterns";
 import { onError, onSuccess } from "../../../helpers/toast";
 import styles from "./Profile.module.scss";
-import ProfileIcon from "../../../assets/icons/ProfileIcon";
+import { ProfileIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
 import Button from "../../atoms/Button";
 import { ERoutes } from "../../../router/routes";
@@ -125,7 +125,11 @@ const Profile = () => {
           >
             Управлять подпиской
           </Button>
-          <Button style={styles.btn} color="blue">
+          <Button
+            style={styles.btn}
+            color="blue"
+            onPress={() => navigate(ERoutes.admin)}
+          >
             Админ панель
           </Button>
         </>

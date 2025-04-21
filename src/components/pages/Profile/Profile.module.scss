@@ -1,0 +1,109 @@
+.profileWrapper {
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--folderOrHighlightedSectionBg);
+  border-radius: 12px;
+  padding: 12px;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.cardPoint {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardPointTitle {
+  color: var(--sectionTransparentText);
+  font-size: 12px;
+  padding-left: 4px;
+}
+
+.cardPointData {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  padding-left: 4px;
+}
+
+.formInput {
+  margin-top: 4px;
+  width: 66%;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.input {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn {
+  width: 80%;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--mainText);
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 700;
+}
+
+.confirmationWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: -16px;
+  margin-bottom: 12px;
+}
+
+.confirmationInput {
+  height: 32px;
+  border-radius: 8px;
+}
+
+.confirmationInputLabel {
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--codeTransparentText);
+}
+
+.error {
+  margin-left: 4px;
+  font-size: 12px;
+}
+
+.codeBtn {
+  height: 33px;
+  border-radius: 8px;
+  margin-top: 17px;
+  color: var(--mainText);
+  font-size: 14px;
+}
+
+.supportTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.supportText,
+.supportTextUnderlined {
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--supportTransparentText);
+  cursor: default;
+}
+
+.supportTextUnderlined {
+  text-decoration: underline;
+  cursor: pointer;
+}

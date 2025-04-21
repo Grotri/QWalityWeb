@@ -9,6 +9,7 @@ import Main from "../components/pages/Main";
 import PublicRoute from "../components/atoms/PublicRoute";
 import Subscription from "../components/pages/Subscription";
 import SubscriptionChange from "../components/pages/SubscriptionChange";
+import Profile from "../components/pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -84,9 +85,21 @@ const router = createBrowserRouter([
             element={
               <PageTemplate
                 headerTitle="Выберите уровень подписки"
-                backPath={ERoutes.main}
+                backPath={ERoutes.profile}
               >
                 <SubscriptionChange />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: ERoutes.profile,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate headerTitle="Профиль" backPath={ERoutes.main}>
+                <Profile />
               </PageTemplate>
             }
           />

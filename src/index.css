@@ -9,6 +9,7 @@
   --red: #ec4f4f;
   --blueTransparent: rgba(21, 116, 224, 0.6);
   --brightBlueTransparent: rgba(0, 200, 255, 0.85);
+  --darkBlueTransparent: rgba(76, 126, 254, 0.85);
   --error: rgb(255, 0, 0);
   --info: rgb(255, 136, 0);
 
@@ -72,7 +73,7 @@
 
   /* Btns-hover */
   --welcomeScreenSubBtn-hover: #0d60be;
-  --welcomeScreenContrastBtn-hover: #13b5e2;
+  --welcomeScreenContrastBtn-hover: #12a4cc;
   --red-hover: #c64343;
   --anyBtnOnBgSubScreen-hover: #2c59c9;
   --darkBlue-hover: #15378d;

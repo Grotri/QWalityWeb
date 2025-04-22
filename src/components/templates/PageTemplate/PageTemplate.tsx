@@ -2,14 +2,19 @@ import { FC, PropsWithChildren } from "react";
 import styles from "./PageTemplate.module.scss";
 import { BackIcon } from "../../../assets/icons";
 import { useNavigate } from "react-router-dom";
+import { IPageTemplate } from "./types";
+import clsx from "clsx";
 
-const PageTemplate: FC<
-  PropsWithChildren & { backPath?: string; headerTitle?: string }
-> = ({ backPath, headerTitle, children }) => {
+const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
+  backPath,
+  headerTitle,
+  canScroll = false,
+  children,
+}) => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={clsx(styles.wrapper, canScroll && styles.scrollWrapper)}>
       {(backPath || headerTitle) && (
         <div className={styles.header}>
           {backPath && (
@@ -31,7 +36,14 @@ const PageTemplate: FC<
           )}
         </div>
       )}
-      <main className={styles["main-wrapper"]}>{children}</main>
+      <main
+        className={clsx(
+          styles["main-wrapper"],
+          canScroll && styles.mainWrapperScroll
+        )}
+      >
+        {children}
+      </main>
     </div>
   );
 };

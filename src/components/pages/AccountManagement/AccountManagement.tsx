@@ -13,6 +13,7 @@ import {
   CustomAccordionDetails,
   CustomAccordionSummary,
 } from "./styles";
+import SupportContent from "../../atoms/SupportContent";
 
 const AccountManagement = () => {
   const {
@@ -140,9 +141,7 @@ const AccountManagement = () => {
           );
         })
       ) : (
-        <span className={styles.noAccounts}>
-          У вас нет управляемых аккаунтов
-        </span>
+        <SupportContent message="У вас нет управляемых аккаунтов" />
       )}
     </div>
   );

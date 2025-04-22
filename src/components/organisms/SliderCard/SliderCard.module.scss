@@ -57,6 +57,10 @@
   padding: 0 48px;
 }
 
+.radio {
+  cursor: default !important;
+}
+
 .subInfo {
   display: flex;
   flex-direction: column;

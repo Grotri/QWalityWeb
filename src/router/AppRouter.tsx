@@ -144,11 +144,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={
-              <PageTemplate
-                headerTitle="Помощь"
-                backPath={ERoutes.main}
-                canScroll
-              >
+              <PageTemplate headerTitle="Помощь" hasMenu canScroll>
                 <FAQ />
               </PageTemplate>
             }

@@ -1,14 +1,13 @@
 import { SyntheticEvent, useState } from "react";
 import { questions } from "../../../constants/questions";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
-import MessageIcon from "../../../assets/icons/MessageIcon";
 import styles from "./FAQ.module.scss";
 import {
   CustomAccordion,
   CustomAccordionDetails,
   CustomAccordionSummary,
 } from "./styles";
-import { BottomIcon } from "../../../assets/icons";
+import { BottomIcon, MessageIcon } from "../../../assets/icons";
 import SupportContent from "../../atoms/SupportContent";
 
 const FAQ = () => {

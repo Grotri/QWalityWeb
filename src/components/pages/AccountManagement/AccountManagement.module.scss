@@ -1,23 +1,27 @@
 .managerWrapper {
-  width: 40%;
-  height: 100%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  margin-top: 40px;
-  margin-left: 90px;
+  margin: 40px 0 80px 90px;
 }
 
 .header {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding-right: 16px;
+}
+
+.profileIcon {
+  flex-shrink: 0;
 }
 
 .headerText {
   font-size: 20px;
   line-height: 27px;
   font-weight: 600;
+  word-break: break-word;
 }
 
 .content {

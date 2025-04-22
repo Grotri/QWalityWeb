@@ -13,6 +13,7 @@ import {
   CustomAccordionDetails,
   CustomAccordionSummary,
 } from "./styles";
+import SupportContent from "../../atoms/SupportContent";
 
 const AccountManagement = () => {
   const {
@@ -67,7 +68,11 @@ const AccountManagement = () => {
                 expandIcon={<BottomIcon scale={2} stroke={1.5} />}
               >
                 <div className={styles.header}>
-                  <ProfileIcon width={42} stroke={9} />
+                  <ProfileIcon
+                    width={42}
+                    stroke={9}
+                    style={styles.profileIcon}
+                  />
                   <span className={styles.headerText}>{section.name}</span>
                 </div>
               </CustomAccordionSummary>
@@ -140,9 +145,7 @@ const AccountManagement = () => {
           );
         })
       ) : (
-        <span className={styles.noAccounts}>
-          У вас нет управляемых аккаунтов
-        </span>
+        <SupportContent message="У вас нет управляемых аккаунтов" />
       )}
     </div>
   );

@@ -8,4 +8,5 @@ export enum ERoutes {
   profile = "/profile",
   admin = "/admin",
   accountManagement = "/account-management",
+  support = "/support",
 }

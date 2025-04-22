@@ -21,7 +21,7 @@ const SliderCard: FC<ISliderCard> = ({
       <span className={styles.description}>{description}</span>
       <div className={styles.radios}>
         {radioLabels.map((label: string, index: number) => (
-          <Radio label={label} isChecked key={index} />
+          <Radio label={label} isChecked key={index} style={styles.radio} />
         ))}
       </div>
     </div>

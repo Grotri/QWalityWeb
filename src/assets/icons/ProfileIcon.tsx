@@ -5,8 +5,15 @@ const ProfileIcon: FC<IIcon> = ({
   width = 116,
   color = "var(--white)",
   stroke = 6,
+  style,
 }) => (
-  <svg width={width} height={width} viewBox="0 0 116 116" fill="none">
+  <svg
+    width={width}
+    height={width}
+    viewBox="0 0 116 116"
+    fill="none"
+    className={style}
+  >
     <path
       stroke={color}
       strokeLinecap="round"

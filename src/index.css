@@ -109,3 +109,34 @@ span {
   font-weight: 400;
   color: var(--mainText);
 }
+
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 0px;
+  background-color: var(--bg);
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: var(--bg);
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: var(--bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--blue3);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--darkBlue);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: var(--darkBlue);
+}

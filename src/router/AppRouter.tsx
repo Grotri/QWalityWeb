@@ -12,6 +12,7 @@ import SubscriptionChange from "../components/pages/SubscriptionChange";
 import Profile from "../components/pages/Profile";
 import Admin from "../components/pages/Admin";
 import AccountManagement from "../components/pages/AccountManagement";
+import FAQ from "../components/pages/FAQ";
 
 const router = createBrowserRouter([
   {
@@ -130,8 +131,25 @@ const router = createBrowserRouter([
               <PageTemplate
                 headerTitle="Управление аккаунтами"
                 backPath={ERoutes.admin}
+                canScroll
               >
                 <AccountManagement />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: ERoutes.support,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate
+                headerTitle="Помощь"
+                backPath={ERoutes.main}
+                canScroll
+              >
+                <FAQ />
               </PageTemplate>
             }
           />

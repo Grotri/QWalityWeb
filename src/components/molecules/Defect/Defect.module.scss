@@ -1,0 +1,56 @@
+.itemWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.image {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  background-color: var(--trashItemImageBg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.imageBtn:hover {
+  background-color: var(--supportTransparentText);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.itemDate {
+  line-height: 20px;
+}
+
+.btn {
+  color: var(--mainText);
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--supportTransparentText);
+  }
+}

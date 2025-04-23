@@ -9,4 +9,5 @@ export enum ERoutes {
   admin = "/admin",
   accountManagement = "/account-management",
   support = "/support",
+  trashBin = "/trash-bin",
 }

@@ -13,6 +13,7 @@ const Modal: FC<IModal> = ({ children, isVisible, setIsVisible }) => {
       onClose={handleClose}
       closeAfterTransition
       disableEnforceFocus
+      disableAutoFocus
       slots={{ backdrop: Backdrop }}
       slotProps={{
         backdrop: {

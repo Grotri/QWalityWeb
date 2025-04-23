@@ -18,7 +18,7 @@ export const menuItems: IMenuItem[] = [
   {
     icon: TrashBinIcon,
     title: "Корзина",
-    path: "",
+    path: ERoutes.trashBin,
   },
   {
     icon: HelpIcon,

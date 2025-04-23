@@ -13,6 +13,7 @@ import Profile from "../components/pages/Profile";
 import Admin from "../components/pages/Admin";
 import AccountManagement from "../components/pages/AccountManagement";
 import FAQ from "../components/pages/FAQ";
+import TrashBin from "../components/pages/TrashBin";
 
 const router = createBrowserRouter([
   {
@@ -146,6 +147,18 @@ const router = createBrowserRouter([
             element={
               <PageTemplate headerTitle="Помощь" hasMenu canScroll>
                 <FAQ />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: ERoutes.trashBin,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate headerTitle="Корзина" hasMenu canScroll>
+                <TrashBin />
               </PageTemplate>
             }
           />

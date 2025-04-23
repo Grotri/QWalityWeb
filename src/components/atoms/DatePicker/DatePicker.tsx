@@ -9,7 +9,12 @@ import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { formatDate } from "../../../helpers/formatDate";
 
-const DatePicker: FC<IDatePicker> = ({ date, setDate, bgColor }) => {
+const DatePicker: FC<IDatePicker> = ({
+  date,
+  setDate,
+  bgColor = "var(--dateAndListSelectsPopupBg)",
+  height = "27px",
+}) => {
   const [show, setShow] = useState<boolean>(false);
   const [tempDate, setTempDate] = useState<Dayjs | null>(
     date ? dayjs(date) : null
@@ -22,7 +27,8 @@ const DatePicker: FC<IDatePicker> = ({ date, setDate, bgColor }) => {
           className={styles.datePicker}
           onClick={() => setShow(true)}
           style={{
-            backgroundColor: bgColor || "var(--dateAndListSelectsPopupBg)",
+            backgroundColor: bgColor,
+            height,
           }}
         >
           <span className={styles.date}>

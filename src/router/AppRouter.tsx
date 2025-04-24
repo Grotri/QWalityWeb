@@ -14,6 +14,23 @@ import Admin from "../components/pages/Admin";
 import AccountManagement from "../components/pages/AccountManagement";
 import FAQ from "../components/pages/FAQ";
 import TrashBin from "../components/pages/TrashBin";
+import { useState } from "react";
+
+const MainPageWithSearch = () => {
+  const [search, setSearch] = useState<string>("");
+
+  return (
+    <PageTemplate
+      canScroll
+      hasMenu
+      isMainPage
+      search={search}
+      setSearch={setSearch}
+    >
+      <Main search={search} />
+    </PageTemplate>
+  );
+};
 
 const router = createBrowserRouter([
   {
@@ -23,15 +40,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <PrivateRoute
-            element={
-              <PageTemplate>
-                <Main />
-              </PageTemplate>
-            }
-          />
-        ),
+        element: <PrivateRoute element={<MainPageWithSearch />} />,
       },
       {
         path: ERoutes.register,

@@ -1,0 +1,39 @@
+.modal {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  background-color: var(--bgMainScreenPopup);
+  padding: 12px 40px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 700;
+}
+
+.name {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--codeTransparentText);
+  margin-bottom: 16px;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 42px;
+}
+
+.btn {
+  flex: 1;
+  border-radius: 8px;
+  height: 30px;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+  color: var(--mainText);
+}

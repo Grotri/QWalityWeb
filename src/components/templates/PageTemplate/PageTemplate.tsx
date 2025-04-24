@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { menuItems } from "../../../constants/menuItems";
 import { ERoutes } from "../../../router/routes";
 import Input from "../../atoms/Input/Input";
+import SettingsModal from "../../organisms/SettingsModal";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   backPath,
@@ -26,6 +27,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
 }) => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
@@ -125,20 +127,25 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                 <span className={styles.mainPageIconTitle}>Профиль</span>
               </div>
               <div
-                className={clsx(
-                  styles.mainPageIcon,
-                  styles.settingsIconWrapper
-                )}
+                className={styles.mainPageIcon}
+                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               >
                 <SettingsIcon
                   width={48}
                   stroke={2.5}
-                  style={styles.settingsIcon}
+                  style={clsx(
+                    styles.settingsIcon,
+                    isSettingsOpen && styles.settingsIconRotated
+                  )}
                 />
                 <span className={styles.mainPageIconTitle}>Настройки</span>
               </div>
             </div>
           )}
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            setIsOpen={setIsSettingsOpen}
+          />
         </div>
       )}
       <main

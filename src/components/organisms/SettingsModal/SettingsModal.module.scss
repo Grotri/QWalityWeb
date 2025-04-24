@@ -1,0 +1,158 @@
+.wrapper {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  background-color: var(--subFolderBg);
+  padding: 20px;
+  border-radius: 10px;
+  right: 12px;
+  top: 100%;
+  align-items: center;
+}
+
+.wrapperVisible {
+  display: flex;
+}
+
+.dropdowns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dropdown {
+  width: 100px !important;
+}
+
+.dropdownWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.dropdownText {
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 8px;
+  padding: 0 48px;
+}
+
+.btn {
+  border-radius: 10px;
+  height: 34px;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+  color: var(--mainText);
+}
+
+.version {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--supportTransparentText);
+}
+
+.exitModal,
+.deleteModal {
+  width: 32vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  background-color: var(--subFolderBg);
+  padding: 20px 66px 28px 66px;
+  gap: 42px;
+}
+
+.deleteModal {
+  gap: 12px;
+  padding: 12px 58px 16px 58px;
+}
+
+.modalTitle {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+}
+
+.modalBtns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.modalBtn {
+  flex: 1;
+  border-radius: 8px;
+  height: 38px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--mainText);
+}
+
+.confirmationWrapper {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.codeBtn {
+  flex-shrink: 0;
+  width: 44%;
+  border-radius: 8px;
+  height: 33px;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--mainText);
+  margin-top: 19px;
+}
+
+.inputWrapper {
+  height: 33px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+}
+
+.input {
+  color: var(--black) !important;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+}
+
+.inputLabel {
+  color: var(--codeTransparentText);
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.modalCancelBtn {
+  width: 44%;
+  border-radius: 8px;
+  height: 34px;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 700;
+  color: var(--mainText);
+}
+
+.modalDeleteBtn {
+  flex: 1;
+}

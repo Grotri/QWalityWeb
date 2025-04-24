@@ -1,0 +1,30 @@
+.wrapper {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: flex-start;
+  margin-bottom: 80px;
+  margin-left: 124px;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerText {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.emptyText {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--sectionTransparentText);
+  padding-left: 20px;
+}

@@ -4,8 +4,15 @@ import { FC } from "react";
 import styles from "./Modal.module.scss";
 import { Backdrop, Fade } from "@mui/material";
 
-const Modal: FC<IModal> = ({ children, isVisible, setIsVisible }) => {
-  const handleClose = () => setIsVisible(false);
+const Modal: FC<IModal> = ({ children, isVisible, setIsVisible, onClose }) => {
+  const handleClose = () => {
+    if (setIsVisible) {
+      setIsVisible(false);
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <ReactModal

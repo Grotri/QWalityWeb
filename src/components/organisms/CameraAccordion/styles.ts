@@ -24,14 +24,22 @@ export const CustomAccordion = styled(Accordion)({
   },
   "& .MuiAccordionSummary-content": {
     minHeight: "0 !important",
-    margin: "8px 0 !important",
+    margin: "0 !important",
   },
 });
 
 export const CustomAccordionSummary = styled(AccordionSummary)({
-  margin: "8px 0 !important",
-  padding: 0,
+  backgroundColor: "var(--subBg)",
+  borderRadius: "12px",
+  margin: "12px 0 0 0 !important",
+  padding: "12px 20px",
   minHeight: "0 !important",
+  transition: "0.3s",
+  "&.Mui-expanded": {
+    padding: "12px 20px",
+    minHeight: "0 !important",
+    borderRadius: "12px 12px 0 0",
+  },
   "& .MuiAccordionSummary-expandIconWrapper": {
     transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important",
   },

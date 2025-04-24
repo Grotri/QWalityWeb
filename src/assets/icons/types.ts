@@ -9,7 +9,6 @@ export interface IIcon {
   opacity?: number;
   onClick?: () => void;
   stroke?: number;
-  disabled?: boolean;
   isActive?: boolean;
   scale?: number;
 }

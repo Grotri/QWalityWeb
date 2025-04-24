@@ -1,0 +1,160 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerMain {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.cameraNameWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 24%;
+}
+
+.cameraName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cameraIcon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.cameraTitle {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.defectText {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.line {
+  height: 70%;
+  width: 3px;
+  background-color: var(--splitBar);
+  border-radius: 8px;
+}
+
+.stateWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.state {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.stateName,
+.uptime {
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--subFolderBg);
+  padding: 20px;
+  border-radius: 0 0 12px 12px;
+}
+
+.settingsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.settingsIcons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  span,
+  svg path {
+    transition: 0.3s;
+  }
+
+  &:hover {
+    span {
+      color: var(--supportTransparentText);
+    }
+
+    svg path {
+      stroke: var(--supportTransparentText);
+    }
+  }
+}
+
+.activeIcon {
+  span {
+    color: var(--brightBlue);
+  }
+
+  svg path {
+    stroke: var(--brightBlue);
+  }
+
+  &:hover {
+    span {
+      color: var(--welcomeScreenContrastBtn-hover);
+    }
+
+    svg path {
+      stroke: var(--welcomeScreenContrastBtn-hover);
+    }
+  }
+}
+
+.horizontalLine {
+  height: 2px;
+  border-radius: 8px;
+  width: 32%;
+  background-color: var(--subDropdownListBgTransparent);
+}
+
+.defects {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.noDefects {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--sectionTransparentText);
+}

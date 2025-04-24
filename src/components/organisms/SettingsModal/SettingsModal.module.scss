@@ -1,0 +1,101 @@
+.wrapper {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  background-color: var(--subFolderBg);
+  padding: 20px;
+  border-radius: 10px;
+  right: 12px;
+  top: 100%;
+  align-items: center;
+}
+
+.wrapperVisible {
+  display: flex;
+}
+
+.dropdowns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dropdown {
+  width: 100px !important;
+}
+
+.dropdownWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.dropdownText {
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 8px;
+  padding: 0 48px;
+}
+
+.btn {
+  border-radius: 10px;
+  height: 34px;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+  color: var(--mainText);
+}
+
+.version {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--supportTransparentText);
+}
+
+// .modal {
+//   width: 30vw;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   border-radius: 14px;
+//   background-color: var(--bgMainScreenPopup);
+//   padding: 12px;
+//   gap: 16px;
+// }
+
+// .modalTitle {
+//   font-size: 20px;
+//   line-height: 27px;
+//   font-weight: 700;
+// }
+
+// .content {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 26px;
+//   padding: 0 20px;
+// }
+
+// .btn {
+//   border-radius: 8px;
+//   height: 30px;
+//   font-size: 16px;
+//   line-height: 21px;
+//   font-weight: 600;
+//   color: var(--mainText);
+// }

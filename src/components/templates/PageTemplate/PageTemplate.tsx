@@ -13,6 +13,7 @@ import clsx from "clsx";
 import { menuItems } from "../../../constants/menuItems";
 import { ERoutes } from "../../../router/routes";
 import Input from "../../atoms/Input/Input";
+import SettingsModal from "../../organisms/SettingsModal";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   backPath,
@@ -26,6 +27,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
 }) => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
@@ -129,6 +131,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   styles.mainPageIcon,
                   styles.settingsIconWrapper
                 )}
+                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               >
                 <SettingsIcon
                   width={48}
@@ -139,6 +142,10 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
               </div>
             </div>
           )}
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            setIsOpen={setIsSettingsOpen}
+          />
         </div>
       )}
       <main

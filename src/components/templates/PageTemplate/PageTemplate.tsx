@@ -61,14 +61,12 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                 )}
                 onClick={handleOverlayClick}
               />
-              <div
-                className={styles.menuWrapper}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
+              <div className={styles.menuWrapper}>
                 <input
                   type="checkbox"
                   className={styles.menuCheckbox}
                   checked={isMenuOpen}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
                 />
                 <span className={styles.burgerLine} />
                 <span className={styles.burgerLine} />
@@ -78,6 +76,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                     styles.burgerTitle,
                     isMenuOpen && styles.burgerTitleNone
                   )}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                   Меню
                 </span>

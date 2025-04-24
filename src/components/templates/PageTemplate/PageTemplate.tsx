@@ -127,16 +127,16 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                 <span className={styles.mainPageIconTitle}>Профиль</span>
               </div>
               <div
-                className={clsx(
-                  styles.mainPageIcon,
-                  styles.settingsIconWrapper
-                )}
+                className={styles.mainPageIcon}
                 onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               >
                 <SettingsIcon
                   width={48}
                   stroke={2.5}
-                  style={styles.settingsIcon}
+                  style={clsx(
+                    styles.settingsIcon,
+                    isSettingsOpen && styles.settingsIconRotated
+                  )}
                 />
                 <span className={styles.mainPageIconTitle}>Настройки</span>
               </div>

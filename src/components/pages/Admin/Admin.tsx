@@ -3,7 +3,6 @@ import useAccountStore from "../../../store/useAccountStore";
 import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
 import { IAccount } from "../../../model/account";
 import { v4 as uuidv4 } from "uuid";
 import { onError } from "../../../helpers/toast";
@@ -20,7 +19,6 @@ import { ERoutes } from "../../../router/routes";
 const Admin = () => {
   const navigate = useNavigate();
   const { accounts, addAccount } = useAccountStore();
-  const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -30,12 +28,7 @@ const Admin = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      name: !name.trim() ? EErrors.required : "",
-      login: !login.trim()
-        ? EErrors.required
-        : !emailPattern.test(login.trim())
-        ? EErrors.email
-        : "",
+      login: !login.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -50,7 +43,6 @@ const Admin = () => {
     e.preventDefault();
     const account: IAccount = {
       id: uuidv4(),
-      name,
       login,
       password,
       role,
@@ -59,7 +51,6 @@ const Admin = () => {
       addAccount(account);
       setLogin("");
       setPassword("");
-      setName("");
     } else {
       onError(EErrors.fields);
     }
@@ -74,19 +65,6 @@ const Admin = () => {
       <form className={styles.infoWrapper} onSubmit={createSubAccount}>
         <span className={styles.subTitle}>Регистрация суб-аккаунта</span>
         <div className={styles.inputs}>
-          <Input
-            label="Имя пользователя"
-            value={name}
-            onChangeText={(name) => {
-              setName(name);
-              setErrors({ ...errors, name: "" });
-            }}
-            errorText={errors.name}
-            maxLength={254}
-            inputClassName={styles.confirmationInputWrapper}
-            inputFieldClassName={styles.confirmationInput}
-            labelClassName={styles.confirmationInputLabel}
-          />
           <Input
             label="Логин"
             value={login}

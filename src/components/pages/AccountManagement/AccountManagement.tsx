@@ -57,6 +57,9 @@ const AccountManagement = () => {
       {accounts.length > 0 ? (
         sections.map((section, index: number) => {
           const error = errors[index] || { login: "", password: "" };
+          const initialUser = accounts.find(
+            (account) => account.id === section.id
+          );
 
           return (
             <CustomAccordion
@@ -73,7 +76,9 @@ const AccountManagement = () => {
                     stroke={9}
                     style={styles.profileIcon}
                   />
-                  <span className={styles.headerText}>{section.name}</span>
+                  <span className={styles.headerText}>
+                    {initialUser?.login}
+                  </span>
                 </div>
               </CustomAccordionSummary>
               <CustomAccordionDetails>

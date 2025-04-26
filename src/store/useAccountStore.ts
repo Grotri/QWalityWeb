@@ -3,7 +3,6 @@ import { IStoreStatus } from "../model/misc";
 import { initialAccounts } from "../constants/accounts";
 import { roles } from "../constants/roles";
 import { EErrors } from "../constants/errors";
-import { emailPattern } from "../constants/patterns";
 import { IAccount } from "../model/account";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
 
@@ -71,11 +70,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     const { login, password } = newAccount;
 
     const newError: IErrors = {
-      login: !login.trim()
-        ? EErrors.required
-        : !emailPattern.test(login.trim())
-        ? EErrors.email
-        : "",
+      login: !login.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -104,7 +99,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
             loading: false,
             error: false,
           }));
-          onSuccess(`Данные ${newAccount.name} изменены`);
+          onSuccess(`Данные аккаунта изменены`);
         } catch (error) {
           onError("Не удалось изменить данные");
           console.error(error);
@@ -138,7 +133,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess(`${role?.name} ${userToDelete.name} удален`);
+      onSuccess(`${role?.name} ${userToDelete.login} удален`);
     } catch (error) {
       onError("Не удалось удалить аккаунт");
       console.error(error);

@@ -122,7 +122,8 @@ const AccountManagement = () => {
                       }
                       label="Роль"
                       controlHeight="24px"
-                      valueMargin="10px"
+                      marginHorizontal="10px"
+                      marginVertical="6px"
                     />
                   </div>
                   <div className={styles.btns}>

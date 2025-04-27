@@ -100,6 +100,7 @@ const Admin = () => {
             label="Роль"
             controlHeight="29px"
             iconScale={1.3}
+            marginVertical="8px"
           />
         </div>
         <Button color="blue" style={styles.btn} type="submit">

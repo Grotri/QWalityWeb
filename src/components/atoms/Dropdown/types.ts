@@ -9,7 +9,8 @@ export interface IDropdown {
   controlBackgroundColor?: string;
   controlHeight?: string;
   fontSize?: string;
-  valueMargin?: string;
+  marginHorizontal?: string;
+  marginVertical?: string;
   borderRadius?: string;
 }
 

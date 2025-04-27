@@ -50,7 +50,8 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               value={isAutoDelete}
               wrapperStyle={styles.dropdown}
               fontSize="14px"
-              valueMargin="6px"
+              marginHorizontal="8px"
+              marginVertical="4px"
             />
           </div>
           <div className={styles.dropdownWrapper}>
@@ -61,7 +62,8 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               value={isAutoClear}
               wrapperStyle={styles.dropdown}
               fontSize="14px"
-              valueMargin="6px"
+              marginHorizontal="8px"
+              marginVertical="4px"
             />
           </div>
         </div>

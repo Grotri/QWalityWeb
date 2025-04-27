@@ -65,6 +65,10 @@
   margin-bottom: 12px;
 }
 
+.confirmation {
+  gap: 2px;
+}
+
 .confirmationInput {
   height: 32px;
   border-radius: 8px;
@@ -84,7 +88,7 @@
 .codeBtn {
   height: 33px;
   border-radius: 8px;
-  margin-top: 17px;
+  margin-top: 19px;
   color: var(--mainText);
   font-size: 14px;
 }

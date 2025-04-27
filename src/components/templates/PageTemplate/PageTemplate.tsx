@@ -21,6 +21,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   canScroll = false,
   hasMenu = false,
   isMainPage = false,
+  centralized = false,
   search,
   setSearch,
   children,
@@ -150,8 +151,9 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
       )}
       <main
         className={clsx(
-          styles["main-wrapper"],
-          canScroll && styles.mainWrapperScroll
+          styles.mainWrapper,
+          canScroll && styles.mainWrapperScroll,
+          centralized && styles.mainWrapperCentralized
         )}
       >
         {children}

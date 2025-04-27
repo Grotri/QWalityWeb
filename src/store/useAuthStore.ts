@@ -102,7 +102,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             loading: true,
             user: newUser,
           });
-          onSuccess("Вы успешно зарегистрировались!", 5000);
+          onSuccess("Вы успешно зарегистрировались!", 2000);
         } catch (error) {
           console.log(error);
           onError("Произошла ошибка при регистрации");
@@ -125,7 +125,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             loading: true,
             user: existingAccount,
           });
-          onSuccess("Вы успешно вошли в аккаунт!", 5000);
+          onSuccess("Вы успешно вошли в аккаунт!", 2000);
         } else {
           onError("Такого аккаунта не существует");
         }

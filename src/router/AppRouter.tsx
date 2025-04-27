@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         element: (
           <PublicRoute
             element={
-              <PageTemplate backPath={ERoutes.register}>
+              <PageTemplate backPath={ERoutes.register} centralized>
                 <Login />
               </PageTemplate>
             }
@@ -81,7 +81,7 @@ const router = createBrowserRouter([
         element: (
           <PublicRoute
             element={
-              <PageTemplate backPath={ERoutes.login}>
+              <PageTemplate backPath={ERoutes.login} centralized>
                 <ForgotPassword />
               </PageTemplate>
             }
@@ -121,7 +121,11 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={
-              <PageTemplate headerTitle="Профиль" backPath={ERoutes.main}>
+              <PageTemplate
+                headerTitle="Профиль"
+                backPath={ERoutes.main}
+                centralized
+              >
                 <Profile />
               </PageTemplate>
             }
@@ -136,6 +140,7 @@ const router = createBrowserRouter([
               <PageTemplate
                 headerTitle="Админ панель"
                 backPath={ERoutes.profile}
+                centralized
               >
                 <Admin />
               </PageTemplate>

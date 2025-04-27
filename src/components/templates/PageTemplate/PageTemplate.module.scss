@@ -10,7 +10,7 @@
   min-height: 100vh;
 }
 
-.main-wrapper {
+.mainWrapper {
   width: 1440px;
   margin: 0 auto;
   flex: 1;
@@ -23,6 +23,10 @@
 
 .mainWrapperScroll {
   justify-content: start;
+}
+
+.mainWrapperCentralized {
+  margin-top: -106px;
 }
 
 .header {
@@ -257,6 +261,7 @@
   font-size: 16px;
   line-height: 19px;
   font-weight: 600;
+  user-select: none;
 }
 
 .settingsIcon {

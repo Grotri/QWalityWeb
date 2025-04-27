@@ -12,7 +12,7 @@ import Modal from "../../atoms/Modal";
 import Input from "../../atoms/Input/Input";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
-  const { logout } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
@@ -41,32 +41,36 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <div className={clsx(styles.wrapper, isOpen && styles.wrapperVisible)}>
-        <div className={styles.dropdowns}>
-          <div className={styles.dropdownWrapper}>
-            <span className={styles.dropdownText}>Авто-удаление дефектов</span>
-            <Dropdown
-              data={settingsItems}
-              setValue={setIsAutoDelete}
-              value={isAutoDelete}
-              wrapperStyle={styles.dropdown}
-              fontSize="14px"
-              marginHorizontal="8px"
-              marginVertical="4px"
-            />
+        {user.role !== "user" && (
+          <div className={styles.dropdowns}>
+            <div className={styles.dropdownWrapper}>
+              <span className={styles.dropdownText}>
+                Авто-удаление дефектов
+              </span>
+              <Dropdown
+                data={settingsItems}
+                setValue={setIsAutoDelete}
+                value={isAutoDelete}
+                wrapperStyle={styles.dropdown}
+                fontSize="14px"
+                marginHorizontal="8px"
+                marginVertical="4px"
+              />
+            </div>
+            <div className={styles.dropdownWrapper}>
+              <span className={styles.dropdownText}>Авто-чистка корзины</span>
+              <Dropdown
+                data={settingsItems}
+                setValue={setIsAutoClear}
+                value={isAutoClear}
+                wrapperStyle={styles.dropdown}
+                fontSize="14px"
+                marginHorizontal="8px"
+                marginVertical="4px"
+              />
+            </div>
           </div>
-          <div className={styles.dropdownWrapper}>
-            <span className={styles.dropdownText}>Авто-чистка корзины</span>
-            <Dropdown
-              data={settingsItems}
-              setValue={setIsAutoClear}
-              value={isAutoClear}
-              wrapperStyle={styles.dropdown}
-              fontSize="14px"
-              marginHorizontal="8px"
-              marginVertical="4px"
-            />
-          </div>
-        </div>
+        )}
         <div className={styles.btns}>
           <Button
             style={styles.btn}
@@ -75,13 +79,15 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
           >
             Выйти из аккаунта
           </Button>
-          <Button
-            style={styles.btn}
-            color="red"
-            onPress={() => setIsDeleteModalOpen(true)}
-          >
-            Удалить аккаунт
-          </Button>
+          {user.role === "owner" && (
+            <Button
+              style={styles.btn}
+              color="red"
+              onPress={() => setIsDeleteModalOpen(true)}
+            >
+              Удалить аккаунт
+            </Button>
+          )}
         </div>
         <span className={styles.version}>QWality Release v1.0.0</span>
       </div>

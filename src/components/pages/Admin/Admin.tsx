@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAccountStore from "../../../store/useAccountStore";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { v4 as uuidv4 } from "uuid";
@@ -14,11 +14,14 @@ import Dropdown from "../../atoms/Dropdown";
 import GetReportModal from "../../organisms/GetReportModal";
 import { ERoutes } from "../../../router/routes";
 import { IUser } from "../../../model/user";
-import { ERoles } from "../../../constants/roles";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import useAuthStore from "../../../store/useAuthStore";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { accounts, addAccount } = useAccountStore();
+  const { user } = useAuthStore();
+  const { accounts, fetchAccounts, addAccount } = useAccountStore();
+  const availableRoles = useAvailableRoles();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -56,6 +59,12 @@ const Admin = () => {
     }
   };
 
+  useEffect(() => {
+    if (!accounts.length) {
+      fetchAccounts(user.role);
+    }
+  }, []);
+
   return (
     <div className={styles.adminWrapper}>
       <div className={styles.sliderWrapper}>
@@ -91,10 +100,7 @@ const Admin = () => {
             labelClassName={styles.confirmationInputLabel}
           />
           <Dropdown
-            data={Object.entries(ERoles).map(([key, value]) => ({
-              value: key,
-              label: value,
-            }))}
+            data={availableRoles}
             value={role}
             setValue={setRole}
             label="Роль"
@@ -120,9 +126,11 @@ const Admin = () => {
         >
           Управлять аккаунтами
         </Button>
-        <span className={styles.statistics}>
-          {accounts.length}/15 аккаунтов
-        </span>
+        {user.role === "owner" && (
+          <span className={styles.statistics}>
+            {accounts.length}/15 аккаунтов
+          </span>
+        )}
       </form>
       <GetReportModal
         isOpen={isMainModalOpened}

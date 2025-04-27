@@ -13,17 +13,21 @@ import {
 } from "./styles";
 import SupportContent from "../../atoms/SupportContent";
 import { IUser } from "../../../model/user";
-import { ERoles } from "../../../constants/roles";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import useAuthStore from "../../../store/useAuthStore";
 
 const AccountManagement = () => {
   const {
     accounts,
+    fetchAccounts,
     changeAccount,
     deleteAccount,
     errors,
     changeError,
     refreshErrors,
   } = useAccountStore();
+  const { user } = useAuthStore();
+  const availableRoles = useAvailableRoles();
   const [activeSection, setActiveSection] = useState<string | false>(false);
   const [sections, setSections] = useState<IUser[]>([...accounts]);
 
@@ -51,6 +55,12 @@ const AccountManagement = () => {
   useEffect(() => {
     refreshErrors();
   }, [refreshErrors]);
+
+  useEffect(() => {
+    if (!accounts.length) {
+      fetchAccounts(user.role);
+    }
+  }, []);
 
   return (
     <div className={styles.managerWrapper}>
@@ -112,10 +122,7 @@ const AccountManagement = () => {
                       iconSize={20}
                     />
                     <Dropdown
-                      data={Object.entries(ERoles).map(([key, value]) => ({
-                        value: key,
-                        label: value,
-                      }))}
+                      data={availableRoles}
                       value={section.role}
                       setValue={(role) =>
                         changeAccountField(section.id, "role", role)

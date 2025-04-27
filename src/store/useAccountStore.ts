@@ -14,7 +14,7 @@ export interface IErrors {
 interface IUseAccountStore extends IStoreStatus {
   accounts: IUser[];
   errors: IErrors[];
-  fetchAccounts: () => void;
+  fetchAccounts: (currentRole: string) => void;
   addAccount: (account: IUser) => void;
   changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
@@ -26,13 +26,22 @@ interface IUseAccountStore extends IStoreStatus {
 const useAccountStore = create<IUseAccountStore>((set, get) => ({
   loading: false,
   error: null,
-  accounts: [...initialAccounts],
-  errors: initialAccounts.map(() => ({ login: "", password: "" })),
+  accounts: [],
+  errors: [],
 
-  fetchAccounts: () => {
+  fetchAccounts: (currentRole: string) => {
     try {
       set({ loading: true, error: null });
-      const accounts = [...initialAccounts];
+
+      const rolesOrder = ["user", "moderator", "administrator", "owner"];
+      const allowedRoles = rolesOrder.filter(
+        (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(currentRole)
+      );
+
+      const accounts = initialAccounts.filter((acc) =>
+        allowedRoles.includes(acc.role as keyof typeof ERoles)
+      );
+
       set({
         accounts,
         errors: accounts.map(() => ({ login: "", password: "" })),

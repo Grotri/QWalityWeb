@@ -12,9 +12,11 @@ import AddCameraModal from "../../organisms/AddCameraModal";
 import { BottomIcon, PlusIcon } from "../../../assets/icons";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import CameraAccordion from "../../organisms/CameraAccordion";
+import useAuthStore from "../../../store/useAuthStore";
 
 const Main: FC<{ search: string }> = ({ search }) => {
   const { cameras: camerasInfo } = useCamerasStore();
+  const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
@@ -118,11 +120,13 @@ const Main: FC<{ search: string }> = ({ search }) => {
         isOpen={isAddCameraModalOpen}
         setIsOpen={setIsAddCameraModalOpen}
       />
-      <BottomFixIcon
-        icon={<PlusIcon />}
-        text="Добавить камеру"
-        onPress={() => setIsAddCameraModalOpen(true)}
-      />
+      {user.role !== "user" && (
+        <BottomFixIcon
+          icon={<PlusIcon />}
+          text="Добавить камеру"
+          onPress={() => setIsAddCameraModalOpen(true)}
+        />
+      )}
     </div>
   );
 };

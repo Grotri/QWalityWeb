@@ -9,10 +9,12 @@ import DatePicker from "../../atoms/DatePicker";
 import Button from "../../atoms/Button";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import Defect from "../../molecules/Defect";
+import useAuthStore from "../../../store/useAuthStore";
 
 const TrashBin = () => {
   const { cameras, recoverDefect, clearTrashBin, clearTrashBinByDates } =
     useCamerasStore();
+  const { user } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -44,7 +46,7 @@ const TrashBin = () => {
               <Defect
                 key={defect.id}
                 defect={defect}
-                textBtn="Восстановить"
+                textBtn={user.role !== "user" ? "Восстановить" : undefined}
                 onPress={() => recoverDefect(camera.id, defect.id)}
               />
             ))
@@ -95,7 +97,7 @@ const TrashBin = () => {
           </div>
         </div>
       </Modal>
-      {deletedDefects.length > 0 && (
+      {deletedDefects.length > 0 && user.role !== "user" && (
         <BottomFixIcon
           icon={<TrashBinIcon width={38} />}
           text="Очистить корзину"

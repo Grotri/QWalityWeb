@@ -7,6 +7,7 @@ export { default as FilterIcon } from "./FilterIcon";
 export { default as HelpIcon } from "./HelpIcon";
 export { default as HomeIcon } from "./HomeIcon";
 export { default as LeftIcon } from "./LeftIcon";
+export { default as LockIcon } from "./LockIcon";
 export { default as LogoIcon } from "./LogoIcon";
 export { default as MessageIcon } from "./MessageIcon";
 export { default as PlusIcon } from "./PlusIcon";

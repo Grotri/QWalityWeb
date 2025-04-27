@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lockIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.btn {
+  height: 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--white);
+  padding: 0 20px;
+}

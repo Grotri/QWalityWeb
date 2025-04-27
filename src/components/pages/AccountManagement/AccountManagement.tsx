@@ -5,7 +5,6 @@ import { BottomIcon, ProfileIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Dropdown from "../../atoms/Dropdown";
-import { roles } from "../../../constants/roles";
 import Button from "../../atoms/Button";
 import {
   CustomAccordion,
@@ -14,6 +13,7 @@ import {
 } from "./styles";
 import SupportContent from "../../atoms/SupportContent";
 import { IUser } from "../../../model/user";
+import { ERoles } from "../../../constants/roles";
 
 const AccountManagement = () => {
   const {
@@ -112,9 +112,9 @@ const AccountManagement = () => {
                       iconSize={20}
                     />
                     <Dropdown
-                      data={roles.map((role) => ({
-                        value: role.id,
-                        label: role.name,
+                      data={Object.entries(ERoles).map(([key, value]) => ({
+                        value: key,
+                        label: value,
                       }))}
                       value={section.role}
                       setValue={(role) =>

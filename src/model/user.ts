@@ -12,7 +12,7 @@ export const initialUser: IUser = {
   inn: "",
   login: "",
   password: "",
-  role: "3",
+  role: "owner",
 };
 
 export interface IErrors {

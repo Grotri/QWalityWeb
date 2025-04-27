@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
 import { initialAccounts } from "../constants/accounts";
-import { roles } from "../constants/roles";
 import { EErrors } from "../constants/errors";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
 import { IUser } from "../model/user";
+import { ERoles } from "../constants/roles";
 
 export interface IErrors {
   login: string;
@@ -47,7 +47,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   },
 
   addAccount: (account) => {
-    const currRole = roles.find((r) => r.id === account.role)?.name;
+    const currRole = ERoles[account.role as keyof typeof ERoles];
 
     try {
       set({ loading: true, error: null });
@@ -123,7 +123,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   deleteAccount: (index) => {
     const { accounts, errors } = get();
     const userToDelete = accounts[index];
-    const role = roles.find((role) => role.id === userToDelete.role);
+    const role = ERoles[userToDelete.role as keyof typeof ERoles];
 
     try {
       set({ loading: true, error: null });
@@ -133,7 +133,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess(`${role?.name} ${userToDelete.login} удален`);
+      onSuccess(`${role} ${userToDelete.login} удален`);
     } catch (error) {
       onError("Не удалось удалить аккаунт");
       console.error(error);

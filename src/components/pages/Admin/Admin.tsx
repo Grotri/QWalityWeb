@@ -11,10 +11,10 @@ import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
 import Slider from "../../atoms/Slider";
 import Dropdown from "../../atoms/Dropdown";
-import { roles } from "../../../constants/roles";
 import GetReportModal from "../../organisms/GetReportModal";
 import { ERoutes } from "../../../router/routes";
 import { IUser } from "../../../model/user";
+import { ERoles } from "../../../constants/roles";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Admin = () => {
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
-  const [role, setRole] = useState<string>("0");
+  const [role, setRole] = useState<string>("user");
   const [isMainModalOpened, setIsMainModalOpened] = useState<boolean>(false);
   const [confidence, setConfidence] = useState<number>(0.75);
 
@@ -91,9 +91,9 @@ const Admin = () => {
             labelClassName={styles.confirmationInputLabel}
           />
           <Dropdown
-            data={roles.map((role) => ({
-              value: role.id,
-              label: role.name,
+            data={Object.entries(ERoles).map(([key, value]) => ({
+              value: key,
+              label: value,
             }))}
             value={role}
             setValue={setRole}

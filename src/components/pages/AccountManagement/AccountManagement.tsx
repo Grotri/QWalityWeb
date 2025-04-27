@@ -1,6 +1,5 @@
 import useAccountStore from "../../../store/useAccountStore";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { IAccount } from "../../../model/account";
 import styles from "./AccountManagement.module.scss";
 import { BottomIcon, ProfileIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
@@ -14,6 +13,7 @@ import {
   CustomAccordionSummary,
 } from "./styles";
 import SupportContent from "../../atoms/SupportContent";
+import { IUser } from "../../../model/user";
 
 const AccountManagement = () => {
   const {
@@ -25,7 +25,7 @@ const AccountManagement = () => {
     refreshErrors,
   } = useAccountStore();
   const [activeSection, setActiveSection] = useState<string | false>(false);
-  const [sections, setSections] = useState<IAccount[]>([...accounts]);
+  const [sections, setSections] = useState<IUser[]>([...accounts]);
 
   const handleSectionChange =
     (section: string) => (_: SyntheticEvent, newExpanded: boolean) => {
@@ -34,7 +34,7 @@ const AccountManagement = () => {
 
   const changeAccountField = (
     id: string,
-    field: keyof IAccount,
+    field: keyof IUser,
     value: string
   ) => {
     setSections(
@@ -50,7 +50,7 @@ const AccountManagement = () => {
 
   useEffect(() => {
     refreshErrors();
-  }, []);
+  }, [refreshErrors]);
 
   return (
     <div className={styles.managerWrapper}>
@@ -129,7 +129,14 @@ const AccountManagement = () => {
                     <Button
                       color="management"
                       style={styles.btn}
-                      onPress={() => changeAccount(index, section)}
+                      onPress={() =>
+                        changeAccount(index, {
+                          id: section.id,
+                          login: section.login.trim(),
+                          password: section.password.trim(),
+                          role: section.role,
+                        })
+                      }
                     >
                       Изменить
                     </Button>

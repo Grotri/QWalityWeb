@@ -39,7 +39,7 @@ const Login = () => {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      login(email, password);
+      login(email.trim(), password.trim());
     } else {
       onError(EErrors.fields);
     }

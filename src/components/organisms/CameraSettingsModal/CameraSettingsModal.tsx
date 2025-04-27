@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { ICameraSettingsModal } from "./types";
 import useCamerasStore from "../../../store/useCamerasStore";
 import { ICamera, initialCamera } from "../../../model/camera";
@@ -26,6 +26,12 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   const [cameraInfo, setCameraInfo] = useState<ICamera>({ ...initialCamera });
   const { title, link, online } = cameraInfo;
 
+  const handleEditCamera = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editCamera(cameraInfo, setCamera);
+    setIsHistoryModalOpen(null);
+  };
+
   const openHistoryModal = () => {
     setIsHistoryModalOpen(true);
   };
@@ -49,7 +55,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   return (
     <Modal isVisible={!!camera} onClose={closeModal}>
       <div className={styles.modals}>
-        <div className={styles.modal}>
+        <form className={styles.modal} onSubmit={handleEditCamera}>
           <div className={styles.crossIconWrapper}>
             <CrossIcon style={styles.crossIcon} onClick={closeModal} />
             <Input
@@ -118,19 +124,12 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
                   Удалить камеру
                 </Button>
               </div>
-              <Button
-                style={styles.fullBtn}
-                color="modal"
-                onPress={() => {
-                  editCamera(cameraInfo, setCamera);
-                  setIsHistoryModalOpen(null);
-                }}
-              >
+              <Button style={styles.fullBtn} color="modal" type="submit">
                 Сохранить
               </Button>
             </div>
           </div>
-        </div>
+        </form>
         {isHistoryModalOpen !== null && (
           <div className={styles.modal}>
             <span className={styles.smallModalTitle}>

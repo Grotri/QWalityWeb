@@ -1,16 +1,16 @@
-import { IAccount } from "../model/account";
+import { IUser } from "../model/user";
 
-export const initialAccounts: IAccount[] = [
+export const initialAccounts: IUser[] = [
   {
     id: "0",
     login: "qwerty12345",
-    password: "121828121",
+    password: "qwerty12345",
     role: "0",
   },
   {
     id: "1",
     login: "xdd",
-    password: "dkwkdwdjwjd",
+    password: "123456789",
     role: "1",
   },
   {
@@ -18,5 +18,11 @@ export const initialAccounts: IAccount[] = [
     login: "admin",
     password: "adminadmin",
     role: "2",
+  },
+  {
+    id: "3",
+    login: "owner",
+    password: "ownerowner",
+    role: "3",
   },
 ];

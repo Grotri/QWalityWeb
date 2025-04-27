@@ -1,38 +1,11 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
 import { EErrors } from "../constants/errors";
-import { emailPattern } from "../constants/patterns";
+import { emailPattern, innPattern } from "../constants/patterns";
 import { v4 as uuidv4 } from "uuid";
 import { onError, onSuccess } from "../helpers/toast";
-
-export interface IUser {
-  id: string;
-  inn: string;
-  email: string;
-  password: string;
-  subscription?: string;
-}
-
-export const initialUser: IUser = {
-  id: "",
-  inn: "",
-  email: "",
-  password: "",
-};
-
-interface IErrors {
-  inn: string;
-  email: string;
-  code: string;
-  password: string;
-}
-
-const initialErrors: IErrors = {
-  inn: "",
-  email: "",
-  code: "",
-  password: "",
-};
+import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
+import { initialAccounts } from "../constants/accounts";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -85,17 +58,18 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
     validate: (code) => {
       const { user } = get();
-      const { inn, email, password } = user;
+      const { inn, login, password } = user;
 
       const newErrors: IErrors = {
-        inn: !inn
+        inn:
+          !inn || !inn.trim()
+            ? EErrors.required
+            : !innPattern.test(inn.trim())
+            ? EErrors.inn
+            : "",
+        login: !login.trim()
           ? EErrors.required
-          : inn.length !== 10 && inn.length !== 12
-          ? EErrors.inn
-          : "",
-        email: !email.trim()
-          ? EErrors.required
-          : !emailPattern.test(email.trim())
+          : !emailPattern.test(login.trim())
           ? EErrors.email
           : "",
         code: !code.trim() ? EErrors.required : "",
@@ -115,9 +89,12 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
       if (validate(code)) {
         try {
-          const newUser = {
-            ...user,
+          const newUser: IUser = {
             id: uuidv4(),
+            login: user.login.trim(),
+            password: user.password.trim(),
+            inn: user.inn?.trim(),
+            role: user.role,
           };
 
           localStorage.setItem("user", JSON.stringify(newUser));
@@ -139,20 +116,19 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
     login: (email, password) => {
       try {
-        const newUser: IUser = {
-          id: uuidv4(),
-          inn: "1122123450",
-          email,
-          password,
-          subscription: "1",
-        };
-
-        localStorage.setItem("user", JSON.stringify(newUser));
-        set({
-          loading: true,
-          user: newUser,
-        });
-        onSuccess("Вы успешно вошли в аккаунт!", 5000);
+        const existingAccount = initialAccounts.find(
+          (acc) => acc.login === email && acc.password === password
+        );
+        if (existingAccount) {
+          localStorage.setItem("user", JSON.stringify(existingAccount));
+          set({
+            loading: true,
+            user: existingAccount,
+          });
+          onSuccess("Вы успешно вошли в аккаунт!", 5000);
+        } else {
+          onError("Такого аккаунта не существует");
+        }
       } catch (error) {
         console.log(error);
         onError("Произошла ошибка при входе в аккаунт");

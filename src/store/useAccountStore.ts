@@ -3,8 +3,8 @@ import { IStoreStatus } from "../model/misc";
 import { initialAccounts } from "../constants/accounts";
 import { roles } from "../constants/roles";
 import { EErrors } from "../constants/errors";
-import { IAccount } from "../model/account";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
+import { IUser } from "../model/user";
 
 export interface IErrors {
   login: string;
@@ -12,14 +12,14 @@ export interface IErrors {
 }
 
 interface IUseAccountStore extends IStoreStatus {
-  accounts: IAccount[];
+  accounts: IUser[];
   errors: IErrors[];
   fetchAccounts: () => void;
-  addAccount: (account: IAccount) => void;
-  changeAccount: (index: number, newAccount: IAccount) => void;
+  addAccount: (account: IUser) => void;
+  changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
   refreshErrors: () => void;
-  validate: (newAccount: IAccount, index: number) => boolean;
+  validate: (newAccount: IUser, index: number) => boolean;
   deleteAccount: (index: number) => void;
 }
 

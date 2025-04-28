@@ -93,3 +93,19 @@
   justify-content: center;
   background-color: var(--blue);
 }
+
+@media (max-width: 1023.89px) {
+  .card {
+    gap: 100px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .radios {
+    padding: 0 32px;
+  }
+
+  .subInfo {
+    padding: 0 32px;
+  }
+}

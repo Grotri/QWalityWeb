@@ -10,6 +10,7 @@
 .cards {
   width: 100%;
   height: 100%;
+  max-height: 800px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: 0 28px;
@@ -24,4 +25,37 @@
   line-height: 22px;
   font-weight: 900;
   color: var(--welcomeScreenSubText);
+}
+
+@media (max-width: 1023.89px) {
+  .wrapper {
+    margin: 40px 0;
+    height: unset;
+  }
+
+  .cards {
+    height: unset;
+    max-height: unset;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 40px;
+    padding: 0 40px;
+  }
+
+  .cancelBtn {
+    width: 40%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .cards {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding: 0 28px;
+    gap: 28px;
+  }
+
+  .cancelBtn {
+    width: 70%;
+  }
 }

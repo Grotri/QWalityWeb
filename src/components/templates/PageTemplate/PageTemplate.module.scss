@@ -39,6 +39,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
+  text-align: center;
 }
 
 .headerShadow {
@@ -68,6 +69,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  width: 70%;
 }
 
 .title {
@@ -296,12 +298,7 @@
 }
 
 @media (max-width: 424.89px) {
-  .wrapper {
-    height: unset;
-    min-height: 100vh;
-  }
-
-  .mainWrapper {
-    justify-content: start;
+  .title {
+    font-size: 24px;
   }
 }

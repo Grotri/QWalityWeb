@@ -94,7 +94,10 @@ const router = createBrowserRouter([
           <PrivateRoute
             allowUnsubscribed
             element={
-              <PageTemplate headerTitle="Выберите уровень подписки">
+              <PageTemplate
+                headerTitle="Выберите уровень подписки"
+                widthToScroll={1023}
+              >
                 <Subscription />
               </PageTemplate>
             }
@@ -109,6 +112,7 @@ const router = createBrowserRouter([
               <PageTemplate
                 headerTitle="Выберите уровень подписки"
                 backPath={ERoutes.profile}
+                widthToScroll={1023}
               >
                 <SubscriptionChange />
               </PageTemplate>

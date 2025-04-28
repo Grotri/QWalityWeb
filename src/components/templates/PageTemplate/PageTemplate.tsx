@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import styles from "./PageTemplate.module.scss";
 import {
   BackIcon,
@@ -19,7 +19,6 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   backPath,
   headerTitle,
   canScroll = false,
-  widthToScroll,
   hasMenu = false,
   isMainPage = false,
   centralized = false,
@@ -30,37 +29,15 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerHeight);
-  const isScrollHeight = widthToScroll && windowWidth <= widthToScroll;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
   };
 
   return (
-    <div
-      className={clsx(
-        styles.wrapper,
-        (canScroll || isScrollHeight) && styles.scrollWrapper
-      )}
-    >
+    <div className={clsx(styles.wrapper, canScroll && styles.scrollWrapper)}>
       {(backPath || headerTitle || hasMenu || isMainPage) && (
-        <div
-          className={clsx(
-            styles.header,
-            (canScroll || isScrollHeight) && styles.headerShadow
-          )}
-        >
+        <div className={clsx(styles.header, canScroll && styles.headerShadow)}>
           {backPath && (
             <div
               className={styles.backIcon}
@@ -176,7 +153,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
       <main
         className={clsx(
           styles.mainWrapper,
-          (canScroll || isScrollHeight) && styles.mainWrapperScroll,
+          canScroll && styles.mainWrapperScroll,
           centralized && styles.mainWrapperCentralized
         )}
       >

@@ -7,5 +7,4 @@ export interface IPageTemplate {
   centralized?: boolean;
   search?: string;
   setSearch?: (value: string) => void;
-  widthToScroll?: number;
 }

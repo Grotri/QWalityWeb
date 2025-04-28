@@ -94,6 +94,12 @@
   background-color: var(--blue);
 }
 
+@media (max-width: 1439.89px) {
+  .card {
+    gap: 120px;
+  }
+}
+
 @media (max-width: 1023.89px) {
   .card {
     gap: 100px;

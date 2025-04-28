@@ -27,10 +27,11 @@
   color: var(--welcomeScreenSubText);
 }
 
-@media (max-width: 1023.89px) {
+@media (max-width: 1439.89px) {
   .wrapper {
     margin: 40px 0;
     height: unset;
+    gap: 60px;
   }
 
   .cards {
@@ -38,12 +39,19 @@
     max-height: unset;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 40px;
-    padding: 0 40px;
+    gap: 60px;
+    padding: 0 80px;
   }
 
   .cancelBtn {
-    width: 40%;
+    width: 50%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .cards {
+    gap: 40px;
+    padding: 0 40px;
   }
 }
 

@@ -4,3 +4,5 @@ export enum ERoles {
   administrator = "Администратор",
   owner = "Владелец",
 }
+
+export const rolesOrder = ["user", "moderator", "administrator", "owner"];

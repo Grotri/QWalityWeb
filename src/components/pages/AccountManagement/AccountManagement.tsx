@@ -14,12 +14,12 @@ import {
 import SupportContent from "../../atoms/SupportContent";
 import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import { rolesOrder } from "../../../constants/roles";
 import useAuthStore from "../../../store/useAuthStore";
 
 const AccountManagement = () => {
   const {
     accounts,
-    fetchAccounts,
     changeAccount,
     deleteAccount,
     errors,
@@ -30,10 +30,11 @@ const AccountManagement = () => {
   const availableRoles = useAvailableRoles();
   const [activeSection, setActiveSection] = useState<string | false>(false);
   const [sections, setSections] = useState<IUser[]>([...accounts]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleSectionChange =
-    (section: string) => (_: SyntheticEvent, newExpanded: boolean) => {
-      setActiveSection(newExpanded ? section : false);
+    (sectionId: string) => (_: SyntheticEvent, newExpanded: boolean) => {
+      setActiveSection(newExpanded ? sectionId : false);
     };
 
   const changeAccountField = (
@@ -49,23 +50,32 @@ const AccountManagement = () => {
   };
 
   useEffect(() => {
-    setSections([...accounts]);
-  }, [accounts]);
+    setIsLoading(true);
+    const allowedRoles = rolesOrder.filter(
+      (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(user.role)
+    );
+    const filteredAccounts = accounts.filter((acc) =>
+      allowedRoles.includes(acc.role)
+    );
+    setSections([...filteredAccounts]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, [accounts, user.role]);
 
   useEffect(() => {
     refreshErrors();
   }, [refreshErrors]);
 
-  useEffect(() => {
-    if (!accounts.length) {
-      fetchAccounts(user.role);
-    }
-  }, []);
-
   return (
     <div className={styles.managerWrapper}>
-      {accounts.length > 0 ? (
-        sections.map((section, index: number) => {
+      {isLoading ? (
+        <SupportContent isLoading={isLoading} />
+      ) : !isLoading && sections.length === 0 ? (
+        <SupportContent message="У вас нет управляемых аккаунтов" />
+      ) : (
+        sections.map((section) => {
+          const index = accounts.findIndex((acc) => acc.id === section.id);
           const error = errors[index] || { login: "", password: "" };
           const initialUser = accounts.find(
             (account) => account.id === section.id
@@ -164,8 +174,6 @@ const AccountManagement = () => {
             </CustomAccordion>
           );
         })
-      ) : (
-        <SupportContent message="У вас нет управляемых аккаунтов" />
       )}
     </div>
   );

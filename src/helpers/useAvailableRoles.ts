@@ -1,8 +1,6 @@
 import { IDropdownData } from "../components/atoms/Dropdown/types";
-import { ERoles } from "../constants/roles";
+import { ERoles, rolesOrder } from "../constants/roles";
 import useAuthStore from "../store/useAuthStore";
-
-const rolesOrder = ["user", "moderator", "administrator", "owner"];
 
 export const useAvailableRoles = () => {
   const { user } = useAuthStore();

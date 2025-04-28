@@ -69,7 +69,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   type="checkbox"
                   className={styles.menuCheckbox}
                   checked={isMenuOpen}
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  onChange={() => setIsMenuOpen(!isMenuOpen)}
                 />
                 <span className={styles.burgerLine} />
                 <span className={styles.burgerLine} />
@@ -88,6 +88,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   <div className={styles.menuItems}>
                     {menuItems.map(({ icon: Icon, path, title }) => (
                       <div
+                        key={title}
                         className={styles.menuItem}
                         onClick={() => {
                           navigate(path);

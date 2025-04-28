@@ -1,16 +1,15 @@
 import { FC } from "react";
 import useAuthStore from "../../../store/useAuthStore";
 import styles from "./Subscription.module.scss";
-import { slidersInfo } from "../../../constants/slider";
-import { ISliderCard } from "../../organisms/SliderCard/types";
 import SliderCard from "../../organisms/SliderCard";
+import { ISubscription, subscriptions } from "../../../constants/subscriptions";
 
 const Subscription: FC = () => {
   const { setUserField } = useAuthStore();
 
   return (
     <div className={styles.wrapper}>
-      {slidersInfo.map((slider: ISliderCard) => (
+      {subscriptions.map((slider: ISubscription) => (
         <SliderCard
           key={slider.id}
           id={slider.id}

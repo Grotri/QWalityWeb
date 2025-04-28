@@ -14,7 +14,6 @@ export interface IErrors {
 interface IUseAccountStore extends IStoreStatus {
   accounts: IUser[];
   errors: IErrors[];
-  fetchAccounts: (currentRole: string) => void;
   addAccount: (account: IUser) => void;
   changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
@@ -26,34 +25,8 @@ interface IUseAccountStore extends IStoreStatus {
 const useAccountStore = create<IUseAccountStore>((set, get) => ({
   loading: false,
   error: null,
-  accounts: [],
-  errors: [],
-
-  fetchAccounts: (currentRole: string) => {
-    try {
-      set({ loading: true, error: null });
-
-      const rolesOrder = ["user", "moderator", "administrator", "owner"];
-      const allowedRoles = rolesOrder.filter(
-        (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(currentRole)
-      );
-
-      const accounts = initialAccounts.filter((acc) =>
-        allowedRoles.includes(acc.role as keyof typeof ERoles)
-      );
-
-      set({
-        accounts,
-        errors: accounts.map(() => ({ login: "", password: "" })),
-        loading: false,
-        error: false,
-      });
-    } catch (error) {
-      onError("Не удалось загрузить список управляемых аккаунтов");
-      console.error(error);
-      set({ error, loading: false });
-    }
-  },
+  accounts: [...initialAccounts],
+  errors: initialAccounts.map(() => ({ login: "", password: "" })),
 
   addAccount: (account) => {
     const currRole = ERoles[account.role as keyof typeof ERoles];

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAccountStore from "../../../store/useAccountStore";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { v4 as uuidv4 } from "uuid";
@@ -16,12 +16,14 @@ import { ERoutes } from "../../../router/routes";
 import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import useAuthStore from "../../../store/useAuthStore";
+import { useAccountLimits } from "../../../helpers/useAccountLimits";
 
 const Admin = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { accounts, fetchAccounts, addAccount } = useAccountStore();
+  const { accounts, addAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();
+  const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -44,26 +46,24 @@ const Admin = () => {
 
   const createSubAccount = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const account: IUser = {
-      id: uuidv4(),
-      login: login.trim(),
-      password: password.trim(),
-      role,
-    };
-    if (validate()) {
-      addAccount(account);
-      setLogin("");
-      setPassword("");
+    if (accounts.length < accountLimits) {
+      const account: IUser = {
+        id: uuidv4(),
+        login: login.trim(),
+        password: password.trim(),
+        role,
+      };
+      if (validate()) {
+        addAccount(account);
+        setLogin("");
+        setPassword("");
+      } else {
+        onError(EErrors.fields);
+      }
     } else {
-      onError(EErrors.fields);
+      onError("Достигнут лимит аккаунтов");
     }
   };
-
-  useEffect(() => {
-    if (!accounts.length) {
-      fetchAccounts(user.role);
-    }
-  }, []);
 
   return (
     <div className={styles.adminWrapper}>
@@ -128,7 +128,7 @@ const Admin = () => {
         </Button>
         {user.role === "owner" && (
           <span className={styles.statistics}>
-            {accounts.length}/15 аккаунтов
+            {accounts.length}/{accountLimits} аккаунтов
           </span>
         )}
       </form>

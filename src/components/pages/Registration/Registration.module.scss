@@ -69,3 +69,43 @@
     color: var(--mainText);
   }
 }
+
+@media (max-width: 1439.89px) {
+  .form {
+    width: 44%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .wrapper {
+    margin: 45px 0;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .createBtn {
+    width: 100%;
+  }
+
+  .createBtnText {
+    font-size: 24px;
+  }
+
+  .codeBtnText {
+    font-size: 16px;
+  }
+}

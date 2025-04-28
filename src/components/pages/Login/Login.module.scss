@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  z-index: 2;
 }
 
 .title {
@@ -50,5 +51,41 @@
 
   &:hover {
     color: var(--mainText);
+  }
+}
+
+@media (max-width: 1439.89px) {
+  .form {
+    width: 44%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .wrapper {
+    margin: 100px 0 40px 0;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .loginBtn {
+    width: 100%;
+  }
+
+  .loginBtnText {
+    font-size: 24px;
   }
 }

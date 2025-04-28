@@ -289,8 +289,19 @@
   line-height: 25px;
 }
 
-@media (max-width: 1440px) {
-  .main-wrapper {
+@media (max-width: 1439.89px) {
+  .mainWrapper {
     width: 100vw;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .wrapper {
+    height: unset;
+    min-height: 100vh;
+  }
+
+  .mainWrapper {
+    justify-content: start;
   }
 }

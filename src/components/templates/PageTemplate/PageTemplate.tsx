@@ -51,7 +51,12 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
             </div>
           )}
           {headerTitle && (
-            <div className={styles.titleWrapper}>
+            <div
+              className={clsx(
+                styles.titleWrapper,
+                backPath && styles.titleWrapperShort
+              )}
+            >
               <span className={styles.title}>{headerTitle}</span>
             </div>
           )}

@@ -69,7 +69,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
+  width: 74%;
 }
 
 .title {
@@ -309,8 +309,118 @@
   }
 }
 
+@media (max-width: 1023.89px) {
+  .inputWrapper {
+    width: 50% !important;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .inputWrapper {
+    width: 100%;
+    margin-top: 80px;
+    margin-left: 0;
+    width: 100% !important;
+  }
+}
+
 @media (max-width: 424.89px) {
+  .header {
+    padding: 20px;
+  }
+
+  .backIcon svg {
+    height: 28px;
+    width: auto;
+  }
+
+  .titleWrapperShort {
+    width: 66%;
+  }
+
   .title {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .burgerLine {
+    margin-bottom: 6px;
+    width: 35px;
+    height: 4px;
+    transform-origin: 3px 0px;
+  }
+
+  .menuWrapper {
+    left: 20px;
+    top: 20px;
+    width: 35px;
+    height: 50px;
+  }
+
+  .menuCheckbox {
+    width: 36px;
+    height: 36px;
+  }
+
+  .burgerTitle,
+  .mainPageIconTitle {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .menu {
+    margin-top: -50px;
+    margin-left: -20px;
+    padding: 12px 20px;
+
+    svg {
+      width: 100px;
+      height: auto;
+    }
+  }
+
+  .menuItems {
+    svg {
+      width: 40px;
+      height: auto;
+    }
+  }
+
+  .menuItem {
+    gap: 16px;
+  }
+
+  .menuItemTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .mainPageIcons {
+    top: 16px;
+    right: 20px;
+    gap: 16px;
+  }
+
+  .mainPageIcon {
+    svg {
+      width: 36px;
+      height: auto;
+    }
+  }
+
+  .inputWrapper {
+    margin-top: 60px;
+
+    svg {
+      height: 24px;
+      width: auto;
+    }
+  }
+
+  .input {
+    height: 36px !important;
+  }
+
+  .inputText {
+    font-size: 16px;
   }
 }

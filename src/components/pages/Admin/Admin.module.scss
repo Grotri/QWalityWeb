@@ -69,3 +69,45 @@
   line-height: 21px;
   color: var(--supportTransparentText);
 }
+
+@media (max-width: 1439.89px) {
+  .adminWrapper {
+    margin: 120px 0;
+  }
+
+  .adminWrapper {
+    width: 32%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .adminWrapper {
+    width: 50%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .adminWrapper {
+    margin: 120px 0 40px 0;
+    width: 70%;
+  }
+
+  .inputs {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .btn {
+    font-size: 16px;
+    height: 36px;
+  }
+
+  .subTitle {
+    font-size: 18px;
+  }
+}

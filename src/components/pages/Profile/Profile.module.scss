@@ -78,6 +78,7 @@
   font-size: 14px;
   line-height: 17px;
   color: var(--codeTransparentText);
+  margin-left: 4px;
 }
 
 .error {
@@ -110,4 +111,42 @@
 .supportTextUnderlined {
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media (max-width: 1439.89px) {
+  .profileWrapper {
+    margin: 120px 0;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .profileWrapper {
+    width: 58%;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+    height: 36px;
+  }
+
+  .confirmationInputLabel {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .profileWrapper {
+    margin: 120px 0 40px 0;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .profileWrapper {
+    width: 78%;
+  }
+
+  .formInput {
+    width: 100%;
+  }
 }

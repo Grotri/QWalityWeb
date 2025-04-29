@@ -132,6 +132,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
+  text-align: center;
 }
 
 .smallModalBtns {
@@ -150,4 +151,45 @@
   color: var(--mainText);
   font-size: 16px;
   line-height: 21px;
+}
+
+@media (max-width: 1439.89px) {
+  .modals {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .modals {
+    width: 78vw;
+  }
+
+  .smallModalBtns {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .modals {
+    width: 90vw;
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .smallModalTitle {
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .flexBtns {
+    flex-direction: column;
+    gap: 8px;
+    align-items: unset;
+  }
+
+  .btn {
+    flex: auto;
+  }
 }

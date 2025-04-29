@@ -3,7 +3,6 @@ import useAuthStore from "../../../store/useAuthStore";
 import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
 import { onError } from "../../../helpers/toast";
 import styles from "./Login.module.scss";
 import Input from "../../atoms/Input/Input";
@@ -20,11 +19,7 @@ const Login = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      email: !email.trim()
-        ? EErrors.required
-        : !emailPattern.test(email.trim())
-        ? EErrors.email
-        : "",
+      email: !email.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -39,7 +34,7 @@ const Login = () => {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      login(email, password);
+      login(email.trim(), password.trim());
     } else {
       onError(EErrors.fields);
     }

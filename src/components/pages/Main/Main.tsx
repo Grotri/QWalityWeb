@@ -12,9 +12,14 @@ import AddCameraModal from "../../organisms/AddCameraModal";
 import { BottomIcon, PlusIcon } from "../../../assets/icons";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import CameraAccordion from "../../organisms/CameraAccordion";
+import useAuthStore from "../../../store/useAuthStore";
+import { useCameraLimits } from "../../../helpers/useCameraLimits";
+import { onError } from "../../../helpers/toast";
 
 const Main: FC<{ search: string }> = ({ search }) => {
   const { cameras: camerasInfo } = useCamerasStore();
+  const cameraLimits = useCameraLimits();
+  const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
@@ -64,7 +69,9 @@ const Main: FC<{ search: string }> = ({ search }) => {
             onChange={handleSectionChange(section.title)}
           >
             <CustomAccordionSummary
-              expandIcon={<BottomIcon scale={2.5} stroke={1.5} />}
+              expandIcon={
+                <BottomIcon scale={2.5} stroke={1.5} style={styles.arrowIcon} />
+              }
             >
               <div className={styles.header}>
                 <span className={styles.headerText}>{section.title}</span>
@@ -118,11 +125,20 @@ const Main: FC<{ search: string }> = ({ search }) => {
         isOpen={isAddCameraModalOpen}
         setIsOpen={setIsAddCameraModalOpen}
       />
-      <BottomFixIcon
-        icon={<PlusIcon />}
-        text="Добавить камеру"
-        onPress={() => setIsAddCameraModalOpen(true)}
-      />
+      {user.role !== "user" && (
+        <BottomFixIcon
+          icon={<PlusIcon />}
+          text="Добавить камеру"
+          onPress={() => {
+            if (camerasInfo.length < cameraLimits) {
+              setIsAddCameraModalOpen(true);
+            } else {
+              onError("Достигнут лимит камер");
+            }
+          }}
+          customBtn={styles.bottomBtn}
+        />
+      )}
     </div>
   );
 };

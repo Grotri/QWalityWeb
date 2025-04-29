@@ -1,11 +1,11 @@
 export interface IErrors {
-  email: string;
+  login: string;
   code: string;
   inn: string;
 }
 
 export const initialErrors: IErrors = {
-  email: "",
+  login: "",
   code: "",
   inn: "",
 };

@@ -15,6 +15,9 @@ import AccountManagement from "../components/pages/AccountManagement";
 import FAQ from "../components/pages/FAQ";
 import TrashBin from "../components/pages/TrashBin";
 import { useState } from "react";
+import AccessDenied from "../components/pages/AccessDenied";
+import NotFound from "../components/pages/NotFound";
+import ErrorPage from "../components/pages/ErrorPage";
 
 const MainPageWithSearch = () => {
   const [search, setSearch] = useState<string>("");
@@ -35,8 +38,15 @@ const MainPageWithSearch = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    // element
-    // TODO: добавить элемент ошибки
+    errorElement: (
+      <PrivateRoute
+        element={
+          <PageTemplate>
+            <ErrorPage />
+          </PageTemplate>
+        }
+      />
+    ),
     children: [
       {
         index: true,
@@ -59,7 +69,7 @@ const router = createBrowserRouter([
         element: (
           <PublicRoute
             element={
-              <PageTemplate backPath={ERoutes.register}>
+              <PageTemplate backPath={ERoutes.register} centralized>
                 <Login />
               </PageTemplate>
             }
@@ -71,7 +81,7 @@ const router = createBrowserRouter([
         element: (
           <PublicRoute
             element={
-              <PageTemplate backPath={ERoutes.login}>
+              <PageTemplate backPath={ERoutes.login} centralized>
                 <ForgotPassword />
               </PageTemplate>
             }
@@ -111,7 +121,11 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={
-              <PageTemplate headerTitle="Профиль" backPath={ERoutes.main}>
+              <PageTemplate
+                headerTitle="Профиль"
+                backPath={ERoutes.main}
+                centralized
+              >
                 <Profile />
               </PageTemplate>
             }
@@ -126,6 +140,7 @@ const router = createBrowserRouter([
               <PageTemplate
                 headerTitle="Админ панель"
                 backPath={ERoutes.profile}
+                centralized
               >
                 <Admin />
               </PageTemplate>
@@ -173,18 +188,30 @@ const router = createBrowserRouter([
           />
         ),
       },
-      // {
-      //   path: '*',
-      //   element: (
-      //     <PageHeaderProvider
-      //       header="Страница не найдена"
-      //       backRoute={ERoutes.dashboard}
-      //       backTooltip="На Главную"
-      //     >
-      //       <PrivateRoute element={<NotFound />} />
-      //     </PageHeaderProvider>
-      //   ),
-      // },
+      {
+        path: ERoutes.accessDenied,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate>
+                <AccessDenied />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: "*",
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate>
+                <NotFound />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
     ],
   },
 ]);

@@ -54,6 +54,7 @@ const CameraSortModal: FC<ICameraSortModal> = ({
             controlBackgroundColor="var(--subDropdownListBgTransparent)"
             controlHeight="28px"
             iconScale={1.2}
+            marginVertical="6px"
           />
           <div className={styles.btns}>
             <Button style={styles.btn} color="modal" onPress={handleApply}>

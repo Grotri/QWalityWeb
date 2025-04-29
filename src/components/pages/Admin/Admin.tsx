@@ -3,8 +3,6 @@ import useAccountStore from "../../../store/useAccountStore";
 import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
-import { IAccount } from "../../../model/account";
 import { v4 as uuidv4 } from "uuid";
 import { onError } from "../../../helpers/toast";
 import styles from "./Admin.module.scss";
@@ -13,29 +11,29 @@ import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
 import Slider from "../../atoms/Slider";
 import Dropdown from "../../atoms/Dropdown";
-import { roles } from "../../../constants/roles";
 import GetReportModal from "../../organisms/GetReportModal";
 import { ERoutes } from "../../../router/routes";
+import { IUser } from "../../../model/user";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import useAuthStore from "../../../store/useAuthStore";
+import { useAccountLimits } from "../../../helpers/useAccountLimits";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const { accounts, addAccount } = useAccountStore();
-  const [name, setName] = useState<string>("");
+  const availableRoles = useAvailableRoles();
+  const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
-  const [role, setRole] = useState<string>("0");
+  const [role, setRole] = useState<string>("user");
   const [isMainModalOpened, setIsMainModalOpened] = useState<boolean>(false);
   const [confidence, setConfidence] = useState<number>(0.75);
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      name: !name.trim() ? EErrors.required : "",
-      login: !login.trim()
-        ? EErrors.required
-        : !emailPattern.test(login.trim())
-        ? EErrors.email
-        : "",
+      login: !login.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -48,20 +46,22 @@ const Admin = () => {
 
   const createSubAccount = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const account: IAccount = {
-      id: uuidv4(),
-      name,
-      login,
-      password,
-      role,
-    };
-    if (validate()) {
-      addAccount(account);
-      setLogin("");
-      setPassword("");
-      setName("");
+    if (accounts.length < accountLimits) {
+      const account: IUser = {
+        id: uuidv4(),
+        login: login.trim(),
+        password: password.trim(),
+        role,
+      };
+      if (validate()) {
+        addAccount(account);
+        setLogin("");
+        setPassword("");
+      } else {
+        onError(EErrors.fields);
+      }
     } else {
-      onError(EErrors.fields);
+      onError("Достигнут лимит аккаунтов");
     }
   };
 
@@ -74,19 +74,6 @@ const Admin = () => {
       <form className={styles.infoWrapper} onSubmit={createSubAccount}>
         <span className={styles.subTitle}>Регистрация суб-аккаунта</span>
         <div className={styles.inputs}>
-          <Input
-            label="Имя пользователя"
-            value={name}
-            onChangeText={(name) => {
-              setName(name);
-              setErrors({ ...errors, name: "" });
-            }}
-            errorText={errors.name}
-            maxLength={254}
-            inputClassName={styles.confirmationInputWrapper}
-            inputFieldClassName={styles.confirmationInput}
-            labelClassName={styles.confirmationInputLabel}
-          />
           <Input
             label="Логин"
             value={login}
@@ -113,15 +100,13 @@ const Admin = () => {
             labelClassName={styles.confirmationInputLabel}
           />
           <Dropdown
-            data={roles.map((role) => ({
-              value: role.id,
-              label: role.name,
-            }))}
+            data={availableRoles}
             value={role}
             setValue={setRole}
             label="Роль"
             controlHeight="29px"
             iconScale={1.3}
+            marginVertical="8px"
           />
         </div>
         <Button color="blue" style={styles.btn} type="submit">
@@ -141,9 +126,11 @@ const Admin = () => {
         >
           Управлять аккаунтами
         </Button>
-        <span className={styles.statistics}>
-          {accounts.length}/15 аккаунтов
-        </span>
+        {user.role === "owner" && (
+          <span className={styles.statistics}>
+            {accounts.length}/{accountLimits} аккаунтов
+          </span>
+        )}
       </form>
       <GetReportModal
         isOpen={isMainModalOpened}

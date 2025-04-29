@@ -65,6 +65,10 @@
   margin-bottom: 12px;
 }
 
+.confirmation {
+  gap: 2px;
+}
+
 .confirmationInput {
   height: 32px;
   border-radius: 8px;
@@ -74,6 +78,7 @@
   font-size: 14px;
   line-height: 17px;
   color: var(--codeTransparentText);
+  margin-left: 4px;
 }
 
 .error {
@@ -84,7 +89,7 @@
 .codeBtn {
   height: 33px;
   border-radius: 8px;
-  margin-top: 17px;
+  margin-top: 19px;
   color: var(--mainText);
   font-size: 14px;
 }
@@ -106,4 +111,42 @@
 .supportTextUnderlined {
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media (max-width: 1439.89px) {
+  .profileWrapper {
+    margin: 120px 0;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .profileWrapper {
+    width: 58%;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+    height: 36px;
+  }
+
+  .confirmationInputLabel {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .profileWrapper {
+    margin: 120px 0 40px 0;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .profileWrapper {
+    width: 78%;
+  }
+
+  .formInput {
+    width: 100%;
+  }
 }

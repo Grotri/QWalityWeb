@@ -41,7 +41,7 @@ const FAQ = () => {
         <SupportContent message="Здесь пусто" />
       )}
       <BottomFixIcon
-        icon={<MessageIcon />}
+        icon={<MessageIcon style={styles.messageIcon} />}
         text="Обратиться в поддержку"
         onPress={() => alert("Обратиться в поддержку пока невозможно.")}
       />

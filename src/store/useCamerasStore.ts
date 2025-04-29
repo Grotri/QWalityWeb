@@ -75,10 +75,10 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
       const newCamera: ICamera = {
         id: uuidv4(),
         online: true,
-        title: name,
+        title: name.trim(),
         uptime: "0д 0ч 0м",
         defects: [],
-        link,
+        link: link.trim(),
       };
 
       try {
@@ -101,13 +101,20 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
   editCamera: (camera, onEdit) => {
     const { validate, cameras } = get();
     const oldCamera = cameras.find((c) => c.id === camera.id);
+    const newCamera: ICamera = {
+      ...camera,
+      title: camera.title.trim(),
+      link: camera.link.trim(),
+    };
 
-    if (JSON.stringify(oldCamera) !== JSON.stringify(camera)) {
-      if (validate(camera.title, camera.link)) {
+    if (JSON.stringify(oldCamera) !== JSON.stringify(newCamera)) {
+      if (validate(newCamera.title, newCamera.link)) {
         try {
           set({
             loading: true,
-            cameras: cameras.map((c) => (c.id === camera.id ? camera : c)),
+            cameras: cameras.map((c) =>
+              c.id === newCamera.id ? newCamera : c
+            ),
           });
           onEdit(null);
           onSuccess("Данные камеры успешно отредактированы");

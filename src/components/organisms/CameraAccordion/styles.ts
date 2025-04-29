@@ -43,6 +43,9 @@ export const CustomAccordionSummary = styled(AccordionSummary)({
   "& .MuiAccordionSummary-expandIconWrapper": {
     transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important",
   },
+  "@media (max-width: 424.89px)": {
+    padding: "12px !important",
+  },
 });
 
 export const CustomAccordionDetails = styled(AccordionDetails)({

@@ -34,3 +34,62 @@
   max-width: 120px;
   text-align: center;
 }
+
+.gradient {
+  display: none;
+}
+
+@media (max-width: 1023.89px) {
+  .circle {
+    height: 50px;
+    width: 50px;
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .btnText {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .btn {
+    max-width: 84px;
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .circle {
+    height: 40px;
+    width: 40px;
+    z-index: 1;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .btnText {
+    font-size: 12px;
+    line-height: 16px;
+    z-index: 1;
+  }
+
+  .btn {
+    bottom: 0;
+    right: 0;
+    padding: 0 12px 12px 0;
+  }
+
+  .gradient {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

@@ -36,6 +36,10 @@ export const CustomAccordionSummary = styled(AccordionSummary)({
     transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important",
   },
   borderRadius: "12px",
+  "@media (max-width: 424.89px)": {
+    padding: "0 12px !important",
+    margin: "0 !important",
+  },
 });
 
 export const CustomAccordionDetails = styled(AccordionDetails)({

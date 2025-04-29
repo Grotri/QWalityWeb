@@ -77,6 +77,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 wrapperStyle={styles.flex}
                 borderRadius="8px"
                 controlBackgroundColor="var(--dateAndListSelectsPopupBg)"
+                marginVertical="8px"
               />
               <div className={styles.empty} />
               <div className={styles.flex} />

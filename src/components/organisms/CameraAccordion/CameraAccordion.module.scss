@@ -157,4 +157,90 @@
   line-height: 24px;
   font-weight: 600;
   color: var(--sectionTransparentText);
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 1023.89px) {
+  .cameraNameWrapper {
+    width: 30%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .headerMain {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cameraNameWrapper {
+    width: -webkit-fill-available;
+    width: -moz-available;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .cameraTitle {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .settingsIcons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .icon {
+    gap: 4px;
+  }
+
+  .horizontalLine {
+    width: 50%;
+  }
+
+  .contentWrapper {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .defects {
+    gap: 10px;
+  }
+
+  .cameraIcon svg {
+    width: 32px;
+    height: auto;
+  }
+
+  .defectText,
+  .stateName,
+  .uptime {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .contentWrapper {
+    padding: 12px;
+  }
+
+  .icon span {
+    font-size: 12px;
+  }
+
+  .settingsIcons {
+    gap: 4px;
+  }
+
+  .arrowIcon {
+    width: 25px;
+    height: auto;
+  }
+
+  .noDefects {
+    line-height: 16px;
+  }
 }

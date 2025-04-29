@@ -1,21 +1,49 @@
 import styles from "./SubscriptionChange.module.scss";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/useAuthStore";
-import { slidersInfo } from "../../../constants/slider";
-import { ISliderCard } from "../../organisms/SliderCard/types";
 import SliderCard from "../../organisms/SliderCard";
 import { ERoutes } from "../../../router/routes";
-import { onSuccess } from "../../../helpers/toast";
+import { onError, onSuccess } from "../../../helpers/toast";
 import Button from "../../atoms/Button";
+import {
+  accountLimits,
+  cameraLimits,
+  ISubscription,
+  subscriptions,
+} from "../../../constants/subscriptions";
+import useCamerasStore from "../../../store/useCamerasStore";
+import useAccountStore from "../../../store/useAccountStore";
 
 const SubscriptionChange = () => {
   const navigate = useNavigate();
   const { user, setUserField, logout } = useAuthStore();
+  const { cameras } = useCamerasStore();
+  const { accounts } = useAccountStore();
+
+  const handleChangeSubscription = (sliderId: string) => {
+    const camerasLimit = cameraLimits[sliderId];
+    const accountLimit = accountLimits[sliderId];
+    if (accountLimit < accounts.length) {
+      onError(
+        "Вы не можете перейти на этот тариф, так как у вас больше суб-аккаунтов, чем в лимите",
+        2000
+      );
+    } else if (camerasLimit < cameras.length) {
+      onError(
+        "Вы не можете перейти на этот тариф, так как у вас больше камер, чем в лимите",
+        2000
+      );
+    } else {
+      setUserField("subscription", sliderId);
+      navigate(ERoutes.profile);
+      onSuccess("Вы успешно поменяли уровень подписки", 2000);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.cards}>
-        {slidersInfo.map((slider: ISliderCard) => (
+        {subscriptions.map((slider: ISubscription) => (
           <SliderCard
             key={slider.id}
             id={slider.id}
@@ -24,11 +52,7 @@ const SubscriptionChange = () => {
             description={slider.description}
             radioLabels={slider.radioLabels}
             price={slider.price}
-            onPress={() => {
-              setUserField("subscription", slider.id.toString());
-              navigate(ERoutes.profile);
-              onSuccess("Вы успешно поменяли уровень подписки", 2000);
-            }}
+            onPress={() => handleChangeSubscription(slider.id.toString())}
           />
         ))}
       </div>

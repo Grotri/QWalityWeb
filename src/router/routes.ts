@@ -10,4 +10,5 @@ export enum ERoutes {
   accountManagement = "/account-management",
   support = "/support",
   trashBin = "/trash-bin",
+  accessDenied = "/access-denied",
 }

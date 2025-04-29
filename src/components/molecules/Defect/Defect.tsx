@@ -40,9 +40,11 @@ const Defect: FC<IDefectItem> = ({
           <span className={styles.itemDate}>{convertISODate(date)}</span>
         </div>
       </div>
-      <Button onPress={onPress} style={styles.btn}>
-        {textBtn}
-      </Button>
+      {textBtn && (
+        <Button onPress={onPress} style={styles.btn}>
+          {textBtn}
+        </Button>
+      )}
     </div>
   );
 };

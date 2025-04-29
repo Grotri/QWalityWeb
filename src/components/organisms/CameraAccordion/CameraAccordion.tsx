@@ -26,6 +26,7 @@ import CameraSettingsModal from "../CameraSettingsModal";
 import CameraSortModal from "../CameraSortModal";
 import CameraFilterModal from "../CameraFilterModal";
 import DefectSaveModal from "../DefectSaveModal";
+import useAuthStore from "../../../store/useAuthStore";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -42,6 +43,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
   const { deleteDefect } = useCamerasStore();
+  const { user } = useAuthStore();
   const [activeSection, setActiveSection] = useState<string | false>(false);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
   const [sortModalCameraId, setSortModalCameraId] = useState<string | null>(
@@ -135,7 +137,9 @@ const CameraAccordion: FC<ICameraAccordion> = ({
             onChange={handleSectionChange(camera.id)}
           >
             <CustomAccordionSummary
-              expandIcon={<BottomIcon scale={2.5} stroke={1.5} />}
+              expandIcon={
+                <BottomIcon scale={2.5} stroke={1.5} style={styles.arrowIcon} />
+              }
             >
               <div className={styles.headerMain}>
                 <div className={styles.cameraNameWrapper}>
@@ -171,50 +175,54 @@ const CameraAccordion: FC<ICameraAccordion> = ({
             </CustomAccordionSummary>
             <CustomAccordionDetails>
               <div className={styles.contentWrapper}>
-                <div className={styles.settingsWrapper}>
-                  <div className={styles.settingsIcons}>
-                    <Button
-                      style={styles.icon}
-                      onPress={() => {
-                        setSelectedCamera(camera);
-                      }}
-                    >
-                      <SettingsIcon width={19} />
-                      <span>Настроить</span>
-                    </Button>
-                    {defects.length > 0 && (
-                      <>
+                {(user.role !== "user" || defects.length > 0) && (
+                  <div className={styles.settingsWrapper}>
+                    <div className={styles.settingsIcons}>
+                      {user.role !== "user" && (
                         <Button
-                          style={clsx(
-                            styles.icon,
-                            sortOption && styles.activeIcon
-                          )}
+                          style={styles.icon}
                           onPress={() => {
-                            setSortModalCameraId(camera.id);
-                            setIsSortCameraModalOpen(true);
+                            setSelectedCamera(camera);
                           }}
                         >
-                          <SortIcon />
-                          <span>Сортировать</span>
+                          <SettingsIcon width={19} />
+                          <span>Настроить</span>
                         </Button>
-                        <Button
-                          style={clsx(
-                            styles.icon,
-                            filterOption && styles.activeIcon
-                          )}
-                          onPress={() => {
-                            setFilterModalCameraId(camera.id);
-                            setIsFilterCameraModalOpen(true);
-                          }}
-                        >
-                          <FilterIcon />
-                          <span>Фильтровать</span>
-                        </Button>
-                      </>
-                    )}
+                      )}
+                      {defects.length > 0 && (
+                        <>
+                          <Button
+                            style={clsx(
+                              styles.icon,
+                              sortOption && styles.activeIcon
+                            )}
+                            onPress={() => {
+                              setSortModalCameraId(camera.id);
+                              setIsSortCameraModalOpen(true);
+                            }}
+                          >
+                            <SortIcon />
+                            <span>Сортировать</span>
+                          </Button>
+                          <Button
+                            style={clsx(
+                              styles.icon,
+                              filterOption && styles.activeIcon
+                            )}
+                            onPress={() => {
+                              setFilterModalCameraId(camera.id);
+                              setIsFilterCameraModalOpen(true);
+                            }}
+                          >
+                            <FilterIcon />
+                            <span>Фильтровать</span>
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                    <div className={styles.horizontalLine} />
                   </div>
-                  <div className={styles.horizontalLine} />
-                </div>
+                )}
                 <div
                   className={styles.defects}
                   style={{
@@ -229,7 +237,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                       <Defect
                         key={defect.id}
                         defect={defect}
-                        textBtn="Скрыть"
+                        textBtn={user.role !== "user" ? "Скрыть" : undefined}
                         setSelectedDefect={setSelectedDefect}
                         onPress={() => deleteDefect(camera.id, defect.id)}
                         pressableIcon

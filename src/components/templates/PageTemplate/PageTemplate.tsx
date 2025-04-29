@@ -21,6 +21,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   canScroll = false,
   hasMenu = false,
   isMainPage = false,
+  centralized = false,
   search,
   setSearch,
   children,
@@ -50,7 +51,12 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
             </div>
           )}
           {headerTitle && (
-            <div className={styles.titleWrapper}>
+            <div
+              className={clsx(
+                styles.titleWrapper,
+                backPath && styles.titleWrapperShort
+              )}
+            >
               <span className={styles.title}>{headerTitle}</span>
             </div>
           )}
@@ -68,7 +74,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   type="checkbox"
                   className={styles.menuCheckbox}
                   checked={isMenuOpen}
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  onChange={() => setIsMenuOpen(!isMenuOpen)}
                 />
                 <span className={styles.burgerLine} />
                 <span className={styles.burgerLine} />
@@ -87,6 +93,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   <div className={styles.menuItems}>
                     {menuItems.map(({ icon: Icon, path, title }) => (
                       <div
+                        key={title}
                         className={styles.menuItem}
                         onClick={() => {
                           navigate(path);
@@ -150,8 +157,9 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
       )}
       <main
         className={clsx(
-          styles["main-wrapper"],
-          canScroll && styles.mainWrapperScroll
+          styles.mainWrapper,
+          canScroll && styles.mainWrapperScroll,
+          centralized && styles.mainWrapperCentralized
         )}
       >
         {children}

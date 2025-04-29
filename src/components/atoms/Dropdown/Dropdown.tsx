@@ -16,7 +16,8 @@ const Dropdown: FC<IDropdown> = ({
   controlBackgroundColor = "var(--textFieldInFolderBg)",
   controlHeight = "20px",
   fontSize = "16px",
-  valueMargin = "8px",
+  marginHorizontal = "8px",
+  marginVertical = "0px",
   borderRadius = "6px",
 }) => {
   const CustomDropdownIndicator = (
@@ -77,9 +78,9 @@ const Dropdown: FC<IDropdown> = ({
           }),
           singleValue: (base) => ({
             ...base,
-            margin: `0 ${valueMargin}`,
+            margin: `0 ${marginHorizontal}`,
             fontSize,
-            lineHeight: "20px",
+            lineHeight: "21px",
             fontWeight: 400,
             color: "var(--mainText)",
             fontFamily: "Segoe UI",
@@ -96,7 +97,7 @@ const Dropdown: FC<IDropdown> = ({
             fontFamily: "Segoe UI",
             fontSize,
             lineHeight: "20px",
-            padding: valueMargin,
+            padding: `${marginVertical} ${marginHorizontal}`,
             cursor: "pointer",
           }),
           menu: (base) => ({
@@ -108,7 +109,7 @@ const Dropdown: FC<IDropdown> = ({
           }),
           dropdownIndicator: (base) => ({
             ...base,
-            padding: `0 ${valueMargin}`,
+            padding: `0 ${marginHorizontal}`,
           }),
           indicatorSeparator: () => ({
             display: "none",

@@ -122,6 +122,8 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
               }
               controlBackgroundColor="var(--subDropdownListBgTransparent)"
               controlHeight="30px"
+              fontSize="16px"
+              marginVertical="6px"
             />
           </div>
           <Button style={styles.btn} color="modal" onPress={handleApply}>

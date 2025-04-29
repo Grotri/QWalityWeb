@@ -85,3 +85,37 @@
   line-height: 21px;
   font-weight: 700;
 }
+
+@media (max-width: 1023.89px) {
+  .modals {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .modals {
+    width: 68vw;
+  }
+
+  .row {
+    gap: 12px;
+  }
+
+  .modalContent {
+    padding: 0 12px;
+  }
+
+  .btnModal {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .modals {
+    width: 90vw;
+  }
+
+  .modalContent {
+    padding: 0;
+  }
+}

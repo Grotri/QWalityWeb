@@ -1,12 +1,10 @@
 import useAccountStore from "../../../store/useAccountStore";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { IAccount } from "../../../model/account";
 import styles from "./AccountManagement.module.scss";
 import { BottomIcon, ProfileIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Dropdown from "../../atoms/Dropdown";
-import { roles } from "../../../constants/roles";
 import Button from "../../atoms/Button";
 import {
   CustomAccordion,
@@ -14,6 +12,10 @@ import {
   CustomAccordionSummary,
 } from "./styles";
 import SupportContent from "../../atoms/SupportContent";
+import { IUser } from "../../../model/user";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import { rolesOrder } from "../../../constants/roles";
+import useAuthStore from "../../../store/useAuthStore";
 
 const AccountManagement = () => {
   const {
@@ -24,17 +26,20 @@ const AccountManagement = () => {
     changeError,
     refreshErrors,
   } = useAccountStore();
+  const { user } = useAuthStore();
+  const availableRoles = useAvailableRoles();
   const [activeSection, setActiveSection] = useState<string | false>(false);
-  const [sections, setSections] = useState<IAccount[]>([...accounts]);
+  const [sections, setSections] = useState<IUser[]>([...accounts]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleSectionChange =
-    (section: string) => (_: SyntheticEvent, newExpanded: boolean) => {
-      setActiveSection(newExpanded ? section : false);
+    (sectionId: string) => (_: SyntheticEvent, newExpanded: boolean) => {
+      setActiveSection(newExpanded ? sectionId : false);
     };
 
   const changeAccountField = (
     id: string,
-    field: keyof IAccount,
+    field: keyof IUser,
     value: string
   ) => {
     setSections(
@@ -45,18 +50,36 @@ const AccountManagement = () => {
   };
 
   useEffect(() => {
-    setSections([...accounts]);
-  }, [accounts]);
+    setIsLoading(true);
+    const allowedRoles = rolesOrder.filter(
+      (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(user.role)
+    );
+    const filteredAccounts = accounts.filter((acc) =>
+      allowedRoles.includes(acc.role)
+    );
+    setSections([...filteredAccounts]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, [accounts, user.role]);
 
   useEffect(() => {
     refreshErrors();
-  }, []);
+  }, [refreshErrors]);
 
   return (
     <div className={styles.managerWrapper}>
-      {accounts.length > 0 ? (
-        sections.map((section, index: number) => {
+      {isLoading ? (
+        <SupportContent isLoading={isLoading} />
+      ) : !isLoading && sections.length === 0 ? (
+        <SupportContent message="У вас нет управляемых аккаунтов" />
+      ) : (
+        sections.map((section) => {
+          const index = accounts.findIndex((acc) => acc.id === section.id);
           const error = errors[index] || { login: "", password: "" };
+          const initialUser = accounts.find(
+            (account) => account.id === section.id
+          );
 
           return (
             <CustomAccordion
@@ -73,7 +96,9 @@ const AccountManagement = () => {
                     stroke={9}
                     style={styles.profileIcon}
                   />
-                  <span className={styles.headerText}>{section.name}</span>
+                  <span className={styles.headerText}>
+                    {initialUser?.login}
+                  </span>
                 </div>
               </CustomAccordionSummary>
               <CustomAccordionDetails>
@@ -107,24 +132,29 @@ const AccountManagement = () => {
                       iconSize={20}
                     />
                     <Dropdown
-                      data={roles.map((role) => ({
-                        value: role.id,
-                        label: role.name,
-                      }))}
+                      data={availableRoles}
                       value={section.role}
                       setValue={(role) =>
                         changeAccountField(section.id, "role", role)
                       }
                       label="Роль"
                       controlHeight="24px"
-                      valueMargin="10px"
+                      marginHorizontal="10px"
+                      marginVertical="6px"
                     />
                   </div>
                   <div className={styles.btns}>
                     <Button
                       color="management"
                       style={styles.btn}
-                      onPress={() => changeAccount(index, section)}
+                      onPress={() =>
+                        changeAccount(index, {
+                          id: section.id,
+                          login: section.login.trim(),
+                          password: section.password.trim(),
+                          role: section.role,
+                        })
+                      }
                     >
                       Изменить
                     </Button>
@@ -144,8 +174,6 @@ const AccountManagement = () => {
             </CustomAccordion>
           );
         })
-      ) : (
-        <SupportContent message="У вас нет управляемых аккаунтов" />
       )}
     </div>
   );

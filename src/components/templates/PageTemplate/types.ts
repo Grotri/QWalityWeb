@@ -4,6 +4,7 @@ export interface IPageTemplate {
   canScroll?: boolean;
   hasMenu?: boolean;
   isMainPage?: boolean;
+  centralized?: boolean;
   search?: string;
   setSearch?: (value: string) => void;
 }

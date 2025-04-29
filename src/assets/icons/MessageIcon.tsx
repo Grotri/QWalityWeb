@@ -5,8 +5,15 @@ const MessageIcon: FC<IIcon> = ({
   color = "var(--mainText)",
   width = 38,
   stroke = 3,
+  style,
 }) => (
-  <svg width={width} height={width} fill="none" viewBox="0 0 38 38">
+  <svg
+    width={width}
+    height={width}
+    fill="none"
+    viewBox="0 0 38 38"
+    className={style}
+  >
     <path
       stroke={color}
       strokeLinecap="round"

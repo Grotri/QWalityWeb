@@ -69,15 +69,12 @@
 }
 
 @media (max-width: 424.89px) {
-  .itemWrapper {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .itemName {
+    font-size: 14px;
+    line-height: 18px;
   }
 
-  .item {
-    gap: 20px;
-    width: -webkit-fill-available;
-    width: -moz-available;
+  .itemDate {
+    font-size: 12px;
   }
 }

@@ -137,7 +137,9 @@ const CameraAccordion: FC<ICameraAccordion> = ({
             onChange={handleSectionChange(camera.id)}
           >
             <CustomAccordionSummary
-              expandIcon={<BottomIcon scale={2.5} stroke={1.5} />}
+              expandIcon={
+                <BottomIcon scale={2.5} stroke={1.5} style={styles.arrowIcon} />
+              }
             >
               <div className={styles.headerMain}>
                 <div className={styles.cameraNameWrapper}>

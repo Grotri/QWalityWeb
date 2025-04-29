@@ -100,7 +100,7 @@
 
 @media (max-width: 767.89px) {
   .wrapper {
-    margin: 40px 108px 120px 40px;
+    margin: 40px 100px 120px 32px;
   }
 
   .modal {
@@ -122,12 +122,22 @@
 
 @media (max-width: 424.89px) {
   .wrapper {
-    margin: 40px 90px 80px 20px;
-    gap: 28px;
+    margin: 40px 20px 100px 20px;
   }
 
   .modal {
     width: 90vw;
+    gap: 24px;
+  }
+
+  .modalTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .modalContent {
+    gap: 28px;
+    padding: 0 4px;
   }
 
   .row {

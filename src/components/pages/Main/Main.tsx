@@ -69,7 +69,9 @@ const Main: FC<{ search: string }> = ({ search }) => {
             onChange={handleSectionChange(section.title)}
           >
             <CustomAccordionSummary
-              expandIcon={<BottomIcon scale={2.5} stroke={1.5} />}
+              expandIcon={
+                <BottomIcon scale={2.5} stroke={1.5} style={styles.arrowIcon} />
+              }
             >
               <div className={styles.header}>
                 <span className={styles.headerText}>{section.title}</span>
@@ -134,6 +136,7 @@ const Main: FC<{ search: string }> = ({ search }) => {
               onError("Достигнут лимит камер");
             }
           }}
+          customBtn={styles.bottomBtn}
         />
       )}
     </div>

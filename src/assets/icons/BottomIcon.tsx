@@ -6,6 +6,7 @@ const BottomIcon: FC<IIcon> = ({
   stroke = 2,
   cssStyle,
   scale = 1,
+  style,
 }) => {
   const baseWidth = 12;
   const baseHeight = 9;
@@ -20,6 +21,7 @@ const BottomIcon: FC<IIcon> = ({
       viewBox="0 0 12 9"
       fill="none"
       style={cssStyle}
+      className={style}
     >
       <path
         stroke={color}

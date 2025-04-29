@@ -1,4 +1,5 @@
 export { default as BackIcon } from "./BackIcon";
+export { default as BlackGradient } from "./BlackGradient";
 export { default as BottomIcon } from "./BottomIcon";
 export { default as CameraIcon } from "./CameraIcon";
 export { default as CrossIcon } from "./CrossIcon";

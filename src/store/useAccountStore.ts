@@ -69,8 +69,9 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   changeAccount: (index, newAccount) => {
     const { accounts, validate } = get();
     const oldAccount = accounts[index];
-
-    if (JSON.stringify(oldAccount) !== JSON.stringify(newAccount)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { inn, subscription, ...oldAccountData } = oldAccount;
+    if (JSON.stringify(oldAccountData) !== JSON.stringify(newAccount)) {
       if (validate(newAccount, index)) {
         try {
           set({ loading: true, error: null });

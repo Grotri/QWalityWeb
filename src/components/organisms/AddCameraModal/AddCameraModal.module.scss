@@ -67,3 +67,31 @@
   line-height: 27px;
   font-weight: 600;
 }
+
+@media (max-width: 1439.89px) {
+  .modal {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .modal {
+    width: 78vw;
+  }
+
+  .btn {
+    font-size: 16px;
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .modal {
+    width: 90vw;
+  }
+
+  .modalTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}

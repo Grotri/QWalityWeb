@@ -131,6 +131,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               inputClassName={styles.inputWrapper}
               inputFieldClassName={styles.input}
               labelClassName={styles.inputLabel}
+              errorClassName={styles.inputError}
             />
             <Button style={styles.codeBtn} color="blue">
               Отправить код

@@ -12,6 +12,7 @@
   font-size: 20px;
   line-height: 27px;
   font-weight: 700;
+  text-align: center;
 }
 
 .name {
@@ -36,4 +37,33 @@
   line-height: 21px;
   font-weight: 600;
   color: var(--mainText);
+}
+
+@media (max-width: 1439.89px) {
+  .modal {
+    width: 50vw;
+  }
+
+  .name {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .modal {
+    width: 78vw;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .modal {
+    width: 90vw;
+    gap: 4px;
+  }
+
+  .modalTitle {
+    font-size: 16px;
+    line-height: 21px;
+  }
 }

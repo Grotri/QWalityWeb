@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
-import { initialAccounts } from "../constants/accounts";
 import { EErrors } from "../constants/errors";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
 import { IUser } from "../model/user";
@@ -15,6 +14,7 @@ interface IUseAccountStore extends IStoreStatus {
   accounts: IUser[];
   errors: IErrors[];
   addAccount: (account: IUser) => void;
+  registerAccount: (account: IUser) => void;
   changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
   refreshErrors: () => void;
@@ -25,10 +25,26 @@ interface IUseAccountStore extends IStoreStatus {
 const useAccountStore = create<IUseAccountStore>((set, get) => ({
   loading: false,
   error: null,
-  accounts: [...initialAccounts],
-  errors: initialAccounts.map(() => ({ login: "", password: "" })),
+  accounts: [],
+  errors: [],
 
   addAccount: (account) => {
+    try {
+      set({ loading: true, error: null });
+      set((state) => ({
+        accounts: [...state.accounts, account],
+        errors: [...state.errors, { login: "", password: "" }],
+        loading: false,
+        error: false,
+      }));
+    } catch (error) {
+      onError("Не удалось добавить аккаунт");
+      console.error(error);
+      set({ error, loading: false });
+    }
+  },
+
+  registerAccount: (account) => {
     const currRole = ERoles[account.role as keyof typeof ERoles];
 
     try {
@@ -41,7 +57,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
       }));
       onSuccess(`${currRole} создан`);
     } catch (error) {
-      onError("Не удалось изменить данные");
+      onError("Не удалось создать аккаунт");
       console.error(error);
       set({ error, loading: false });
     }

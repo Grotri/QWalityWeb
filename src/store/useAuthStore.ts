@@ -5,7 +5,7 @@ import { emailPattern, innPattern } from "../constants/patterns";
 import { v4 as uuidv4 } from "uuid";
 import { onError, onSuccess } from "../helpers/toast";
 import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
-import { initialAccounts } from "../constants/accounts";
+import { credits } from "../constants/credits";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -15,9 +15,13 @@ interface IUseAuthStore extends IStoreStatus {
   errors: IErrors;
   setErrorsField: (field: keyof IErrors, error: string) => void;
   clearErrors: () => void;
-  register: (code: string) => void;
+  register: (code: string, addAccount: (account: IUser) => void) => void;
   validate: (code: string) => boolean;
-  login: (email: string, password: string) => void;
+  login: (
+    email: string,
+    password: string,
+    addAccount: (account: IUser) => void
+  ) => void;
   logout: () => void;
 }
 
@@ -84,7 +88,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       return Object.values(newErrors).every((error) => !error);
     },
 
-    register: (code) => {
+    register: (code, addAccount) => {
       const { user, validate } = get();
 
       if (validate(code)) {
@@ -98,6 +102,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           };
 
           localStorage.setItem("user", JSON.stringify(newUser));
+          addAccount(newUser);
           set({
             loading: true,
             user: newUser,
@@ -114,13 +119,14 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       }
     },
 
-    login: (email, password) => {
+    login: (email, password, addAccount) => {
       try {
-        const existingAccount = initialAccounts.find(
+        const existingAccount = credits.find(
           (acc) => acc.login === email && acc.password === password
         );
         if (existingAccount) {
           localStorage.setItem("user", JSON.stringify(existingAccount));
+          addAccount(existingAccount);
           set({
             loading: true,
             user: existingAccount,

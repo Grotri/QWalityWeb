@@ -6,6 +6,7 @@ import Button from "../../atoms/Button";
 import InputPassword from "../../atoms/InputPassword";
 import { useNavigate } from "react-router-dom";
 import { ERoutes } from "../../../router/routes";
+import useAccountStore from "../../../store/useAccountStore";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -18,12 +19,13 @@ const Registration = () => {
     clearUser,
     register,
   } = useAuthStore();
+  const { addAccount } = useAccountStore();
 
   const [code, setCode] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register(code);
+    register(code, addAccount);
   };
 
   useEffect(() => {

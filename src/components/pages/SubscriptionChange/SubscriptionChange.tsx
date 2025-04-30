@@ -13,6 +13,7 @@ import {
 } from "../../../constants/subscriptions";
 import useCamerasStore from "../../../store/useCamerasStore";
 import useAccountStore from "../../../store/useAccountStore";
+import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
 
 const SubscriptionChange = () => {
   const navigate = useNavigate();
@@ -23,15 +24,31 @@ const SubscriptionChange = () => {
   const handleChangeSubscription = (sliderId: string) => {
     const camerasLimit = cameraLimits[sliderId];
     const accountLimit = accountLimits[sliderId];
-    if (accountLimit < accounts.length) {
+    const allowedRoles = getAllowedRolesBySubscription(sliderId);
+
+    const hasTooManyAccounts = accountLimit < accounts.length;
+    const hasTooManyCameras = camerasLimit < cameras.length;
+    const invalidAccounts = accounts.filter(
+      (account) => !allowedRoles.includes(account.role)
+    );
+
+    if (hasTooManyAccounts) {
       onError(
         "Вы не можете перейти на этот тариф, так как у вас больше суб-аккаунтов, чем в лимите",
         2000
       );
-    } else if (camerasLimit < cameras.length) {
+    } else if (hasTooManyCameras) {
       onError(
         "Вы не можете перейти на этот тариф, так как у вас больше камер, чем в лимите",
         2000
+      );
+    } else if (invalidAccounts.length > 0) {
+      const rolesList = [...new Set(invalidAccounts.map((a) => a.role))].join(
+        ", "
+      );
+      onError(
+        `Нельзя перейти на этот тариф, так как у вас есть аккаунты с ролями: ${rolesList}, которые не входят в разрешённые роли этого тарифа`,
+        3000
       );
     } else {
       setUserField("subscription", sliderId);

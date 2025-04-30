@@ -9,10 +9,12 @@ import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
 import { ERoutes } from "../../../router/routes";
+import useAccountStore from "../../../store/useAccountStore";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
+  const { addAccount } = useAccountStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -34,7 +36,7 @@ const Login = () => {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      login(email.trim(), password.trim());
+      login(email.trim(), password.trim(), addAccount);
     } else {
       onError(EErrors.fields);
     }

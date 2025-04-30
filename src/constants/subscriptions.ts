@@ -2,16 +2,16 @@ import { ISliderCard } from "../components/organisms/SliderCard/types";
 
 export const rolesLimits: Record<string, number> = {
   "0": 1,
-  "1": 3,
+  "1": 2,
   "2": 4,
   "3": 4,
 };
 
 export const accountLimits: Record<string, number> = {
   "0": 1,
-  "1": 8,
-  "2": 16,
-  "3": 32,
+  "1": 4,
+  "2": 8,
+  "3": 20,
 };
 
 export const cameraLimits: Record<string, number> = {
@@ -37,35 +37,35 @@ export const subscriptions: ISubscription[] = [
   },
   {
     id: 1,
-    title: "Старт",
+    title: "Стандарт",
     description: "Расширенный функционал",
     radioLabels: [
       `${rolesLimits["1"]} роли`,
-      `${accountLimits["1"]} аккаунтов`,
+      `${accountLimits["1"]} аккаунта`,
       `${cameraLimits["1"]} камеры`,
     ],
-    price: "15000",
+    price: "2999",
   },
   {
     id: 2,
-    title: "Премиум",
+    title: "Про",
     description: "Полноценный функционал",
     radioLabels: [
       `${rolesLimits["2"]} роли`,
       `${accountLimits["2"]} аккаунтов`,
       `${cameraLimits["2"]} камер`,
     ],
-    price: "30000",
+    price: "8990",
   },
   {
     id: 3,
-    title: "Премиум +",
+    title: "Ультима",
     description: "Полноценный функционал",
     radioLabels: [
       `${rolesLimits["3"]} роли`,
-      `${accountLimits["3"]} аккаунта`,
+      `${accountLimits["3"]} аккаунтов`,
       `${cameraLimits["3"]} камер`,
     ],
-    price: "50000",
+    price: "17999",
   },
 ];

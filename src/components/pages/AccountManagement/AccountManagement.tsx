@@ -14,8 +14,8 @@ import {
 import SupportContent from "../../atoms/SupportContent";
 import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
-import { rolesOrder } from "../../../constants/roles";
 import useAuthStore from "../../../store/useAuthStore";
+import { ERoles } from "../../../constants/roles";
 
 const AccountManagement = () => {
   const {
@@ -51,11 +51,8 @@ const AccountManagement = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const allowedRoles = rolesOrder.filter(
-      (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(user.role)
-    );
     const filteredAccounts = accounts.filter((acc) =>
-      allowedRoles.includes(acc.role)
+      availableRoles.includes(acc.role)
     );
     setSections([...filteredAccounts]);
     setTimeout(() => {
@@ -132,7 +129,10 @@ const AccountManagement = () => {
                       iconSize={20}
                     />
                     <Dropdown
-                      data={availableRoles}
+                      data={availableRoles.map((key) => ({
+                        value: key,
+                        label: ERoles[key as keyof typeof ERoles],
+                      }))}
                       value={section.role}
                       setValue={(role) =>
                         changeAccountField(section.id, "role", role)

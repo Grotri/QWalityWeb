@@ -15,13 +15,12 @@ import GetReportModal from "../../organisms/GetReportModal";
 import { ERoutes } from "../../../router/routes";
 import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
-import useAuthStore from "../../../store/useAuthStore";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
+import { ERoles } from "../../../constants/roles";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
-  const { accounts, addAccount } = useAccountStore();
+  const { accounts, registerAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();
   const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
@@ -54,7 +53,7 @@ const Admin = () => {
         role,
       };
       if (validate()) {
-        addAccount(account);
+        registerAccount(account);
         setLogin("");
         setPassword("");
       } else {
@@ -100,7 +99,10 @@ const Admin = () => {
             labelClassName={styles.confirmationInputLabel}
           />
           <Dropdown
-            data={availableRoles}
+            data={availableRoles.map((key) => ({
+              value: key,
+              label: ERoles[key as keyof typeof ERoles],
+            }))}
             value={role}
             setValue={setRole}
             label="Роль"
@@ -126,11 +128,9 @@ const Admin = () => {
         >
           Управлять аккаунтами
         </Button>
-        {user.role === "owner" && (
-          <span className={styles.statistics}>
-            {accounts.length}/{accountLimits} аккаунтов
-          </span>
-        )}
+        <span className={styles.statistics}>
+          {accounts.length}/{accountLimits} аккаунтов
+        </span>
       </form>
       <GetReportModal
         isOpen={isMainModalOpened}

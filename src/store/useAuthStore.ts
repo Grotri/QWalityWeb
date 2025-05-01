@@ -22,7 +22,7 @@ interface IUseAuthStore extends IStoreStatus {
     password: string,
     addAccount: (account: IUser) => void
   ) => void;
-  logout: () => void;
+  logout: (clearAccounts: () => void) => void;
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
@@ -50,9 +50,10 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         return { user: updatedUser };
       }),
 
-    logout: () => {
+    logout: (clearAccounts) => {
       localStorage.removeItem("user");
       set({ user: { ...initialUser } });
+      clearAccounts();
     },
 
     setErrorsField: (field, error) =>
@@ -127,6 +128,9 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         if (existingAccount) {
           localStorage.setItem("user", JSON.stringify(existingAccount));
           addAccount(existingAccount);
+          if (existingAccount.role === "administrator") {
+            addAccount(credits[3]);
+          }
           set({
             loading: true,
             user: existingAccount,

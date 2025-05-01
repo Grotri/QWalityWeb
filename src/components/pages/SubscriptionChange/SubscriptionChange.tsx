@@ -19,7 +19,7 @@ const SubscriptionChange = () => {
   const navigate = useNavigate();
   const { user, setUserField, logout } = useAuthStore();
   const { cameras } = useCamerasStore();
-  const { accounts } = useAccountStore();
+  const { accounts, clearAccounts } = useAccountStore();
 
   const handleChangeSubscription = (sliderId: string) => {
     const camerasLimit = cameraLimits[sliderId];
@@ -51,9 +51,13 @@ const SubscriptionChange = () => {
         3000
       );
     } else {
-      setUserField("subscription", sliderId);
-      navigate(ERoutes.profile);
-      onSuccess("Вы успешно поменяли уровень подписки", 2000);
+      if (sliderId === "0") {
+        setUserField("subscription", sliderId);
+        navigate(ERoutes.profile);
+        onSuccess("Вы успешно поменяли уровень подписки", 2000);
+      } else {
+        navigate(`${ERoutes.subscriptionEdit}${ERoutes.payment}/${sliderId}`);
+      }
     }
   };
 
@@ -73,7 +77,13 @@ const SubscriptionChange = () => {
           />
         ))}
       </div>
-      <Button color="welcomeBlue" style={styles.cancelBtn} onPress={logout}>
+      <Button
+        color="welcomeBlue"
+        style={styles.cancelBtn}
+        onPress={() => {
+          logout(clearAccounts);
+        }}
+      >
         Отменить подписку
       </Button>
     </div>

@@ -21,6 +21,13 @@ export const cameraLimits: Record<string, number> = {
   "3": 15,
 };
 
+export const cost: Record<string, string> = {
+  "0": "0",
+  "1": "2999",
+  "2": "8990",
+  "3": "17999",
+};
+
 export type ISubscription = ISliderCard;
 
 export const subscriptions: ISubscription[] = [
@@ -33,7 +40,7 @@ export const subscriptions: ISubscription[] = [
       `${accountLimits["0"]} аккаунт`,
       `${cameraLimits["0"]} камера`,
     ],
-    price: "0",
+    price: cost["0"],
   },
   {
     id: 1,
@@ -44,7 +51,7 @@ export const subscriptions: ISubscription[] = [
       `${accountLimits["1"]} аккаунта`,
       `${cameraLimits["1"]} камеры`,
     ],
-    price: "2999",
+    price: cost["1"],
   },
   {
     id: 2,
@@ -55,7 +62,7 @@ export const subscriptions: ISubscription[] = [
       `${accountLimits["2"]} аккаунтов`,
       `${cameraLimits["2"]} камер`,
     ],
-    price: "8990",
+    price: cost["2"],
   },
   {
     id: 3,
@@ -66,6 +73,6 @@ export const subscriptions: ISubscription[] = [
       `${accountLimits["3"]} аккаунтов`,
       `${cameraLimits["3"]} камер`,
     ],
-    price: "17999",
+    price: cost["3"],
   },
 ];

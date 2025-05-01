@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { matchPath, Navigate, useLocation } from "react-router-dom";
 import useAuthStore from "../../../store/useAuthStore";
 import { ERoutes } from "../../../router/routes";
 import { roleRestrictedRoutes } from "../../../router/roleRestrictions";
@@ -14,6 +14,9 @@ const PrivateRoute = ({
   const { user } = useAuthStore();
   const location = useLocation();
   const restrictedRoutes = roleRestrictedRoutes[user.role] || [];
+  const isRestricted = restrictedRoutes.some((path) =>
+    matchPath({ path, end: true }, location.pathname)
+  );
 
   if (!user.id) {
     return <Navigate to={ERoutes.register} replace />;
@@ -23,11 +26,17 @@ const PrivateRoute = ({
     return <Navigate to={ERoutes.subscription} replace />;
   }
 
-  if (user.subscription && location.pathname === ERoutes.subscription) {
+  if (
+    user.subscription &&
+    (location.pathname === ERoutes.subscription ||
+      location.pathname.startsWith(
+        `${ERoutes.subscription}${ERoutes.payment}/`
+      ))
+  ) {
     return <Navigate to={ERoutes.main} replace />;
   }
 
-  if (restrictedRoutes.includes(location.pathname)) {
+  if (isRestricted) {
     return <Navigate to={ERoutes.accessDenied} replace />;
   }
 

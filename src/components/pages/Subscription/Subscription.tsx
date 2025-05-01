@@ -1,10 +1,13 @@
 import { FC } from "react";
-import useAuthStore from "../../../store/useAuthStore";
 import styles from "./Subscription.module.scss";
 import SliderCard from "../../organisms/SliderCard";
 import { ISubscription, subscriptions } from "../../../constants/subscriptions";
+import { useNavigate } from "react-router-dom";
+import { ERoutes } from "../../../router/routes";
+import useAuthStore from "../../../store/useAuthStore";
 
 const Subscription: FC = () => {
+  const navigate = useNavigate();
   const { setUserField } = useAuthStore();
 
   return (
@@ -17,7 +20,17 @@ const Subscription: FC = () => {
           description={slider.description}
           radioLabels={slider.radioLabels}
           price={slider.price}
-          onPress={() => setUserField("subscription", slider.id.toString())}
+          onPress={() => {
+            if (slider.id !== 0) {
+              navigate(
+                `${ERoutes.subscription}${
+                  ERoutes.payment
+                }/${slider.id.toString()}`
+              );
+            } else {
+              setUserField("subscription", "0");
+            }
+          }}
         />
       ))}
     </div>

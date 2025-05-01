@@ -18,6 +18,8 @@ import { useState } from "react";
 import AccessDenied from "../components/pages/AccessDenied";
 import NotFound from "../components/pages/NotFound";
 import ErrorPage from "../components/pages/ErrorPage";
+import Payment from "../components/pages/Payment";
+import PaymentChange from "../components/pages/PaymentChange";
 
 const MainPageWithSearch = () => {
   const [search, setSearch] = useState<string>("");
@@ -111,6 +113,39 @@ const router = createBrowserRouter([
                 backPath={ERoutes.profile}
               >
                 <SubscriptionChange />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: `${ERoutes.subscription}${ERoutes.payment}/:subscriptionId`,
+        element: (
+          <PrivateRoute
+            allowUnsubscribed
+            element={
+              <PageTemplate
+                backPath={ERoutes.subscription}
+                headerTitle="Оплата подписки"
+                centralized
+              >
+                <Payment />
+              </PageTemplate>
+            }
+          />
+        ),
+      },
+      {
+        path: `${ERoutes.subscriptionEdit}${ERoutes.payment}/:subscriptionId`,
+        element: (
+          <PrivateRoute
+            element={
+              <PageTemplate
+                backPath={ERoutes.subscriptionEdit}
+                headerTitle="Оплата подписки"
+                centralized
+              >
+                <PaymentChange />
               </PageTemplate>
             }
           />

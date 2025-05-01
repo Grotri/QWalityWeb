@@ -114,6 +114,15 @@ const Dropdown: FC<IDropdown> = ({
           indicatorSeparator: () => ({
             display: "none",
           }),
+          noOptionsMessage: (base) => ({
+            ...base,
+            color: "var(--white)",
+          }),
+          placeholder: (base) => ({
+            ...base,
+            color: "var(--white)",
+            margin: `0 ${marginHorizontal}`,
+          }),
         }}
       />
     </div>

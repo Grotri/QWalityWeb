@@ -10,9 +10,11 @@ import { onError } from "../../../helpers/toast";
 import useAuthStore from "../../../store/useAuthStore";
 import Modal from "../../atoms/Modal";
 import Input from "../../atoms/Input/Input";
+import useAccountStore from "../../../store/useAccountStore";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuthStore();
+  const { clearAccounts } = useAccountStore();
 
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
@@ -26,7 +28,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
       setError(EErrors.required);
       onError("Сначала введите код");
     } else {
-      logout();
+      logout(clearAccounts);
       setIsOpen(false);
     }
   };
@@ -99,7 +101,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               style={styles.modalBtn}
               color="blue"
               onPress={() => {
-                logout();
+                logout(clearAccounts);
                 setIsOpen(false);
               }}
             >

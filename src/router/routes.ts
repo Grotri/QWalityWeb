@@ -11,4 +11,5 @@ export enum ERoutes {
   support = "/support",
   trashBin = "/trash-bin",
   accessDenied = "/access-denied",
+  payment = "/payment",
 }

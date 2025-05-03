@@ -24,13 +24,13 @@
 
 .cardPointTitle {
   color: var(--sectionTransparentText);
-  font-size: 12px;
+  font-size: calc(12px * var(--font-scale));
   padding-left: 4px;
 }
 
 .cardPointData {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
   font-weight: 600;
   padding-left: 4px;
 }
@@ -43,7 +43,7 @@
 }
 
 .input {
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -52,8 +52,8 @@
   height: 42px;
   border-radius: 12px;
   color: var(--mainText);
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 700;
 }
 
@@ -83,7 +83,7 @@
 
 .error {
   margin-left: 4px;
-  font-size: 12px;
+  font-size: calc(12px * var(--font-scale));
 }
 
 .codeBtn {
@@ -102,8 +102,8 @@
 
 .supportText,
 .supportTextUnderlined {
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   color: var(--supportTransparentText);
   cursor: default;
 }
@@ -127,7 +127,7 @@
 
   .btn {
     width: 100%;
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
     height: 36px;
   }
 

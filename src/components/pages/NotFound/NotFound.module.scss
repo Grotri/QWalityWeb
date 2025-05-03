@@ -6,13 +6,13 @@
 
 .error {
   color: var(--anyBtnOnBgSubScreen);
-  font-size: 200px;
+  font-size: calc(200px * var(--font-scale));
   font-weight: 700;
   margin-bottom: 60px;
 }
 
 .title {
-  font-size: 32px;
+  font-size: calc(32px * var(--font-scale));
   font-weight: 600;
   margin-bottom: 40px;
 }
@@ -20,7 +20,7 @@
 .btn {
   height: 32px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   color: var(--white);
   padding: 0 20px;
 }
@@ -33,11 +33,11 @@
 
 @media (max-width: 767.89px) {
   .error {
-    font-size: 120px;
+    font-size: calc(120px * var(--font-scale));
   }
 
   .title {
-    font-size: 24px;
+    font-size: calc(24px * var(--font-scale));
   }
 }
 

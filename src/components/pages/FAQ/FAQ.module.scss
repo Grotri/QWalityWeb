@@ -9,8 +9,8 @@
 }
 
 .headerText {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 700;
   padding-left: 18px;
   padding-right: 18px;
@@ -25,8 +25,8 @@
 }
 
 .contentText {
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
   word-break: break-word;
 }
@@ -43,13 +43,13 @@
   }
 
   .headerText {
-    font-size: 16px;
-    line-height: 21px;
+    font-size: calc(16px * var(--font-scale));
+    line-height: calc(21px * var(--font-scale));
   }
 
   .contentText {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: calc(14px * var(--font-scale));
+    line-height: calc(18px * var(--font-scale));
   }
 }
 

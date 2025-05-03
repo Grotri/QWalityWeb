@@ -34,8 +34,8 @@
 }
 
 .modalTitle {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -71,8 +71,8 @@
   border-radius: 8px;
   height: 30px;
   color: var(--mainText);
-  font-size: 18px;
-  line-height: 24px;
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -131,8 +131,8 @@
   }
 
   .modalTitle {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: calc(20px * var(--font-scale));
+    line-height: calc(28px * var(--font-scale));
   }
 
   .modalContent {

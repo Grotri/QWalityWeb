@@ -16,14 +16,14 @@
 
 .title {
   font-weight: 700;
-  font-size: 36px;
+  font-size: calc(36px * var(--font-scale));
   color: var(--welcomeScreenSubText);
   margin-bottom: 16px;
   text-align: center;
 }
 
 .input {
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -35,14 +35,14 @@
 }
 
 .loginBtnText {
-  font-size: 28px;
+  font-size: calc(28px * var(--font-scale));
   color: var(--subTextMainScreenPopup);
   font-weight: 600;
 }
 
 .forgotBtnText {
-  font-size: 20px;
-  line-height: 32px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   color: var(--subTextMainScreenPopup);
   text-decoration: underline;
   transition: 0.3s;
@@ -81,7 +81,7 @@
   }
 
   .title {
-    font-size: 32px;
+    font-size: calc(32px * var(--font-scale));
   }
 
   .loginBtn {
@@ -89,6 +89,6 @@
   }
 
   .loginBtnText {
-    font-size: 24px;
+    font-size: calc(24px * var(--font-scale));
   }
 }

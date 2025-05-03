@@ -12,6 +12,7 @@
   --darkBlueTransparent: rgba(76, 126, 254, 0.85);
   --error: rgb(255, 0, 0);
   --info: rgb(255, 136, 0);
+  --font-scale: 1;
 
   /* Welcome Screens Section */
   --welcomeScreenPoint: rgba(0, 229, 255, 0.8);
@@ -49,6 +50,8 @@
   --warningBtnBgMainScreenPopup: var(--red);
   --textMainScreenPopup: var(--white);
   --subTextMainScreenPopup: rgba(255, 255, 255, 0.8);
+  --menuItemHover: var(--bg);
+  --headerInput: rgba(131, 166, 255, 0.6);
 
   /* Sub-Screens Section */
   --anyBtnOnBgSubScreen: var(--blue3);
@@ -69,7 +72,10 @@
   --dashBg: #b5caff;
   --modalBtn: #4b74dd;
   --trashItemImageBg: #c4c4c4;
+  --trashItemImageBgHover: rgb(157, 157, 157);
   --datePickerBg: rgba(0, 0, 0, 0.2);
+  --darkBlueBtnBg: var(--darkBlue);
+  --settingsBoxShadow: 0px 0px 10px 0px rgb(16, 58, 163);
 
   /* Btns-hover */
   --welcomeScreenSubBtn-hover: #0d60be;
@@ -81,6 +87,108 @@
   --textFieldInFolderBg-hover: #4e78e4;
   --blueTransparent-hover: rgba(1, 95, 202, 0.6);
   --modalBtns-hover: #789eff;
+}
+
+.light-theme {
+  --white: #000033;
+  --black: #ffffff;
+  --brightBlue: #1b50ca;
+  --blue: #a6cfff;
+  --blue2: #bfdfff;
+  --blue3: #a6cfff;
+  --darkBlue: #6ab2ff;
+  --red: #ec4f4f;
+  --blueTransparent: rgba(21, 116, 224, 0.6);
+  --brightBlueTransparent: rgba(0, 200, 255, 0.85);
+  --darkBlueTransparent: rgb(79, 129, 255);
+  --error: rgb(255, 0, 0);
+  --info: rgb(255, 136, 0);
+
+  /* Welcome Screens Section */
+  --welcomeScreenPoint: rgba(0, 229, 255, 0.8);
+  --welcomeScreenContrastBtn: #398ff1;
+  --welcomeScreenSubBtn: var(--blue);
+  --welcomeScreenSubText: rgba(0, 0, 51, 0.8);
+  --welcomeScreenMainText: var(--white);
+  --welcomeScreenScrollNonActivePoint: rgba(217, 217, 249, 0.7);
+  --welcomeScreenScrollActivePoint: rgba(0, 0, 51, 0.8);
+  --welcomeScreenImproveText: rgba(0, 0, 51, 0.7);
+  --welcomeScreenGradientDark: rgba(5, 5, 5, 0.4);
+  --welcomeScreenGradientLight: rgba(107, 107, 107, 0);
+
+  /* Main Screens Section */
+  --bg: #d9ebff;
+  --menuBg: var(--blue2);
+  --mainOnlineOfflineBg: var(--blue3);
+  --subBg: var(--darkBlue);
+  --subFolderBg: #8fc3ff;
+  --searchBarBg: #7aa5ee;
+  --splitBar: #4f81ff;
+  --edgeBtnBg: #62a1ff;
+  --mainText: var(--white);
+  --gradientLightBlue: #4dedff;
+  --gradientBlue: #053d8f;
+  --subscriptionCardBg: rgba(0, 0, 0, 0.4);
+  --greenOnline: #00ff40;
+
+  /* Main Screen Popups Section */
+  --bgMainScreenPopup: var(--blue2);
+  --textFieldBgMainScreenPopup: #81baff;
+  --activePointMainScreenPopup: var(--brightBlue);
+  --pointBgMainScreenPopup: var(--blue);
+  --selectFieldBgMainScreenPopup: var(--blue3);
+  --warningBtnBgMainScreenPopup: var(--red);
+  --textMainScreenPopup: var(--white);
+  --subTextMainScreenPopup: rgba(0, 0, 51, 0.8);
+  --menuItemHover: var(--edgeBtnBg);
+  --headerInput: rgba(99, 174, 255, 0.5);
+
+  /* Sub-Screens Section */
+  --anyBtnOnBgSubScreen: var(--blue3);
+  --warningBtnBg: var(--red);
+  --subScreenPopupBg: #8cc0ff;
+  --dateAndListSelectsPopupBg: #459aff;
+  --dateAndListBtnsPopupBg: #459aff;
+  --folderOrHighlightedSectionBg: #98c6ff;
+  --textFieldInFolderBg: #519fff;
+  --modalBtns: #80b9ff;
+  --sectionTransparentText: rgba(0, 0, 51, 0.75);
+  --supportTransparentText: rgba(0, 0, 51, 0.6);
+  --codeTransparentText: rgba(0, 0, 51, 0.7);
+  --labelTransparentText: rgba(0, 0, 51, 0.5);
+  --dropdownBgTransparent: var(--blue3);
+  --dropdownListBgTransparent: rgba(166, 207, 255, 0.7);
+  --subDropdownListBgTransparent: rgba(166, 207, 255, 0.8);
+  --dashBg: #0048ff;
+  --modalBtn: #4b74dd;
+  --trashItemImageBg: #fdfdfd;
+  --trashItemImageBgHover: rgb(212, 212, 212);
+  --datePickerBg: rgba(0, 0, 0, 0.2);
+  --darkBlueBtnBg: #2f8dff;
+  --settingsBoxShadow: 0px 0px 10px 0px rgb(58, 150, 255);
+
+  /* Btns-hover */
+  --welcomeScreenSubBtn-hover: #7ab8ff;
+  --welcomeScreenContrastBtn-hover: #1873da;
+  --red-hover: #c64343;
+  --anyBtnOnBgSubScreen-hover: #7bb8ff;
+  --darkBlue-hover: #0073ff;
+  --edgeBtnBg-hover: #408dff;
+  --textFieldInFolderBg-hover: #2f8dff;
+  --blueTransparent-hover: rgba(1, 95, 202, 0.6);
+  --modalBtns-hover: #62a9fe;
+}
+
+.font-small {
+  --font-scale: 0.825;
+}
+
+.font-default {
+  --font-scale: 1;
+}
+
+.font-large {
+  --font-scale: 1.175;
 }
 
 html,
@@ -104,7 +212,7 @@ form {
 span {
   font-family: "Segoe UI";
   font-style: normal;
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   line-height: 1;
   font-weight: 400;
   color: var(--mainText);

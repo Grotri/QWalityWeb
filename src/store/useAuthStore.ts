@@ -26,7 +26,7 @@ interface IUseAuthStore extends IStoreStatus {
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
-  const storedUser = localStorage.getItem("user");
+  const storedUser = sessionStorage.getItem("user");
 
   return {
     loading: false,
@@ -37,7 +37,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
     clearUser: () => set({ user: { ...initialUser } }),
 
     setUser: (newUser) => {
-      localStorage.setItem("user", JSON.stringify(newUser));
+      sessionStorage.setItem("user", JSON.stringify(newUser));
       set({ user: { ...newUser } });
     },
 
@@ -45,13 +45,13 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       set((state) => {
         const updatedUser = { ...state.user, [field]: value };
         if (field === "subscription") {
-          localStorage.setItem("user", JSON.stringify(updatedUser));
+          sessionStorage.setItem("user", JSON.stringify(updatedUser));
         }
         return { user: updatedUser };
       }),
 
     logout: (clearAccounts) => {
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
       set({ user: { ...initialUser } });
       clearAccounts();
     },
@@ -100,9 +100,11 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             password: user.password.trim(),
             inn: user.inn?.trim(),
             role: user.role,
+            theme: "dark",
+            fontSize: "default",
           };
 
-          localStorage.setItem("user", JSON.stringify(newUser));
+          sessionStorage.setItem("user", JSON.stringify(newUser));
           addAccount(newUser);
           set({
             loading: true,
@@ -126,7 +128,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           (acc) => acc.login === email && acc.password === password
         );
         if (existingAccount) {
-          localStorage.setItem("user", JSON.stringify(existingAccount));
+          sessionStorage.setItem("user", JSON.stringify(existingAccount));
           addAccount(existingAccount);
           if (existingAccount.role === "administrator") {
             addAccount(credits[3]);

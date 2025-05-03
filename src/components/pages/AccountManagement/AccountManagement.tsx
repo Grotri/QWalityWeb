@@ -149,10 +149,9 @@ const AccountManagement = () => {
                       style={styles.btn}
                       onPress={() =>
                         changeAccount(index, {
-                          id: section.id,
+                          ...section,
                           login: section.login.trim(),
                           password: section.password.trim(),
-                          role: section.role,
                         })
                       }
                     >

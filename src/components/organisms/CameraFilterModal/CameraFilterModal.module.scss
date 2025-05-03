@@ -24,8 +24,8 @@
 }
 
 .modalTitle {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 700;
 }
 
@@ -49,8 +49,8 @@
 }
 
 .labelStyle {
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -71,8 +71,8 @@
 .btn {
   border-radius: 8px;
   height: 30px;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
   color: var(--mainText);
 }
@@ -89,7 +89,7 @@
   }
 
   .btn {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
     padding: 0 24px;
   }
 }
@@ -105,6 +105,6 @@
   }
 
   .btn {
-    font-size: 14px;
+    font-size: calc(14px * var(--font-scale));
   }
 }

@@ -18,8 +18,8 @@
 }
 
 .headerText {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 600;
   word-break: break-word;
 }
@@ -46,20 +46,20 @@
 }
 
 .inputLabel {
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   font-weight: 400;
   color: var(--labelTransparentText);
 }
 
 .inputError {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: calc(12px * var(--font-scale));
+  line-height: calc(16px * var(--font-scale));
 }
 
 .inputField {
-  font-size: 16px;
-  line-height: 20px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(20px * var(--font-scale));
 }
 
 .btns {
@@ -72,8 +72,8 @@
 .btn {
   height: 24px;
   border-radius: 6px;
-  font-size: 14px;
-  line-height: 21px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   color: var(--subTextMainScreenPopup);
   padding: 0 24px;
 }

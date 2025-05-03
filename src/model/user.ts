@@ -5,6 +5,8 @@ export interface IUser {
   password: string;
   subscription?: string;
   role: string;
+  theme: "light" | "dark";
+  fontSize: "small" | "default" | "large";
 }
 
 export const initialUser: IUser = {
@@ -13,6 +15,8 @@ export const initialUser: IUser = {
   login: "",
   password: "",
   role: "owner",
+  theme: "dark",
+  fontSize: "default",
 };
 
 export interface IErrors {

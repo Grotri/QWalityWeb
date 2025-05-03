@@ -18,9 +18,10 @@
 }
 
 .subTitle {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 600;
+  text-align: center;
 }
 
 .infoWrapper {
@@ -45,28 +46,28 @@
 }
 
 .confirmationInput {
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 500;
 }
 
 .confirmationInputLabel {
-  font-size: 16px;
-  line-height: 19px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
 }
 
 .btn {
   width: 80%;
   height: 42px;
   border-radius: 12px;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   color: var(--mainText);
   font-weight: 700;
 }
 
 .statistics {
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   color: var(--supportTransparentText);
 }
 
@@ -103,11 +104,11 @@
 
 @media (max-width: 424.89px) {
   .btn {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
     height: 36px;
   }
 
   .subTitle {
-    font-size: 18px;
+    font-size: calc(18px * var(--font-scale));
   }
 }

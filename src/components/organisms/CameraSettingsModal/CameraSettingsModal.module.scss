@@ -50,20 +50,20 @@
 }
 
 .customTitleInputFieldStyles {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 600;
   text-align: center;
 }
 
 .customInputFieldStyles {
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
 }
 
 .customLabelStyles {
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   margin-left: 4px;
   color: var(--subTextMainScreenPopup);
 }
@@ -90,8 +90,8 @@
 }
 
 .radioLabelStyle {
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
 }
 
 .btns {
@@ -112,8 +112,8 @@
   flex: 1;
   border-radius: 8px;
   height: 30px;
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   font-weight: 600;
   color: var(--mainText);
 }
@@ -124,14 +124,14 @@
   border-radius: 8px;
   font-weight: 600;
   color: var(--mainText);
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
 }
 
 .smallModalTitle {
   font-weight: 700;
-  font-size: 18px;
-  line-height: 21px;
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   text-align: center;
 }
 
@@ -149,8 +149,8 @@
   height: 30px;
   font-weight: 700;
   color: var(--mainText);
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
 }
 
 @media (max-width: 1439.89px) {
@@ -179,8 +179,8 @@
   }
 
   .smallModalTitle {
-    font-size: 16px;
-    line-height: 18px;
+    font-size: calc(16px * var(--font-scale));
+    line-height: calc(18px * var(--font-scale));
   }
 
   .flexBtns {

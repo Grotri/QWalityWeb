@@ -5,8 +5,8 @@
 }
 
 .label {
-  font-size: 16px;
-  line-height: 19px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   color: var(--subTextMainScreenPopup);
   margin-left: 8px;
 }

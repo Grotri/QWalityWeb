@@ -15,6 +15,11 @@ const App: FC = () => {
     }
   }, [user.theme]);
 
+  useEffect(() => {
+    document.body.classList.remove("font-small", "font-default", "font-large");
+    document.body.classList.add(`font-${user.fontSize}`);
+  }, [user.fontSize]);
+
   return (
     <>
       <AppRouter />

@@ -12,6 +12,7 @@
   --darkBlueTransparent: rgba(76, 126, 254, 0.85);
   --error: rgb(255, 0, 0);
   --info: rgb(255, 136, 0);
+  --font-scale: 1;
 
   /* Welcome Screens Section */
   --welcomeScreenPoint: rgba(0, 229, 255, 0.8);
@@ -178,6 +179,18 @@
   --modalBtns-hover: #62a9fe;
 }
 
+.font-small {
+  --font-scale: 0.825;
+}
+
+.font-default {
+  --font-scale: 1;
+}
+
+.font-large {
+  --font-scale: 1.175;
+}
+
 html,
 body,
 #root {
@@ -199,7 +212,7 @@ form {
 span {
   font-family: "Segoe UI";
   font-style: normal;
-  font-size: 14px;
+  font-size: calc(14px * var(--font-scale));
   line-height: 1;
   font-weight: 400;
   color: var(--mainText);

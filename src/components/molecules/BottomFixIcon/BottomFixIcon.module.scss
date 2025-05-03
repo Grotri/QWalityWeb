@@ -29,8 +29,8 @@
 }
 
 .btnText {
-  line-height: 23px;
-  font-size: 16px;
+  line-height: calc(23px * var(--font-scale));
+  font-size: calc(16px * var(--font-scale));
   max-width: 120px;
   text-align: center;
 }
@@ -51,8 +51,8 @@
   }
 
   .btnText {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: calc(14px * var(--font-scale));
+    line-height: calc(20px * var(--font-scale));
   }
 
   .btn {
@@ -75,8 +75,8 @@
   }
 
   .btnText {
-    font-size: 12px;
-    line-height: 16px;
+    font-size: calc(12px * var(--font-scale));
+    line-height: calc(16px * var(--font-scale));
     z-index: 1;
   }
 

@@ -16,14 +16,14 @@
 }
 
 .headerText {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   font-weight: 600;
   word-break: break-word;
 }
 
 .emptyText {
-  font-size: 20px;
+  font-size: calc(20px * var(--font-scale));
   font-weight: 600;
   color: var(--sectionTransparentText);
   padding-left: 20px;
@@ -61,8 +61,8 @@
   }
 
   .headerText {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: calc(20px * var(--font-scale));
+    line-height: calc(28px * var(--font-scale));
   }
 
   .arrowIcon {
@@ -71,7 +71,7 @@
   }
 
   .emptyText {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
     padding-left: 12px;
   }
 }

@@ -73,7 +73,7 @@
 }
 
 .title {
-  font-size: 32px;
+  font-size: calc(32px * var(--font-scale));
   font-weight: 700;
 }
 
@@ -190,8 +190,8 @@
 
 .burgerTitle {
   position: absolute;
-  font-size: 16px;
-  line-height: 19px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   font-weight: 600;
   transform: translateX(-50%);
   left: 50%;
@@ -237,8 +237,8 @@
 }
 
 .menuItemTitle {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   font-weight: 600;
   transition: 0.3s;
 }
@@ -260,8 +260,8 @@
 }
 
 .mainPageIconTitle {
-  font-size: 16px;
-  line-height: 19px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
   font-weight: 600;
   user-select: none;
 }
@@ -287,8 +287,8 @@
 }
 
 .inputText {
-  font-size: 20px;
-  line-height: 25px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(25px * var(--font-scale));
 }
 
 @media (max-width: 1439.89px) {
@@ -339,7 +339,7 @@
   }
 
   .title {
-    font-size: 22px;
+    font-size: calc(22px * var(--font-scale));
   }
 
   .burgerLine {
@@ -363,8 +363,8 @@
 
   .burgerTitle,
   .mainPageIconTitle {
-    font-size: 12px;
-    line-height: 16px;
+    font-size: calc(12px * var(--font-scale));
+    line-height: calc(16px * var(--font-scale));
   }
 
   .menu {
@@ -390,8 +390,8 @@
   }
 
   .menuItemTitle {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: calc(20px * var(--font-scale));
+    line-height: calc(28px * var(--font-scale));
   }
 
   .mainPageIcons {
@@ -421,6 +421,6 @@
   }
 
   .inputText {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
   }
 }

@@ -5,8 +5,8 @@
 }
 
 .label {
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   color: var(--subTextMainScreenPopup);
   margin-left: 8px;
 }
@@ -61,7 +61,7 @@
 .error-message {
   color: var(--error);
   margin-left: 8px;
-  line-height: 16px;
+  line-height: calc(16px * var(--font-scale));
 }
 
 .error {

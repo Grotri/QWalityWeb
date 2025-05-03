@@ -28,8 +28,8 @@
 }
 
 .title {
-  font-size: 28px;
-  line-height: 37px;
+  font-size: calc(28px * var(--font-scale));
+  line-height: calc(37px * var(--font-scale));
   font-weight: 700;
   margin-bottom: 10px;
 }
@@ -43,8 +43,8 @@
 }
 
 .description {
-  font-size: 22px;
-  line-height: 29px;
+  font-size: calc(22px * var(--font-scale));
+  line-height: calc(29px * var(--font-scale));
   font-weight: 600;
   margin-bottom: 24px;
 }
@@ -71,8 +71,8 @@
 }
 
 .price {
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 700;
   color: var(--codeTransparentText);
 }
@@ -81,8 +81,8 @@
   width: 100%;
   height: 32px;
   border-radius: 8px;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
   font-weight: 700;
   color: var(--mainText);
 }

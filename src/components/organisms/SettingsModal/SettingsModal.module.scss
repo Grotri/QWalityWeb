@@ -37,8 +37,8 @@
 
 .dropdownText {
   white-space: nowrap;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -54,16 +54,16 @@
 .btn {
   border-radius: 10px;
   height: 34px;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
   padding: 0 34px;
   color: var(--mainText);
 }
 
 .version {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: calc(12px * var(--font-scale));
+  line-height: calc(16px * var(--font-scale));
   font-weight: 600;
   color: var(--supportTransparentText);
 }
@@ -86,9 +86,10 @@
 }
 
 .modalTitle {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   font-weight: 700;
+  text-align: center;
 }
 
 .modalBtns {
@@ -102,8 +103,8 @@
   flex: 1;
   border-radius: 8px;
   height: 38px;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
   font-weight: 700;
   color: var(--mainText);
 }
@@ -120,8 +121,8 @@
   width: 44%;
   border-radius: 8px;
   height: 33px;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(16px * var(--font-scale));
   color: var(--mainText);
   margin-top: 19px;
 }
@@ -134,28 +135,28 @@
 
 .input {
   color: var(--black) !important;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
   font-weight: 600;
 }
 
 .inputLabel {
   color: var(--codeTransparentText);
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
 }
 
 .inputError {
-  font-size: 14px;
-  line-height: 19px;
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
 }
 
 .modalCancelBtn {
   width: 44%;
   border-radius: 8px;
   height: 34px;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 700;
   color: var(--mainText);
 }
@@ -195,8 +196,8 @@
   }
 
   .modalTitle {
-    font-size: 21px;
-    line-height: 28px;
+    font-size: calc(21px * var(--font-scale));
+    line-height: calc(28px * var(--font-scale));
   }
 }
 
@@ -212,8 +213,8 @@
   .btn {
     padding: 0 16px;
     height: 28px;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: calc(14px * var(--font-scale));
+    line-height: calc(18px * var(--font-scale));
   }
 
   .dropdownWrapper {
@@ -237,8 +238,8 @@
   }
 
   .modalTitle {
-    font-size: 17px;
-    line-height: 21px;
+    font-size: calc(17px * var(--font-scale));
+    line-height: calc(21px * var(--font-scale));
   }
 
   .modalBtns {
@@ -248,8 +249,8 @@
   .modalBtn,
   .modalCancelBtn {
     height: 28px;
-    font-size: 16px;
-    line-height: 21px;
+    font-size: calc(16px * var(--font-scale));
+    line-height: calc(21px * var(--font-scale));
   }
 
   .modalCancelBtn {

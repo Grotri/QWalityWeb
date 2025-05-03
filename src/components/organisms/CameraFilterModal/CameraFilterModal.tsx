@@ -122,7 +122,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
               }
               controlBackgroundColor="var(--subDropdownListBgTransparent)"
               controlHeight="30px"
-              fontSize="16px"
+              fontSize="calc(16px * var(--font-scale))"
               marginVertical="6px"
             />
           </div>

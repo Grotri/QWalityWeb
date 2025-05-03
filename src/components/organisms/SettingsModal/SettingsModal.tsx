@@ -11,6 +11,7 @@ import useAuthStore from "../../../store/useAuthStore";
 import Modal from "../../atoms/Modal";
 import Input from "../../atoms/Input/Input";
 import useAccountStore from "../../../store/useAccountStore";
+import { fontSizes } from "../../../constants/fontSizes";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const { user, setUser, logout } = useAuthStore();
@@ -25,6 +26,10 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
 
   const toggleTheme = (value: string) => {
     setUser({ ...user, theme: value === "Yes" ? "light" : "dark" });
+  };
+
+  const toggleFontSize = (value: string) => {
+    setUser({ ...user, fontSize: value as "small" | "default" | "large" });
   };
 
   const deleteAccount = () => {
@@ -58,7 +63,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 setValue={setIsAutoDelete}
                 value={isAutoDelete}
                 wrapperStyle={styles.dropdown}
-                fontSize="14px"
+                fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"
                 marginVertical="4px"
               />
@@ -70,7 +75,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 setValue={setIsAutoClear}
                 value={isAutoClear}
                 wrapperStyle={styles.dropdown}
-                fontSize="14px"
+                fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"
                 marginVertical="4px"
               />
@@ -82,7 +87,19 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 setValue={toggleTheme}
                 value={user.theme === "dark" ? "No" : "Yes"}
                 wrapperStyle={styles.dropdown}
-                fontSize="14px"
+                fontSize="calc(14px * var(--font-scale))"
+                marginHorizontal="8px"
+                marginVertical="4px"
+              />
+            </div>
+            <div className={styles.dropdownWrapper}>
+              <span className={styles.dropdownText}>Размер шрифта</span>
+              <Dropdown
+                data={fontSizes}
+                setValue={toggleFontSize}
+                value={user.fontSize}
+                wrapperStyle={styles.dropdown}
+                fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"
                 marginVertical="4px"
               />

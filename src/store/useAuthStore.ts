@@ -101,6 +101,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             inn: user.inn?.trim(),
             role: user.role,
             theme: "dark",
+            fontSize: "default",
           };
 
           sessionStorage.setItem("user", JSON.stringify(newUser));

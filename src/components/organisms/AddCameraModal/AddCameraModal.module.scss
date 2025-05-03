@@ -24,8 +24,8 @@
 }
 
 .modalTitle {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -44,14 +44,14 @@
 }
 
 .input {
-  font-size: 16px;
+  font-size: calc(16px * var(--font-scale));
   font-weight: 600;
 }
 
 .inputLabel {
   margin-left: 4px;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
 }
 
 .errorLabel {
@@ -63,8 +63,8 @@
   padding: 0 16px;
   height: 29px;
   color: var(--mainText);
-  font-size: 20px;
-  line-height: 27px;
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
   font-weight: 600;
 }
 
@@ -80,7 +80,7 @@
   }
 
   .btn {
-    font-size: 16px;
+    font-size: calc(16px * var(--font-scale));
     padding: 0 24px;
   }
 }
@@ -91,7 +91,7 @@
   }
 
   .modalTitle {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: calc(20px * var(--font-scale));
+    line-height: calc(28px * var(--font-scale));
   }
 }

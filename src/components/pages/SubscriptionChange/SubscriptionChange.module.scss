@@ -21,8 +21,8 @@
   border-radius: 14px;
   height: 38px;
   width: 22%;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(22px * var(--font-scale));
   font-weight: 900;
   color: var(--welcomeScreenSubText);
 }

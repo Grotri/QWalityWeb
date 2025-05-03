@@ -52,6 +52,7 @@ const Admin = () => {
         password: password.trim(),
         role,
         theme: "dark",
+        fontSize: "default",
       };
       if (validate()) {
         registerAccount(account);

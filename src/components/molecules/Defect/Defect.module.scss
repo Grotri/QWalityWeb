@@ -35,20 +35,20 @@
 }
 
 .itemName {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
   font-weight: 600;
   word-break: break-word;
 }
 
 .itemDate {
-  line-height: 20px;
+  line-height: calc(20px * var(--font-scale));
 }
 
 .btn {
   color: var(--mainText);
-  font-size: 16px;
-  line-height: 20px;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(20px * var(--font-scale));
   padding: 0;
   text-decoration: underline;
 
@@ -64,17 +64,17 @@
   }
 
   .btn {
-    font-size: 14px;
+    font-size: calc(14px * var(--font-scale));
   }
 }
 
 @media (max-width: 424.89px) {
   .itemName {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: calc(14px * var(--font-scale));
+    line-height: calc(18px * var(--font-scale));
   }
 
   .itemDate {
-    font-size: 12px;
+    font-size: calc(12px * var(--font-scale));
   }
 }

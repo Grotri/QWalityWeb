@@ -8,6 +8,7 @@ export const credits: IUser[] = [
     role: "user",
     subscription: "2",
     theme: "dark",
+    fontSize: "default",
   },
   {
     id: "1",
@@ -16,6 +17,7 @@ export const credits: IUser[] = [
     role: "administrator",
     subscription: "2",
     theme: "dark",
+    fontSize: "default",
   },
   {
     id: "2",
@@ -24,6 +26,7 @@ export const credits: IUser[] = [
     role: "moderator",
     subscription: "2",
     theme: "dark",
+    fontSize: "default",
   },
   {
     id: "3",
@@ -32,6 +35,7 @@ export const credits: IUser[] = [
     role: "owner",
     subscription: "2",
     theme: "dark",
+    fontSize: "default",
     inn: "1234567890",
   },
 ];

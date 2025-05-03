@@ -7,6 +7,7 @@ export const credits: IUser[] = [
     password: "qwerty12345",
     role: "user",
     subscription: "2",
+    theme: "dark",
   },
   {
     id: "1",
@@ -14,6 +15,7 @@ export const credits: IUser[] = [
     password: "administrator",
     role: "administrator",
     subscription: "2",
+    theme: "dark",
   },
   {
     id: "2",
@@ -21,6 +23,7 @@ export const credits: IUser[] = [
     password: "moderator_000",
     role: "moderator",
     subscription: "2",
+    theme: "dark",
   },
   {
     id: "3",
@@ -28,6 +31,7 @@ export const credits: IUser[] = [
     password: "ownerowner",
     role: "owner",
     subscription: "2",
+    theme: "dark",
     inn: "1234567890",
   },
 ];

@@ -153,6 +153,7 @@ const AccountManagement = () => {
                           login: section.login.trim(),
                           password: section.password.trim(),
                           role: section.role,
+                          theme: section.theme,
                         })
                       }
                     >

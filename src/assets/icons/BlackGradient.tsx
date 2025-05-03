@@ -23,8 +23,8 @@ const BlackGradient: FC<IIcon> = ({ width = 100, style }) => {
           gradientTransform="rotate(-128.908 62.313 22.426)scale(89.9569)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop />
-          <stop offset={1} stopColor="#042555" stopOpacity={0} />
+          <stop offset={0} stopColor="var(--bg)" stopOpacity={1} />
+          <stop offset={1} stopColor="var(--bg)" stopOpacity={0} />
         </radialGradient>
       </defs>
     </svg>

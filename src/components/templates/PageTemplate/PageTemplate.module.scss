@@ -227,11 +227,11 @@
 
   &:hover {
     svg path {
-      stroke: var(--bg);
+      stroke: var(--menuItemHover);
     }
 
     .menuItemTitle {
-      color: var(--bg);
+      color: var(--menuItemHover);
     }
   }
 }
@@ -281,7 +281,7 @@
 
 .input {
   height: 42px !important;
-  background: rgba(131, 166, 255, 0.6) !important;
+  background: var(--headerInput) !important;
   border-radius: 8px !important;
   padding: 0 12px !important;
 }

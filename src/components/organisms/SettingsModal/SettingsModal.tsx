@@ -13,7 +13,7 @@ import Input from "../../atoms/Input/Input";
 import useAccountStore from "../../../store/useAccountStore";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
-  const { user, logout } = useAuthStore();
+  const { user, setUser, logout } = useAuthStore();
   const { clearAccounts } = useAccountStore();
 
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
@@ -22,6 +22,10 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string>("");
+
+  const toggleTheme = (value: string) => {
+    setUser({ ...user, theme: value === "Yes" ? "light" : "dark" });
+  };
 
   const deleteAccount = () => {
     if (!code.trim()) {
@@ -65,6 +69,18 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 data={settingsItems}
                 setValue={setIsAutoClear}
                 value={isAutoClear}
+                wrapperStyle={styles.dropdown}
+                fontSize="14px"
+                marginHorizontal="8px"
+                marginVertical="4px"
+              />
+            </div>
+            <div className={styles.dropdownWrapper}>
+              <span className={styles.dropdownText}>Светлая тема</span>
+              <Dropdown
+                data={settingsItems}
+                setValue={toggleTheme}
+                value={user.theme === "dark" ? "No" : "Yes"}
                 wrapperStyle={styles.dropdown}
                 fontSize="14px"
                 marginHorizontal="8px"

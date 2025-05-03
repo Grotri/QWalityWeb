@@ -51,6 +51,7 @@ const Admin = () => {
         login: login.trim(),
         password: password.trim(),
         role,
+        theme: "dark",
       };
       if (validate()) {
         registerAccount(account);

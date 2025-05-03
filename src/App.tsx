@@ -1,8 +1,20 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 import AppRouter from "./router";
+import useAuthStore from "./store/useAuthStore";
 
 const App: FC = () => {
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    const body = document.body;
+    if (user.theme === "light") {
+      body.classList.add("light-theme");
+    } else {
+      body.classList.remove("light-theme");
+    }
+  }, [user.theme]);
+
   return (
     <>
       <AppRouter />

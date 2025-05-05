@@ -175,7 +175,7 @@ const router = createBrowserRouter([
               <PageTemplate
                 headerTitle="Админ панель"
                 backPath={ERoutes.profile}
-                centralized
+                canScroll
               >
                 <Admin />
               </PageTemplate>

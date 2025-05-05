@@ -5,6 +5,7 @@ import { EErrors } from "../constants/errors";
 import { v4 as uuidv4 } from "uuid";
 import { ICamera } from "../model/camera";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
+import { linkPattern } from "../constants/patterns";
 
 interface IErrors {
   name: string;
@@ -61,7 +62,11 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
   validate: (name, link) => {
     const newErrors: IErrors = {
       name: !name.trim() ? EErrors.required : "",
-      link: !link.trim() ? EErrors.required : "",
+      link: !link.trim()
+        ? EErrors.required
+        : !linkPattern.test(link.trim())
+        ? EErrors.link
+        : "",
     };
 
     set({ errors: newErrors });

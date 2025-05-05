@@ -12,6 +12,7 @@ import Modal from "../../atoms/Modal";
 import Input from "../../atoms/Input/Input";
 import useAccountStore from "../../../store/useAccountStore";
 import { fontSizes } from "../../../constants/fontSizes";
+import { themes } from "../../../constants/themes";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const { user, setUser, logout } = useAuthStore();
@@ -25,7 +26,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const [error, setError] = useState<string>("");
 
   const toggleTheme = (value: string) => {
-    setUser({ ...user, theme: value === "Yes" ? "light" : "dark" });
+    setUser({ ...user, theme: value as "light" | "dark" });
   };
 
   const toggleFontSize = (value: string) => {
@@ -81,11 +82,11 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>Светлая тема</span>
+              <span className={styles.dropdownText}>Тема</span>
               <Dropdown
-                data={settingsItems}
+                data={themes}
                 setValue={toggleTheme}
-                value={user.theme === "dark" ? "No" : "Yes"}
+                value={user.theme}
                 wrapperStyle={styles.dropdown}
                 fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"

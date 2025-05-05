@@ -12,6 +12,7 @@ import { ERoutes } from "../../../router/routes";
 import useAuthStore from "../../../store/useAuthStore";
 import { initialUser, IUser } from "../../../model/user";
 import { ERoles } from "../../../constants/roles";
+import { supportLink } from "../../../constants/support";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -185,7 +186,10 @@ const Profile = () => {
           </Button>
           <div className={styles.supportTextWrapper}>
             <span className={styles.supportText}>Нет доступа к почте?</span>
-            <span className={styles.supportTextUnderlined}>
+            <span
+              className={styles.supportTextUnderlined}
+              onClick={() => window.open(supportLink, "_blank")}
+            >
               Обратитесь в тех. поддержку
             </span>
           </div>

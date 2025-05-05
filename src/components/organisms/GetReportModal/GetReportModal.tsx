@@ -22,21 +22,34 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
-  const handleDelete = () => {
+  const validateDates = (): boolean => {
     if (!startDate || !endDate) {
       onError(EErrors.chooseDates);
-      return;
+      return false;
     }
 
     if (endDate > new Date()) {
       onError(EErrors.futureDate);
-      return;
+      return false;
     }
 
     if (startDate > endDate) {
       onError(EErrors.timeDates);
-      return;
+      return false;
     }
+
+    return true;
+  };
+
+  const handleSave = () => {
+    if (!validateDates()) return;
+
+    onSuccess(type === "log" ? "Лог скачан" : "Отчет скачан");
+    closeModal();
+  };
+
+  const handleDelete = () => {
+    if (!validateDates()) return;
 
     onSuccess(type === "log" ? "Лог удален" : "Отчет удален");
     closeModal();
@@ -115,10 +128,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
               <Button
                 color="management"
                 style={styles.btnModal}
-                onPress={() => {
-                  onSuccess(type === "log" ? "Лог скачан" : "Отчет скачан");
-                  closeModal();
-                }}
+                onPress={handleSave}
               >
                 Скачать
               </Button>

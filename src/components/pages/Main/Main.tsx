@@ -42,13 +42,21 @@ const Main: FC<{ search: string }> = ({ search }) => {
   const offlineCameras = cameras.filter((camera) => !camera.online);
 
   const sections = [
-    { title: `Online (${onlineCameras.length})`, cameras: onlineCameras },
-    { title: `Offline (${offlineCameras.length})`, cameras: offlineCameras },
+    {
+      id: "online",
+      title: `Online (${onlineCameras.length})`,
+      cameras: onlineCameras,
+    },
+    {
+      id: "offline",
+      title: `Offline (${offlineCameras.length})`,
+      cameras: offlineCameras,
+    },
   ];
 
   const handleSectionChange =
-    (section: string) => (_: SyntheticEvent, newExpanded: boolean) => {
-      setActiveSection(newExpanded ? section : false);
+    (sectionId: string) => (_: SyntheticEvent, newExpanded: boolean) => {
+      setActiveSection(newExpanded ? sectionId : false);
     };
 
   useEffect(() => {
@@ -64,9 +72,9 @@ const Main: FC<{ search: string }> = ({ search }) => {
         );
         return (
           <CustomAccordion
-            key={section.title}
-            expanded={activeSection === section.title}
-            onChange={handleSectionChange(section.title)}
+            key={section.id}
+            expanded={activeSection === section.id}
+            onChange={handleSectionChange(section.id)}
           >
             <CustomAccordionSummary
               expandIcon={

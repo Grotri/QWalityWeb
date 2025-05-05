@@ -9,6 +9,7 @@ import {
 } from "./styles";
 import { BottomIcon, MessageIcon } from "../../../assets/icons";
 import SupportContent from "../../atoms/SupportContent";
+import { supportLink } from "../../../constants/support";
 
 const FAQ = () => {
   const [activeSection, setActiveSection] = useState<string | false>(false);
@@ -43,7 +44,7 @@ const FAQ = () => {
       <BottomFixIcon
         icon={<MessageIcon style={styles.messageIcon} />}
         text="Обратиться в поддержку"
-        onPress={() => alert("Обратиться в поддержку пока невозможно.")}
+        onPress={() => window.open(supportLink, "_blank")}
       />
     </div>
   );

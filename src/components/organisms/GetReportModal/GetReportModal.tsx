@@ -6,9 +6,10 @@ import styles from "./GetReportModal.module.scss";
 import Dropdown from "../../atoms/Dropdown";
 import { formats } from "../../../constants/formats";
 import Button from "../../atoms/Button";
-import { onSuccess } from "../../../helpers/toast";
+import { onError, onSuccess } from "../../../helpers/toast";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
+import { EErrors } from "../../../constants/errors";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
@@ -19,6 +20,26 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const handleDelete = () => {
+    if (!startDate || !endDate) {
+      onError(EErrors.chooseDates);
+      return;
+    }
+
+    if (endDate > new Date()) {
+      onError(EErrors.futureDate);
+      return;
+    }
+
+    if (startDate > endDate) {
+      onError(EErrors.timeDates);
+      return;
+    }
+
+    onSuccess(type === "log" ? "Лог удален" : "Отчет удален");
+    closeModal();
   };
 
   useEffect(() => {
@@ -95,8 +116,8 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 color="management"
                 style={styles.btnModal}
                 onPress={() => {
+                  onSuccess(type === "log" ? "Лог скачан" : "Отчет скачан");
                   closeModal();
-                  onSuccess("Лог скачан");
                 }}
               >
                 Скачать
@@ -114,10 +135,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 <Button
                   color="red"
                   style={styles.btnModalBold}
-                  onPress={() => {
-                    closeModal();
-                    onSuccess("Лог удален");
-                  }}
+                  onPress={handleDelete}
                 >
                   Да
                 </Button>

@@ -3,14 +3,14 @@ import { IDropdownData } from "../components/atoms/Dropdown/types";
 export const fontSizes: IDropdownData[] = [
   {
     value: "small",
-    label: "Small",
+    label: "Маленький",
   },
   {
     value: "default",
-    label: "Default",
+    label: "Средний",
   },
   {
     value: "large",
-    label: "Large",
+    label: "Большой",
   },
 ];

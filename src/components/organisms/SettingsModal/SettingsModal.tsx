@@ -13,6 +13,7 @@ import Input from "../../atoms/Input/Input";
 import useAccountStore from "../../../store/useAccountStore";
 import { fontSizes } from "../../../constants/fontSizes";
 import { themes } from "../../../constants/themes";
+import { languages } from "../../../constants/languages";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const { user, setUser, logout } = useAuthStore();
@@ -99,6 +100,18 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 data={fontSizes}
                 setValue={toggleFontSize}
                 value={user.fontSize}
+                wrapperStyle={styles.dropdown}
+                fontSize="calc(14px * var(--font-scale))"
+                marginHorizontal="8px"
+                marginVertical="4px"
+              />
+            </div>
+            <div className={styles.dropdownWrapper}>
+              <span className={styles.dropdownText}>Язык</span>
+              <Dropdown
+                data={languages}
+                setValue={() => {}}
+                value={"ru"}
                 wrapperStyle={styles.dropdown}
                 fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"

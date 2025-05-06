@@ -27,7 +27,8 @@ const SubscriptionChange = () => {
     const allowedRoles = getAllowedRolesBySubscription(sliderId);
 
     const hasTooManyAccounts = accountLimit < accounts.length;
-    const hasTooManyCameras = camerasLimit < cameras.length;
+    const hasTooManyCameras =
+      camerasLimit < cameras.filter((c) => !c.deletedAt).length;
     const invalidAccounts = accounts.filter(
       (account) => !allowedRoles.includes(account.role)
     );

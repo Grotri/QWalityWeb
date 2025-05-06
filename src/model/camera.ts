@@ -7,6 +7,7 @@ export interface ICamera {
   uptime: string;
   defects: IDefect[];
   link: string;
+  deletedAt?: string;
 }
 
 export const initialCamera: ICamera = {

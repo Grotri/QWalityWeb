@@ -60,7 +60,7 @@ const Main: FC<{ search: string }> = ({ search }) => {
     };
 
   useEffect(() => {
-    setCameras([...camerasInfo]);
+    setCameras([...camerasInfo.filter((c) => !c.deletedAt)]);
     setIsAddCameraModalOpen(false);
   }, [camerasInfo]);
 
@@ -138,7 +138,7 @@ const Main: FC<{ search: string }> = ({ search }) => {
           icon={<PlusIcon />}
           text="Добавить камеру"
           onPress={() => {
-            if (camerasInfo.length < cameraLimits) {
+            if (cameras.length < cameraLimits) {
               setIsAddCameraModalOpen(true);
             } else {
               onError("Достигнут лимит камер");

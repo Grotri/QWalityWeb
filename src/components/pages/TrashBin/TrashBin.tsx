@@ -10,18 +10,44 @@ import Button from "../../atoms/Button";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import Defect from "../../molecules/Defect";
 import useAuthStore from "../../../store/useAuthStore";
+import Camera from "../../molecules/Camera";
+import { ICamera } from "../../../model/camera";
+import { onError } from "../../../helpers/toast";
+import { useCameraLimits } from "../../../helpers/useCameraLimits";
 
 const TrashBin = () => {
-  const { cameras, recoverDefect, clearTrashBin, clearTrashBinByDates } =
-    useCamerasStore();
+  const {
+    cameras,
+    recoverDefect,
+    recoverCamera,
+    clearTrashBin,
+    clearTrashBinByDates,
+  } = useCamerasStore();
   const { user } = useAuthStore();
+  const cameraLimits = useCameraLimits();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   const deletedDefects = cameras.flatMap((camera) =>
-    camera.defects.filter((d) => d.isDeleted)
+    camera.defects
+      .filter((d) => !!d.deletedAt)
+      .map((defect) => ({
+        type: "defect",
+        data: defect,
+        cameraId: camera.id,
+      }))
   );
+
+  const deletedCameras = cameras
+    .filter((camera) => !!camera.deletedAt)
+    .map((camera) => ({ type: "camera", data: camera, cameraId: camera.id }));
+
+  const trashItems = [...deletedCameras, ...deletedDefects].sort((a, b) => {
+    const dateA = new Date(a.data.deletedAt ?? 0).getTime();
+    const dateB = new Date(b.data.deletedAt ?? 0).getTime();
+    return dateB - dateA;
+  });
 
   useEffect(() => {
     if (isModalOpen) {
@@ -38,19 +64,35 @@ const TrashBin = () => {
 
   return (
     <div className={styles.wrapper}>
-      {deletedDefects.length > 0 ? (
-        cameras.map((camera) =>
-          camera.defects
-            .filter((d) => d.isDeleted)
-            .map((defect: IDefect) => (
+      {trashItems.length > 0 ? (
+        trashItems.map((item) => {
+          if (item.type === "defect") {
+            return (
               <Defect
-                key={defect.id}
-                defect={defect}
+                key={item.data.id}
+                defect={item.data as IDefect}
                 textBtn={user.role !== "user" ? "Восстановить" : undefined}
-                onPress={() => recoverDefect(camera.id, defect.id)}
+                onPress={() => recoverDefect(item.cameraId, item.data.id)}
               />
-            ))
-        )
+            );
+          } else {
+            return (
+              <Camera
+                key={item.data.id}
+                camera={item.data as ICamera}
+                onPress={() => {
+                  if (
+                    cameras.filter((c) => !c.deletedAt).length < cameraLimits
+                  ) {
+                    recoverCamera(item.cameraId);
+                  } else {
+                    onError("Достигнут лимит камер");
+                  }
+                }}
+              />
+            );
+          }
+        })
       ) : (
         <SupportContent message="Корзина пуста" />
       )}

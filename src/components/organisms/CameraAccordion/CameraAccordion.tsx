@@ -118,7 +118,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   return (
     <div className={styles.wrapper}>
       {sections.map((camera) => {
-        const defects = camera.defects.filter((defect) => !defect.isDeleted);
+        const defects = camera.defects.filter((defect) => !defect.deletedAt);
         const page = cameraPages[camera.id] || 1;
         const sortOption = cameraSortOptions[camera.id];
         const filterOption = cameraFilterOptions[camera.id];

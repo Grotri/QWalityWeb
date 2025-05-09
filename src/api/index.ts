@@ -4,7 +4,7 @@ import { forceLogout } from "./forceLogout";
 import { onError } from "../helpers/toast";
 
 const api = axios.create({
-  baseURL: "http://api.qwality.space",
+  baseURL: "https://api.qwality.space",
   headers: {
     "Content-Type": "application/json",
   },

@@ -4,14 +4,15 @@ import { IErrors, initialErrors } from "./types";
 import { emailPattern } from "../../../constants/patterns";
 import { EErrors } from "../../../constants/errors";
 import { useNavigate } from "react-router-dom";
-import { ERoutes } from "../../../router/routes";
-import { onError, onSuccess } from "../../../helpers/toast";
+import { onError } from "../../../helpers/toast";
 import Input from "../../atoms/Input/Input";
 import Button from "../../atoms/Button";
 import InputPassword from "../../atoms/InputPassword";
+import useAuthStore from "../../../store/useAuthStore";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const { sendResetCode, restorePassword } = useAuthStore();
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,8 +40,7 @@ const ForgotPassword = () => {
   const changePassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      navigate(ERoutes.login);
-      onSuccess("Пароль сменен, зайдите с новыми данными", 5000);
+      restorePassword(email.trim(), code.trim(), password.trim(), navigate);
     } else {
       onError(EErrors.fields);
     }
@@ -74,7 +74,11 @@ const ForgotPassword = () => {
               errorText={errors.code}
               inputFieldClassName={styles.input}
             />
-            <Button style={styles.codeBtn} color="blue">
+            <Button
+              style={styles.codeBtn}
+              color="blue"
+              onPress={() => sendResetCode(email.trim())}
+            >
               <span className={styles.codeBtnText}>Получить код</span>
             </Button>
           </div>

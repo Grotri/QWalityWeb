@@ -28,12 +28,15 @@ export const cost: Record<string, string> = {
   "3": "17999",
 };
 
-export type ISubscription = ISliderCard;
+export interface ISubscription extends ISliderCard {
+  titleEng: string;
+}
 
 export const subscriptions: ISubscription[] = [
   {
     id: 0,
     title: "Демо",
+    titleEng: "demo",
     description: "Базовый функционал",
     radioLabels: [
       `${rolesLimits["0"]} роль`,
@@ -45,6 +48,7 @@ export const subscriptions: ISubscription[] = [
   {
     id: 1,
     title: "Стандарт",
+    titleEng: "standard",
     description: "Расширенный функционал",
     radioLabels: [
       `${rolesLimits["1"]} роли`,
@@ -56,6 +60,7 @@ export const subscriptions: ISubscription[] = [
   {
     id: 2,
     title: "Про",
+    titleEng: "pro",
     description: "Полноценный функционал",
     radioLabels: [
       `${rolesLimits["2"]} роли`,
@@ -67,6 +72,7 @@ export const subscriptions: ISubscription[] = [
   {
     id: 3,
     title: "Ультима",
+    titleEng: "ultima",
     description: "Полноценный функционал",
     radioLabels: [
       `${rolesLimits["3"]} роли`,

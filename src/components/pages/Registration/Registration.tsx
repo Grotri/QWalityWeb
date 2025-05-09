@@ -18,6 +18,7 @@ const Registration = () => {
     setUserField,
     clearUser,
     register,
+    sendRegisterCode,
   } = useAuthStore();
   const { addAccount } = useAccountStore();
 
@@ -82,7 +83,11 @@ const Registration = () => {
             errorText={errors.code}
             inputFieldClassName={styles.input}
           />
-          <Button style={styles.codeBtn} color="blue">
+          <Button
+            style={styles.codeBtn}
+            color="blue"
+            onPress={() => sendRegisterCode(user.login.trim())}
+          >
             <span className={styles.codeBtnText}>Получить код</span>
           </Button>
         </div>

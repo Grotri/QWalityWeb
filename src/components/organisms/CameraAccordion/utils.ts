@@ -1,5 +1,5 @@
 import { IDefect } from "../../../model/defect";
-import { EDefectFilterOptions } from "../CameraFilterModal/enums";
+import { EDefectOptions } from "../CameraFilterModal/enums";
 import { ICameraFilter } from "../CameraFilterModal/types";
 import { ESortOptions } from "../CameraSortModal/enums";
 
@@ -46,9 +46,9 @@ export const filterDefects = (
     });
   }
 
-  if (option === "other") {
-    const knownTypes = Object.values(EDefectFilterOptions).filter(
-      (val) => val !== EDefectFilterOptions.other
+  if (option === "otherDefect") {
+    const knownTypes = Object.values(EDefectOptions).filter(
+      (val) => val !== EDefectOptions.otherDefect
     );
 
     return defects.filter((defect) => {
@@ -57,6 +57,6 @@ export const filterDefects = (
   }
 
   const expectedName =
-    EDefectFilterOptions[option as keyof typeof EDefectFilterOptions];
+    EDefectOptions[option as keyof typeof EDefectOptions];
   return defects.filter((defect) => defect.name === expectedName);
 };

@@ -6,8 +6,10 @@ import styles from "./DefectSaveModal.module.scss";
 import { convertISODate } from "../../../helpers/formatDate";
 import Button from "../../atoms/Button";
 import { onSuccess } from "../../../helpers/toast";
+import { useTranslation } from "react-i18next";
 
 const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
+  const { t } = useTranslation();
   const [defectInfo, setDefectInfo] = useState<IDefect>({ ...initialDefect });
   const { name, date } = defectInfo;
 
@@ -20,9 +22,9 @@ const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
   return (
     <Modal isVisible={!!defect} onClose={onClose}>
       <div className={styles.modal}>
-        <span className={styles.modalTitle}>Хотите скачать изображение?</span>
+        <span className={styles.modalTitle}>{t("wantDownloadImage")}</span>
         <span className={styles.name}>
-          Дефект ({name}) {convertISODate(date)}
+          {t("defect")} ({t(name)}) {convertISODate(date)}
         </span>
         <div className={styles.btns}>
           <Button
@@ -30,13 +32,13 @@ const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
             style={styles.btn}
             onPress={() => {
               onClose();
-              onSuccess("Изображение скачано");
+              onSuccess(t("imageDownloaded"));
             }}
           >
-            Да
+            {t("yes")}
           </Button>
           <Button color="modal" style={styles.btn} onPress={onClose}>
-            Нет
+            {t("no")}
           </Button>
         </div>
       </div>

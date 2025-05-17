@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ICamera } from "../model/camera";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
 import { linkPattern } from "../constants/patterns";
+import i18n from "../i18n";
 
 interface IErrors {
   name: string;
@@ -51,7 +52,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         error: false,
       });
     } catch (error) {
-      onError("Не удалось загрузить список камер");
+      onError(i18n.t("failedToLoadCameraList"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -62,11 +63,11 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
 
   validate: (name, link) => {
     const newErrors: IErrors = {
-      name: !name.trim() ? EErrors.required : "",
+      name: !name.trim() ? i18n.t(EErrors.required) : "",
       link: !link.trim()
-        ? EErrors.required
+        ? i18n.t(EErrors.required)
         : !linkPattern.test(link.trim())
-        ? EErrors.link
+        ? i18n.t(EErrors.link)
         : "",
     };
 
@@ -82,7 +83,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         id: uuidv4(),
         online: true,
         title: name.trim(),
-        uptime: "0д 0ч 0м",
+        uptime: i18n.t("zeroTime"),
         defects: [],
         link: link.trim(),
       };
@@ -92,15 +93,17 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
           loading: true,
           cameras: [...cameras, newCamera],
         });
-        onSuccess(`Камера "${name}" успешно добавлена`);
+        onSuccess(
+          `${i18n.t("camera")} "${name}" ${i18n.t("cameraAddedSuccessfully")}`
+        );
       } catch (error) {
         console.log(error);
-        onError("Произошла ошибка при добавлении камеры");
+        onError(i18n.t("cameraAddError"));
       } finally {
         set({ loading: false });
       }
     } else {
-      onError(EErrors.fields);
+      onError(i18n.t(EErrors.fields));
     }
   },
 
@@ -123,18 +126,18 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
             ),
           });
           onEdit(null);
-          onSuccess("Данные камеры успешно отредактированы");
+          onSuccess(i18n.t("cameraDataEditedSuccessfully"));
         } catch (error) {
           console.log(error);
-          onError("Произошла ошибка при редактировании камеры");
+          onError(i18n.t("cameraEditError"));
         } finally {
           set({ loading: false });
         }
       } else {
-        onError(EErrors.fields);
+        onError(i18n.t(EErrors.fields));
       }
     } else {
-      onWarning(EErrors.noChanges);
+      onWarning(i18n.t(EErrors.noChanges));
     }
   },
 
@@ -152,9 +155,11 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess(`Камера "${camera.title}" успешно перемещена в корзину`);
+      onSuccess(
+        `${i18n.t("camera")} "${camera.title}" ${i18n.t("cameraMovedToTrash")}`
+      );
     } catch (error) {
-      onError("Не удалось удалить камеру");
+      onError(i18n.t("failedToDeleteCamera"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -167,7 +172,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         c.id === cameraId ? { ...c, deletedAt: undefined } : c
       ),
     });
-    onSuccess("Камера восстановлена");
+    onSuccess(i18n.t("cameraRestored"));
   },
 
   deleteHistory: (id) => {
@@ -184,9 +189,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess(`История камеры успешно удалена`);
+      onSuccess(i18n.t("cameraHistoryDeleted"));
     } catch (error) {
-      onError("Не удалось удалить историю камеры");
+      onError(i18n.t("failedToDeleteCameraHistory"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -212,9 +217,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess("Дефект перемещен в корзину");
+      onSuccess(i18n.t("defectMovedToTrash"));
     } catch (error) {
-      onError("Не удалось удалить дефект");
+      onError(i18n.t("failedToDeleteDefect"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -238,9 +243,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess("Дефект восстановлен");
+      onSuccess(i18n.t("defectRecovered"));
     } catch (error) {
-      onError("Не удалось восстановить дефект");
+      onError(i18n.t("failedToRestoreDefect"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -258,9 +263,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      onSuccess("Корзина очищена");
+      onSuccess(i18n.t("trashCleared"));
     } catch (error) {
-      onError("Не удалось очистить корзину");
+      onError(i18n.t("failedToClearTrash"));
       console.error(error);
       set({ error, loading: false });
     }
@@ -270,12 +275,12 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     const { cameras } = get();
 
     if (!startDate || !endDate) {
-      onError(EErrors.chooseDates);
+      onError(i18n.t(EErrors.chooseDates));
       return;
     }
 
     if (startDate > endDate) {
-      onError(EErrors.timeDates);
+      onError(i18n.t(EErrors.timeDates));
       return;
     }
 
@@ -308,7 +313,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
       }));
 
       if (!foundSomething) {
-        onWarning("За выбранный период дефекты не найдены");
+        onWarning(i18n.t("noDefectsFoundInPeriod"));
         set({ loading: false });
         return;
       }
@@ -319,9 +324,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         error: false,
       });
 
-      onSuccess("Корзина за данный промежуток очищена");
+      onSuccess(i18n.t("trashClearedForPeriod"));
     } catch (error) {
-      onError("Не удалось очистить корзину за данный промежуток");
+      onError(i18n.t("failedToClearTrashForPeriod"));
       console.error(error);
       set({ error, loading: false });
     }

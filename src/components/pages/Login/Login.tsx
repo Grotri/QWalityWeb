@@ -10,9 +10,11 @@ import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
 import { ERoutes } from "../../../router/routes";
 import useAccountStore from "../../../store/useAccountStore";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { login } = useAuthStore();
   const { addAccount } = useAccountStore();
   const [email, setEmail] = useState<string>("");
@@ -21,11 +23,11 @@ const Login = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      email: !email.trim() ? EErrors.required : "",
+      email: !email.trim() ? t(EErrors.required) : "",
       password: !password.trim()
-        ? EErrors.required
+        ? t(EErrors.required)
         : password.trim().length < 8
-        ? EErrors.password
+        ? t(EErrors.password)
         : "",
     };
 
@@ -38,16 +40,16 @@ const Login = () => {
     if (validate()) {
       login(email.trim(), password.trim(), addAccount);
     } else {
-      onError(EErrors.fields);
+      onError(t(EErrors.fields));
     }
   };
 
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleLogin}>
-        <span className={styles.title}>Войти</span>
+        <span className={styles.title}>{t("signIn")}</span>
         <Input
-          label="Почта / логин"
+          label={t("emailOrLogin")}
           value={email}
           onChangeText={(email) => {
             setEmail(email);
@@ -58,7 +60,7 @@ const Login = () => {
           inputFieldClassName={styles.input}
         />
         <InputPassword
-          label="Пароль"
+          label={t("password")}
           value={password}
           onChangeText={(password) => {
             setPassword(password);
@@ -68,10 +70,10 @@ const Login = () => {
           inputFieldClassName={styles.input}
         />
         <Button color="blue" style={styles.loginBtn} type="submit">
-          <span className={styles.loginBtnText}>Войти</span>
+          <span className={styles.loginBtnText}>{t("signIn")}</span>
         </Button>
         <Button onPress={() => navigate(ERoutes.passwordRecovery)}>
-          <span className={styles.forgotBtnText}>Забыли пароль?</span>
+          <span className={styles.forgotBtnText}>{t("forgotPassword")}</span>
         </Button>
       </form>
     </div>

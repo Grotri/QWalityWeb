@@ -2,6 +2,7 @@ import axios from "axios";
 import { getRefresh, getToken, setToken } from "./token";
 import { forceLogout } from "./forceLogout";
 import { onError } from "../helpers/toast";
+import i18n from "../i18n";
 
 const api = axios.create({
   baseURL: "https://api.qwality.space",
@@ -45,7 +46,7 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
-        onError("Сессия истекла. Пожалуйста, войдите заново.");
+        onError(i18n.t("sessionExpired"));
         forceLogout();
         return Promise.reject(refreshError);
       }

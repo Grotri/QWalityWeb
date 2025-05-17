@@ -7,9 +7,11 @@ import InputPassword from "../../atoms/InputPassword";
 import { useNavigate } from "react-router-dom";
 import { ERoutes } from "../../../router/routes";
 import useAccountStore from "../../../store/useAccountStore";
+import { useTranslation } from "react-i18next";
 
 const Registration = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     errors,
     clearErrors,
@@ -38,9 +40,9 @@ const Registration = () => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <span className={styles.title}>Регистрация</span>
+        <span className={styles.title}>{t("registration")}</span>
         <Input
-          label="ИНН"
+          label={t("inn")}
           maxLength={12}
           value={user.inn || ""}
           onChangeText={(inn) => {
@@ -51,7 +53,7 @@ const Registration = () => {
           inputFieldClassName={styles.input}
         />
         <Input
-          label="Почта"
+          label={t("email")}
           value={user.login}
           onChangeText={(email) => {
             setUserField("login", email);
@@ -62,7 +64,7 @@ const Registration = () => {
           inputFieldClassName={styles.input}
         />
         <InputPassword
-          label="Пароль"
+          label={t("password")}
           value={user.password}
           onChangeText={(password) => {
             setUserField("password", password);
@@ -73,7 +75,7 @@ const Registration = () => {
         />
         <div className={styles.codeWrapper}>
           <Input
-            label="Код"
+            label={t("code")}
             value={code}
             onChangeText={(code) => {
               setCode(code);
@@ -88,14 +90,14 @@ const Registration = () => {
             color="blue"
             onPress={() => sendRegisterCode(user.login.trim())}
           >
-            <span className={styles.codeBtnText}>Получить код</span>
+            <span className={styles.codeBtnText}>{t("getCode")}</span>
           </Button>
         </div>
         <Button color="blue" style={styles.createBtn} type="submit">
-          <span className={styles.createBtnText}>Зарегистрироваться</span>
+          <span className={styles.createBtnText}>{t("signUp")}</span>
         </Button>
         <Button onPress={() => navigate(ERoutes.login)}>
-          <span className={styles.loginBtnText}>Уже есть аккаунт?</span>
+          <span className={styles.loginBtnText}>{t("alreadyHaveAccount")}</span>
         </Button>
       </form>
     </div>

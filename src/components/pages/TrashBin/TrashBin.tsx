@@ -14,8 +14,10 @@ import Camera from "../../molecules/Camera";
 import { ICamera } from "../../../model/camera";
 import { onError } from "../../../helpers/toast";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
+import { useTranslation } from "react-i18next";
 
 const TrashBin = () => {
+  const { t } = useTranslation();
   const {
     cameras,
     recoverDefect,
@@ -71,7 +73,7 @@ const TrashBin = () => {
               <Defect
                 key={item.data.id}
                 defect={item.data as IDefect}
-                textBtn={user.role !== "user" ? "Восстановить" : undefined}
+                textBtn={user.role !== "user" ? t("restore") : undefined}
                 onPress={() => recoverDefect(item.cameraId, item.data.id)}
               />
             );
@@ -86,7 +88,7 @@ const TrashBin = () => {
                   ) {
                     recoverCamera(item.cameraId);
                   } else {
-                    onError("Достигнут лимит камер");
+                    onError(t("camerasLimitReached"));
                   }
                 }}
               />
@@ -94,7 +96,7 @@ const TrashBin = () => {
           }
         })
       ) : (
-        <SupportContent message="Корзина пуста" />
+        <SupportContent message={t("trashEmpty")} />
       )}
       <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen}>
         <div className={styles.modal}>
@@ -103,7 +105,7 @@ const TrashBin = () => {
               style={styles.crossIcon}
               onClick={() => setIsModalOpen(false)}
             />
-            <span className={styles.modalTitle}>Удалить историю</span>
+            <span className={styles.modalTitle}>{t("deleteHistory")}</span>
           </div>
           <div className={styles.modalContent}>
             <div className={styles.row}>
@@ -125,7 +127,7 @@ const TrashBin = () => {
                 style={styles.btnModal}
                 onPress={clearTrashBin}
               >
-                Удалить всё
+                {t("deleteAll")}
               </Button>
               <div className={styles.empty} />
               <Button
@@ -133,7 +135,7 @@ const TrashBin = () => {
                 color="management"
                 onPress={() => clearTrashBinByDates(startDate, endDate)}
               >
-                Удалить
+                {t("delete")}
               </Button>
             </div>
           </div>
@@ -142,7 +144,7 @@ const TrashBin = () => {
       {deletedDefects.length > 0 && user.role !== "user" && (
         <BottomFixIcon
           icon={<TrashBinIcon width={38} />}
-          text="Очистить корзину"
+          text={t("clearCart")}
           onPress={() => setIsModalOpen(true)}
         />
       )}

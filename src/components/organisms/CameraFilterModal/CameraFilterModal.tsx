@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { ICameraFilterModal, initialCameraFilter } from "./types";
-import { EDefectFilterOptions } from "./enums";
+import { EDefectOptions } from "./enums";
 import { onError } from "../../../helpers/toast";
 import { EErrors } from "../../../constants/errors";
 import Modal from "../../atoms/Modal";
@@ -10,6 +10,7 @@ import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
+import { useTranslation } from "react-i18next";
 
 const CameraFilterModal: FC<ICameraFilterModal> = ({
   isOpen,
@@ -17,11 +18,12 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   initialFilter,
   onApply,
 }) => {
+  const { t } = useTranslation();
   const [isDateFilter, setIsDateFilter] = useState<boolean>(true);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [option, setOption] =
-    useState<keyof typeof EDefectFilterOptions>("missingElement");
+    useState<keyof typeof EDefectOptions>("missingElement");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -36,12 +38,12 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   const handleApply = () => {
     if (isDateFilter) {
       if (!startDate || !endDate) {
-        onError(EErrors.chooseDates);
+        onError(t(EErrors.chooseDates));
         return;
       }
 
       if (startDate > endDate) {
-        onError(EErrors.timeDates);
+        onError(t(EErrors.timeDates));
         return;
       }
     }
@@ -74,12 +76,12 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
       <div className={styles.modal}>
         <div className={styles.crossIconWrapper}>
           <CrossIcon style={styles.crossIcon} onClick={closeModal} />
-          <span className={styles.modalTitle}>Фильтровать</span>
+          <span className={styles.modalTitle}>{t("filter")}</span>
         </div>
         <div className={styles.content}>
           <div className={styles.radioWrapper}>
             <Radio
-              label="По дате"
+              label={t("byDate")}
               isChecked={isDateFilter}
               setIsChecked={() => setIsDateFilter(true)}
               style={styles.radio}
@@ -102,7 +104,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
           </div>
           <div className={styles.radioWrapper}>
             <Radio
-              label="По дефектам"
+              label={t("byDefects")}
               isChecked={!isDateFilter}
               setIsChecked={() => setIsDateFilter(false)}
               style={styles.radio}
@@ -110,15 +112,15 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
               labelStyle={styles.labelStyle}
             />
             <Dropdown
-              data={Object.entries(EDefectFilterOptions).map(
+              data={Object.entries(EDefectOptions).map(
                 ([key, value]) => ({
                   value: key,
-                  label: value,
+                  label: t(value),
                 })
               )}
               value={option}
               setValue={(item) =>
-                setOption(item as keyof typeof EDefectFilterOptions)
+                setOption(item as keyof typeof EDefectOptions)
               }
               controlBackgroundColor="var(--subDropdownListBgTransparent)"
               controlHeight="30px"
@@ -127,12 +129,12 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
             />
           </div>
           <Button style={styles.btn} color="modal" onPress={handleApply}>
-            Применить
+            {t("apply")}
           </Button>
           {JSON.stringify(initialCameraFilter) !==
             JSON.stringify(initialFilter) && (
             <Button style={styles.btn} color="darkBlue" onPress={handleReset}>
-              Сбросить фильтры
+              {t("resetFilters")}
             </Button>
           )}
         </div>

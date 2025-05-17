@@ -9,9 +9,11 @@ import Input from "../../atoms/Input/Input";
 import Button from "../../atoms/Button";
 import InputPassword from "../../atoms/InputPassword";
 import useAuthStore from "../../../store/useAuthStore";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { sendResetCode, restorePassword } = useAuthStore();
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
@@ -21,15 +23,15 @@ const ForgotPassword = () => {
   const validate = (): boolean => {
     const newErrors: IErrors = {
       email: !email.trim()
-        ? EErrors.required
+        ? t(EErrors.required)
         : !emailPattern.test(email.trim())
-        ? EErrors.email
+        ? t(EErrors.email)
         : "",
-      code: !code.trim() ? EErrors.required : "",
+      code: !code.trim() ? t(EErrors.required) : "",
       password: !password.trim()
-        ? EErrors.required
+        ? t(EErrors.required)
         : password.trim().length < 8
-        ? EErrors.password
+        ? t(EErrors.password)
         : "",
     };
 
@@ -42,17 +44,17 @@ const ForgotPassword = () => {
     if (validate()) {
       restorePassword(email.trim(), code.trim(), password.trim(), navigate);
     } else {
-      onError(EErrors.fields);
+      onError(t(EErrors.fields));
     }
   };
 
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={changePassword}>
-        <span className={styles.title}>Восстановление пароля</span>
+        <span className={styles.title}>{t("passwordRecovery")}</span>
         <div className={styles.fields}>
           <Input
-            label="Почта"
+            label={t("email")}
             value={email}
             onChangeText={(email) => {
               setEmail(email);
@@ -64,7 +66,7 @@ const ForgotPassword = () => {
           />
           <div className={styles.confirmationWrapper}>
             <Input
-              label="Код"
+              label={t("code")}
               value={code}
               onChangeText={(code) => {
                 setCode(code);
@@ -79,11 +81,11 @@ const ForgotPassword = () => {
               color="blue"
               onPress={() => sendResetCode(email.trim())}
             >
-              <span className={styles.codeBtnText}>Получить код</span>
+              <span className={styles.codeBtnText}>{t("getCode")}</span>
             </Button>
           </div>
           <InputPassword
-            label="Новый пароль"
+            label={t("newPassword")}
             value={password}
             onChangeText={(password) => {
               setPassword(password);
@@ -94,7 +96,7 @@ const ForgotPassword = () => {
           />
         </div>
         <Button color="blue" style={styles.changeBtn} type="submit">
-          <span className={styles.changeBtnText}>Восстановить пароль</span>
+          <span className={styles.changeBtnText}>{t("recoverPassword")}</span>
         </Button>
       </form>
     </div>

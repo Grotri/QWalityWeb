@@ -17,9 +17,11 @@ import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { ERoles } from "../../../constants/roles";
+import { useTranslation } from "react-i18next";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { accounts, registerAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();
   const accountLimits = useAccountLimits();
@@ -32,11 +34,11 @@ const Admin = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      login: !login.trim() ? EErrors.required : "",
+      login: !login.trim() ? t(EErrors.required) : "",
       password: !password.trim()
-        ? EErrors.required
+        ? t(EErrors.required)
         : password.trim().length < 8
-        ? EErrors.password
+        ? t(EErrors.password)
         : "",
     };
     setErrors(newErrors);
@@ -59,24 +61,24 @@ const Admin = () => {
         setLogin("");
         setPassword("");
       } else {
-        onError(EErrors.fields);
+        onError(t(EErrors.fields));
       }
     } else {
-      onError("Достигнут лимит аккаунтов");
+      onError(t("accountsLimitReached"));
     }
   };
 
   return (
     <div className={styles.adminWrapper}>
       <div className={styles.sliderWrapper}>
-        <span className={styles.subTitle}>Уверенность нейросети</span>
+        <span className={styles.subTitle}>{t("networkConfidence")}</span>
         <Slider value={confidence} onChange={setConfidence} />
       </div>
       <form className={styles.infoWrapper} onSubmit={createSubAccount}>
-        <span className={styles.subTitle}>Регистрация суб-аккаунта</span>
+        <span className={styles.subTitle}>{t("subAccountRegistration")}</span>
         <div className={styles.inputs}>
           <Input
-            label="Логин"
+            label={t("login")}
             value={login}
             onChangeText={(login) => {
               setLogin(login);
@@ -89,7 +91,7 @@ const Admin = () => {
             labelClassName={styles.confirmationInputLabel}
           />
           <InputPassword
-            label="Пароль"
+            label={t("password")}
             value={password}
             onChangeText={(password) => {
               setPassword(password);
@@ -103,35 +105,35 @@ const Admin = () => {
           <Dropdown
             data={availableRoles.map((key) => ({
               value: key,
-              label: ERoles[key as keyof typeof ERoles],
+              label: t(ERoles[key as keyof typeof ERoles]),
             }))}
             value={role}
             setValue={setRole}
-            label="Роль"
+            label={t("role")}
             controlHeight="29px"
             iconScale={1.3}
             marginVertical="8px"
           />
         </div>
         <Button color="blue" style={styles.btn} type="submit">
-          Создать аккаунт
+          {t("createAccount")}
         </Button>
         <Button
           color="blue"
           style={styles.btn}
           onPress={() => setIsMainModalOpened(true)}
         >
-          Управлять отчетами
+          {t("manageReports")}
         </Button>
         <Button
           color="blue"
           style={styles.btn}
           onPress={() => navigate(ERoutes.accountManagement)}
         >
-          Управлять аккаунтами
+          {t("manageAccounts")}
         </Button>
         <span className={styles.statistics}>
-          {accounts.length}/{accountLimits} аккаунтов
+          {accounts.length}/{accountLimits} {t("accountsCount")}
         </span>
       </form>
       <GetReportModal

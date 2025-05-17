@@ -96,7 +96,7 @@ const router = createBrowserRouter([
           <PrivateRoute
             allowUnsubscribed
             element={
-              <PageTemplate headerTitle="Выберите уровень подписки">
+              <PageTemplate headerTitle="selectSubscriptionLevel">
                 <Subscription />
               </PageTemplate>
             }
@@ -109,7 +109,7 @@ const router = createBrowserRouter([
           <PrivateRoute
             element={
               <PageTemplate
-                headerTitle="Выберите уровень подписки"
+                headerTitle="selectSubscriptionLevel"
                 backPath={ERoutes.profile}
               >
                 <SubscriptionChange />
@@ -126,7 +126,7 @@ const router = createBrowserRouter([
             element={
               <PageTemplate
                 backPath={ERoutes.subscription}
-                headerTitle="Оплата подписки"
+                headerTitle="subscriptionPayment"
                 centralized
               >
                 <Payment />
@@ -142,7 +142,7 @@ const router = createBrowserRouter([
             element={
               <PageTemplate
                 backPath={ERoutes.subscriptionEdit}
-                headerTitle="Оплата подписки"
+                headerTitle="subscriptionPayment"
                 centralized
               >
                 <PaymentChange />
@@ -157,7 +157,7 @@ const router = createBrowserRouter([
           <PrivateRoute
             element={
               <PageTemplate
-                headerTitle="Профиль"
+                headerTitle="profile"
                 backPath={ERoutes.main}
                 centralized
               >
@@ -173,7 +173,7 @@ const router = createBrowserRouter([
           <PrivateRoute
             element={
               <PageTemplate
-                headerTitle="Админ панель"
+                headerTitle="adminPanel"
                 backPath={ERoutes.profile}
                 canScroll
               >
@@ -189,7 +189,7 @@ const router = createBrowserRouter([
           <PrivateRoute
             element={
               <PageTemplate
-                headerTitle="Управление аккаунтами"
+                headerTitle="accountManagement"
                 backPath={ERoutes.admin}
                 canScroll
               >
@@ -204,7 +204,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={
-              <PageTemplate headerTitle="Помощь" hasMenu canScroll>
+              <PageTemplate headerTitle="help" hasMenu canScroll>
                 <FAQ />
               </PageTemplate>
             }
@@ -216,7 +216,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute
             element={
-              <PageTemplate headerTitle="Корзина" hasMenu canScroll>
+              <PageTemplate headerTitle="trash" hasMenu canScroll>
                 <TrashBin />
               </PageTemplate>
             }

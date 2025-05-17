@@ -15,8 +15,10 @@ import CameraAccordion from "../../organisms/CameraAccordion";
 import useAuthStore from "../../../store/useAuthStore";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
 import { onError } from "../../../helpers/toast";
+import { useTranslation } from "react-i18next";
 
 const Main: FC<{ search: string }> = ({ search }) => {
+  const { t } = useTranslation();
   const { cameras: camerasInfo } = useCamerasStore();
   const cameraLimits = useCameraLimits();
   const { user } = useAuthStore();
@@ -44,12 +46,12 @@ const Main: FC<{ search: string }> = ({ search }) => {
   const sections = [
     {
       id: "online",
-      title: `Online (${onlineCameras.length})`,
+      title: `${t("online")} (${onlineCameras.length})`,
       cameras: onlineCameras,
     },
     {
       id: "offline",
-      title: `Offline (${offlineCameras.length})`,
+      title: `${t("offline")} (${offlineCameras.length})`,
       cameras: offlineCameras,
     },
   ];
@@ -90,8 +92,8 @@ const Main: FC<{ search: string }> = ({ search }) => {
                 <div className={styles.emptyList}>
                   <span className={styles.emptyText}>
                     {!section.cameras.length
-                      ? "Камер в данной категории нет"
-                      : "Нет камер по заданному поиску"}
+                      ? t("noCamerasInCategory")
+                      : t("noCamerasFound")}
                   </span>
                 </div>
               ) : (
@@ -136,12 +138,12 @@ const Main: FC<{ search: string }> = ({ search }) => {
       {user.role !== "user" && (
         <BottomFixIcon
           icon={<PlusIcon />}
-          text="Добавить камеру"
+          text={t("addCamera")}
           onPress={() => {
             if (cameras.length < cameraLimits) {
               setIsAddCameraModalOpen(true);
             } else {
-              onError("Достигнут лимит камер");
+              onError(t("camerasLimitReached"));
             }
           }}
           customBtn={styles.bottomBtn}

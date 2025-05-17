@@ -1,8 +1,8 @@
-export enum EDefectFilterOptions {
-  missingElement = "Отсутствует элемент",
-  damage = "Повреждение",
-  misalignment = "Смещение",
-  assemblyError = "Неверная сборка",
-  surfaceDefect = "Поверхностный дефект",
-  other = "Иной дефект",
+export enum EDefectOptions {
+  missingElement = "missingElement",
+  damage = "damage",
+  misalignment = "misalignment",
+  assemblyError = "assemblyError",
+  surfaceDefect = "surfaceDefect",
+  otherDefect = "otherDefect",
 }

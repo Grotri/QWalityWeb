@@ -5,9 +5,11 @@ import { useCost } from "../../../helpers/useCost";
 import styles from "./PaymentChange.module.scss";
 import { onSuccess } from "../../../helpers/toast";
 import { ERoutes } from "../../../router/routes";
+import { useTranslation } from "react-i18next";
 
 const PaymentChange = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { subscriptionId } = useParams();
   const { setUserField } = useAuthStore();
   const subscriptionCost = useCost(subscriptionId || "0");
@@ -15,20 +17,20 @@ const PaymentChange = () => {
   return (
     <div className={styles.wrapper}>
       <span className={styles.title}>
-        Вы собираетесь оплатить подписку за {subscriptionCost} рублей
+        {t("subscriptionPaymentIntro")} {subscriptionCost} {t("rubles")}
       </span>
       {subscriptionId && (
         <Button
           onPress={() => {
             setUserField("subscription", subscriptionId);
             navigate(ERoutes.profile);
-            onSuccess("Подписка успешно оплачена", 2000);
-            onSuccess("Вы успешно поменяли уровень подписки", 2000);
+            onSuccess(t("subscriptionPaid"), 2000);
+            onSuccess(t("subscriptionLevelChanged"), 2000);
           }}
           style={styles.btn}
           color="blue"
         >
-          Оплатить
+          {t("pay")}
         </Button>
       )}
     </div>

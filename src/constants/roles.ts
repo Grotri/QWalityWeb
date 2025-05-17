@@ -1,6 +1,6 @@
 export enum ERoles {
-  user = "Пользователь",
-  moderator = "Модератор",
-  administrator = "Администратор",
-  owner = "Владелец",
+  user = "user",
+  moderator = "moderator",
+  administrator = "administrator",
+  owner = "owner",
 }

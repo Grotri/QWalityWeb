@@ -4,7 +4,13 @@ import { EErrors } from "../constants/errors";
 import { emailPattern, innPattern } from "../constants/patterns";
 import { v4 as uuidv4 } from "uuid";
 import { onError, onSuccess } from "../helpers/toast";
-import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
+import {
+  IErrors,
+  initialErrors,
+  initialUser,
+  IUser,
+  TLanguage,
+} from "../model/user";
 import {
   confirmResetPassword,
   loginRequest,
@@ -17,10 +23,13 @@ import { forceLogout } from "../api/forceLogout";
 import { AxiosError } from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { ERoutes } from "../router/routes";
+import i18n from "../i18n";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
   errors: IErrors;
+  language: TLanguage;
+  setLanguage: (lang: TLanguage) => void;
   setUserField: (field: keyof IUser, value: string) => void;
   setUser: (newUser: IUser) => void;
   clearUser: () => void;
@@ -49,6 +58,7 @@ interface IUseAuthStore extends IStoreStatus {
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
   const token = getToken();
+  const storedLanguage = sessionStorage.getItem("language") as TLanguage | null;
   const storedUser = sessionStorage.getItem("user");
 
   return {
@@ -56,6 +66,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
     error: null,
     errors: { ...initialErrors },
     user: storedUser && token ? JSON.parse(storedUser) : { ...initialUser },
+    language: storedLanguage || "ru",
 
     setUserField: (field, value) =>
       set((state) => {
@@ -88,20 +99,20 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       const newErrors: IErrors = {
         inn:
           !inn || !inn.trim()
-            ? EErrors.required
+            ? i18n.t(EErrors.required)
             : !innPattern.test(inn.trim())
-            ? EErrors.inn
+            ? i18n.t(EErrors.inn)
             : "",
         login: !login.trim()
-          ? EErrors.required
+          ? i18n.t(EErrors.required)
           : !emailPattern.test(login.trim())
-          ? EErrors.email
+          ? i18n.t(EErrors.email)
           : "",
-        code: !code.trim() ? EErrors.required : "",
+        code: !code.trim() ? i18n.t(EErrors.required) : "",
         password: !password.trim()
-          ? EErrors.required
+          ? i18n.t(EErrors.required)
           : password.trim().length < 8
-          ? EErrors.password
+          ? i18n.t(EErrors.password)
           : "",
       };
 
@@ -113,7 +124,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       const { user, validate } = get();
 
       if (!validate(code)) {
-        onError(EErrors.fields);
+        onError(i18n.t(EErrors.fields));
         return;
       }
 
@@ -147,9 +158,9 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           sessionStorage.setItem("user", JSON.stringify(newUser));
           set({ user: newUser });
           addAccount(newUser);
-          onSuccess("Вы успешно зарегистрировались!", 2000);
+          onSuccess(i18n.t("registrationSuccess"), 2000);
         } else {
-          onError("Регистрация не удалась");
+          onError(i18n.t("registrationFailed"));
         }
       } catch (error) {
         console.log(error);
@@ -159,12 +170,12 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             error.response.data &&
             error.response.data.error
           ) {
-            onError("Ошибка: " + error.response.data.error);
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
           } else {
-            onError("Произошла ошибка при регистрации");
+            onError(i18n.t("registrationError"));
           }
         } else {
-          onError("Неизвестная ошибка");
+          onError(i18n.t("unknownError"));
         }
         set({ error });
       } finally {
@@ -196,7 +207,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         sessionStorage.setItem("user", JSON.stringify(newUser));
         set({ user: newUser });
         addAccount(newUser);
-        onSuccess("Вы успешно вошли в аккаунт!", 2000);
+        onSuccess(i18n.t("loginSuccess"), 2000);
       } catch (error) {
         console.log(error);
         if (error instanceof AxiosError) {
@@ -205,12 +216,12 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             error.response.data &&
             error.response.data.error
           ) {
-            onError("Ошибка: " + error.response.data.error);
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
           } else {
-            onError("Произошла ошибка при входе в аккаунт");
+            onError(i18n.t("loginError"));
           }
         } else {
-          onError("Неизвестная ошибка");
+          onError(i18n.t("unknownError"));
         }
         set({ error });
       } finally {
@@ -223,7 +234,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         try {
           set({ loading: true, error: null });
           await sendCode({ email });
-          onSuccess("Код выслан на почту");
+          onSuccess(i18n.t("codeSentToEmail"));
         } catch (error) {
           console.log(error);
           if (error instanceof AxiosError) {
@@ -232,19 +243,19 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
               error.response.data &&
               error.response.data.error
             ) {
-              onError("Ошибка: " + error.response.data.error);
+              onError(`${i18n.t("error")}: ` + error.response.data.error);
             } else {
-              onError("Произошла ошибка при отправке кода");
+              onError(i18n.t("codeSendError"));
             }
           } else {
-            onError("Неизвестная ошибка");
+            onError(i18n.t("unknownError"));
           }
           set({ error });
         } finally {
           set({ loading: false });
         }
       } else {
-        onError("Сначала введите почту");
+        onError(i18n.t("enterEmailFirst"));
       }
     },
 
@@ -253,7 +264,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         try {
           set({ loading: true, error: null });
           await resetPassword({ email });
-          onSuccess("Код выслан на почту");
+          onSuccess(i18n.t("codeSentToEmail"));
         } catch (error) {
           console.log(error);
           if (error instanceof AxiosError) {
@@ -262,19 +273,19 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
               error.response.data &&
               error.response.data.error
             ) {
-              onError("Ошибка: " + error.response.data.error);
+              onError(`${i18n.t("error")}: ` + error.response.data.error);
             } else {
-              onError("Произошла ошибка при отправке кода");
+              onError(i18n.t("codeSendError"));
             }
           } else {
-            onError("Неизвестная ошибка");
+            onError(i18n.t("unknownError"));
           }
           set({ error });
         } finally {
           set({ loading: false });
         }
       } else {
-        onError("Сначала введите почту");
+        onError(i18n.t("enterEmailFirst"));
       }
     },
 
@@ -283,7 +294,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         set({ loading: true, error: null });
         await confirmResetPassword({ email, code, new_password: password });
         navigate(ERoutes.login);
-        onSuccess("Пароль сменен, зайдите с новыми данными", 5000);
+        onSuccess(i18n.t("passwordChanged"), 5000);
       } catch (error) {
         console.log(error);
         if (error instanceof AxiosError) {
@@ -292,17 +303,23 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             error.response.data &&
             error.response.data.error
           ) {
-            onError("Ошибка: " + error.response.data.error);
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
           } else {
-            onError("Произошла ошибка при восстановлении пароля");
+            onError(i18n.t("passwordRecoveryError"));
           }
         } else {
-          onError("Неизвестная ошибка");
+          onError(i18n.t("unknownError"));
         }
         set({ error });
       } finally {
         set({ loading: false });
       }
+    },
+
+    setLanguage: (lang) => {
+      i18n.changeLanguage(lang);
+      sessionStorage.setItem("language", lang);
+      set({ language: lang });
     },
 
     logout: (clearAccounts) => {

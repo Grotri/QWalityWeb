@@ -1,3 +1,7 @@
+export type TTheme = "light" | "dark";
+export type TFontSize = "small" | "default" | "large";
+export type TLanguage = "ru" | "eng";
+
 export interface IUser {
   id: string;
   inn?: string;
@@ -5,8 +9,8 @@ export interface IUser {
   password: string;
   subscription?: string;
   role: string;
-  theme: "light" | "dark";
-  fontSize: "small" | "default" | "large";
+  theme: TTheme;
+  fontSize: TFontSize;
 }
 
 export const initialUser: IUser = {

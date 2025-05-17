@@ -291,6 +291,35 @@
   line-height: calc(25px * var(--font-scale));
 }
 
+.languageToggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  z-index: 2;
+}
+
+.toggle {
+  color: var(--mainText);
+  font-size: 20px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.highlight {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: var(--blue);
+  border-radius: 8px;
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
 @media (max-width: 1439.89px) {
   .mainWrapper {
     justify-content: start;

@@ -13,9 +13,11 @@ import useAuthStore from "../../../store/useAuthStore";
 import { initialUser, IUser } from "../../../model/user";
 import { ERoles } from "../../../constants/roles";
 import { supportLink } from "../../../constants/support";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user, setUser } = useAuthStore();
   const [userInfo, setUserInfo] = useState<IUser>({ ...initialUser });
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -32,16 +34,16 @@ const Profile = () => {
   const validate = (): boolean => {
     const newErrors: IErrors = {
       login: !userInfo.login.trim()
-        ? EErrors.required
+        ? t(EErrors.required)
         : !emailPattern.test(userInfo.login.trim())
-        ? EErrors.email
+        ? t(EErrors.email)
         : "",
-      code: !code.trim() ? EErrors.required : "",
+      code: !code.trim() ? t(EErrors.required) : "",
       inn:
         !userInfo.inn || !userInfo.inn.trim()
-          ? EErrors.required
+          ? t(EErrors.required)
           : !innPattern.test(userInfo.inn.trim())
-          ? EErrors.inn
+          ? t(EErrors.inn)
           : "",
     };
     setErrors(newErrors);
@@ -60,12 +62,12 @@ const Profile = () => {
         setIsEditMode(false);
         setCode("");
         setUser(newProfile);
-        onSuccess("Данные профиля изменены");
+        onSuccess(t("profileDataChanged"));
       } else {
-        onError(EErrors.fields);
+        onError(t(EErrors.fields));
       }
     } else {
-      onWarning(EErrors.noChanges);
+      onWarning(t(EErrors.noChanges));
     }
   };
 
@@ -79,7 +81,7 @@ const Profile = () => {
       <div className={styles.card}>
         <div className={styles.cardPoint}>
           <span className={styles.cardPointTitle}>
-            Электронная почта / логин
+            {t("emailOrLoginChange")}
           </span>
           {!isEditMode ? (
             <span className={styles.cardPointData}>{userInfo.login}</span>
@@ -99,14 +101,14 @@ const Profile = () => {
           )}
         </div>
         <div className={styles.cardPoint}>
-          <span className={styles.cardPointTitle}>Роль</span>
+          <span className={styles.cardPointTitle}>{t("role")}</span>
           <span className={styles.cardPointData}>
-            {ERoles[user.role as keyof typeof ERoles]}
+            {t(ERoles[user.role as keyof typeof ERoles])}
           </span>
         </div>
         {user.role === "owner" && (
           <div className={styles.cardPoint}>
-            <span className={styles.cardPointTitle}>ИНН</span>
+            <span className={styles.cardPointTitle}>{t("inn")}</span>
             {!isEditMode ? (
               <span className={styles.cardPointData}>{userInfo.inn}</span>
             ) : (
@@ -134,7 +136,7 @@ const Profile = () => {
               color="blue"
               onPress={() => setIsEditMode(true)}
             >
-              Изменить данные
+              {t("editData")}
             </Button>
           )}
           {user.role === "owner" && (
@@ -143,7 +145,7 @@ const Profile = () => {
               color="blue"
               onPress={() => navigate(ERoutes.subscriptionEdit)}
             >
-              Управлять подпиской
+              {t("manageSubscription")}
             </Button>
           )}
           {["owner", "administrator"].includes(user.role) && (
@@ -152,7 +154,7 @@ const Profile = () => {
               color="blue"
               onPress={() => navigate(ERoutes.admin)}
             >
-              Админ панель
+              {t("adminPanel")}
             </Button>
           )}
         </>
@@ -160,7 +162,7 @@ const Profile = () => {
         <>
           <div className={styles.confirmationWrapper}>
             <Input
-              label="Код подтверждения"
+              label={t("confirmationCode")}
               value={code}
               onChangeText={(code) => {
                 setCode(code);
@@ -175,22 +177,22 @@ const Profile = () => {
               errorClassName={styles.error}
             />
             <Button style={styles.codeBtn} color="darkBlue">
-              Отправить код
+              {t("sendCode")}
             </Button>
           </div>
           <Button style={styles.btn} color="blue" type="submit">
-            Сохранить изменения
+            {t("saveChanges")}
           </Button>
           <Button style={styles.btn} color="blue" onPress={cancel}>
-            Отменить
+            {t("cancelAction")}
           </Button>
           <div className={styles.supportTextWrapper}>
-            <span className={styles.supportText}>Нет доступа к почте?</span>
+            <span className={styles.supportText}>{t("noAccessToEmail")}</span>
             <span
               className={styles.supportTextUnderlined}
               onClick={() => window.open(supportLink, "_blank")}
             >
-              Обратитесь в тех. поддержку
+              {t("contactTechSupport")}
             </span>
           </div>
         </>

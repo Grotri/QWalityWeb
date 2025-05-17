@@ -8,6 +8,7 @@ import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import styles from "./CameraSettingsModal.module.scss";
 import Modal from "../../atoms/Modal";
+import { useTranslation } from "react-i18next";
 
 const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   camera,
@@ -15,6 +16,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   isHistoryModalOpen,
   setIsHistoryModalOpen,
 }) => {
+  const { t } = useTranslation();
   const {
     errors,
     setErrorsField,
@@ -73,7 +75,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
           </div>
           <div className={styles.content}>
             <Input
-              label="Ссылка на камеру"
+              label={t("cameraLink")}
               value={link}
               onChangeText={(link) => {
                 setCameraInfo({ ...cameraInfo, link });
@@ -85,10 +87,10 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
               labelClassName={styles.customLabelStyles}
             />
             <div className={styles.stateWrapper}>
-              <span className={styles.stateText}>Состояние</span>
+              <span className={styles.stateText}>{t("status")}</span>
               <div className={styles.stateRadios}>
                 <Radio
-                  label="Online"
+                  label={t("online")}
                   isChecked={online}
                   setIsChecked={() =>
                     setCameraInfo({ ...cameraInfo, online: true })
@@ -97,7 +99,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
                   labelStyle={styles.radioLabelStyle}
                 />
                 <Radio
-                  label="Offline"
+                  label={t("offline")}
                   isChecked={!online}
                   setIsChecked={() =>
                     setCameraInfo({ ...cameraInfo, online: false })
@@ -114,18 +116,18 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
                   color="red"
                   onPress={openHistoryModal}
                 >
-                  Удалить историю
+                  {t("deleteHistory")}
                 </Button>
                 <Button
                   style={styles.btn}
                   color="red"
                   onPress={openCameraModal}
                 >
-                  Удалить камеру
+                  {t("deleteCamera")}
                 </Button>
               </div>
               <Button style={styles.fullBtn} color="modal" type="submit">
-                Сохранить
+                {t("save")}
               </Button>
             </div>
           </div>
@@ -133,8 +135,8 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
         {isHistoryModalOpen !== null && (
           <div className={styles.modal}>
             <span className={styles.smallModalTitle}>
-              Вы точно хотите удалить{" "}
-              {isHistoryModalOpen ? "историю" : "камеру"}?
+              {t("confirmDelete")}{" "}
+              {isHistoryModalOpen ? t("history") : t("cameraTake")}?
             </span>
             <div className={styles.smallModalBtns}>
               <Button
@@ -149,14 +151,14 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
                   closeModal();
                 }}
               >
-                Да
+                {t("yes")}
               </Button>
               <Button
                 style={styles.btnBolderText}
                 color="modal"
                 onPress={() => setIsHistoryModalOpen(null)}
               >
-                Нет
+                {t("no")}
               </Button>
             </div>
           </div>

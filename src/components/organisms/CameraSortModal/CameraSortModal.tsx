@@ -6,6 +6,7 @@ import styles from "./CameraSortModal.module.scss";
 import { CrossIcon } from "../../../assets/icons";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
+import { useTranslation } from "react-i18next";
 
 const CameraSortModal: FC<ICameraSortModal> = ({
   isOpen,
@@ -13,6 +14,7 @@ const CameraSortModal: FC<ICameraSortModal> = ({
   setIsOpen,
   onApply,
 }) => {
+  const { t } = useTranslation();
   const [option, setOption] = useState<keyof typeof ESortOptions>("type");
 
   const closeModal = () => {
@@ -41,13 +43,13 @@ const CameraSortModal: FC<ICameraSortModal> = ({
       <div className={styles.modal}>
         <div className={styles.crossIconWrapper}>
           <CrossIcon style={styles.crossIcon} onClick={closeModal} />
-          <span className={styles.modalTitle}>Сортировать</span>
+          <span className={styles.modalTitle}>{t("sort")}</span>
         </div>
         <div className={styles.content}>
           <Dropdown
             data={Object.entries(ESortOptions).map(([key, value]) => ({
               value: key,
-              label: value,
+              label: t(value),
             }))}
             value={option}
             setValue={(item) => setOption(item as keyof typeof ESortOptions)}
@@ -58,11 +60,11 @@ const CameraSortModal: FC<ICameraSortModal> = ({
           />
           <div className={styles.btns}>
             <Button style={styles.btn} color="modal" onPress={handleApply}>
-              Применить
+              {t("apply")}
             </Button>
             {initialOption && (
               <Button style={styles.btn} color="darkBlue" onPress={handleReset}>
-                Сбросить сортировку
+                {t("resetSorting")}
               </Button>
             )}
           </div>

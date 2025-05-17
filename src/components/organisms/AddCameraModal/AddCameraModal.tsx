@@ -6,8 +6,10 @@ import Modal from "../../atoms/Modal";
 import { CrossIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
 import Button from "../../atoms/Button";
+import { useTranslation } from "react-i18next";
 
 const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
+  const { t } = useTranslation();
   const { addCamera, errors, setErrorsField, refreshErrors } =
     useCamerasStore();
   const [name, setName] = useState<string>("");
@@ -34,11 +36,11 @@ const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
             style={styles.crossIcon}
             onClick={() => setIsOpen(false)}
           />
-          <span className={styles.modalTitle}>Добавить камеру</span>
+          <span className={styles.modalTitle}>{t("addCamera")}</span>
         </div>
         <div className={styles.modalContent}>
           <Input
-            label="Название"
+            label={t("name")}
             value={name}
             onChangeText={(name) => {
               setName(name);
@@ -52,7 +54,7 @@ const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
             errorClassName={styles.errorLabel}
           />
           <Input
-            label="Ссылка на камеру"
+            label={t("cameraLink")}
             value={link}
             onChangeText={(link) => {
               setLink(link);
@@ -66,7 +68,7 @@ const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
           />
         </div>
         <Button style={styles.btn} color="modal" type="submit">
-          Добавить
+          {t("add")}
         </Button>
       </form>
     </Modal>

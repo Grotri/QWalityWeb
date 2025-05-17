@@ -14,10 +14,13 @@ import useAccountStore from "../../../store/useAccountStore";
 import { fontSizes } from "../../../constants/fontSizes";
 import { themes } from "../../../constants/themes";
 import { languages } from "../../../constants/languages";
+import { TFontSize, TLanguage, TTheme } from "../../../model/user";
+import { useTranslation } from "react-i18next";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
-  const { user, setUser, logout } = useAuthStore();
+  const { user, setUser, language, setLanguage, logout } = useAuthStore();
   const { clearAccounts } = useAccountStore();
+  const { t } = useTranslation();
 
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
@@ -27,17 +30,21 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const [error, setError] = useState<string>("");
 
   const toggleTheme = (value: string) => {
-    setUser({ ...user, theme: value as "light" | "dark" });
+    setUser({ ...user, theme: value as TTheme });
   };
 
   const toggleFontSize = (value: string) => {
-    setUser({ ...user, fontSize: value as "small" | "default" | "large" });
+    setUser({ ...user, fontSize: value as TFontSize });
+  };
+
+  const toggleLanguage = (value: string) => {
+    setLanguage(value as TLanguage);
   };
 
   const deleteAccount = () => {
     if (!code.trim()) {
-      setError(EErrors.required);
-      onError("Сначала введите код");
+      setError(t(EErrors.required));
+      onError(t("enterCodeFirst"));
     } else {
       logout(clearAccounts);
       setIsOpen(false);
@@ -58,10 +65,13 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
           <div className={styles.dropdowns}>
             <div className={styles.dropdownWrapper}>
               <span className={styles.dropdownText}>
-                Авто-удаление дефектов
+                {t("autoDeleteDefects")}
               </span>
               <Dropdown
-                data={settingsItems}
+                data={settingsItems.map((item) => ({
+                  value: item.value,
+                  label: t(item.label),
+                }))}
                 setValue={setIsAutoDelete}
                 value={isAutoDelete}
                 wrapperStyle={styles.dropdown}
@@ -71,9 +81,12 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>Авто-чистка корзины</span>
+              <span className={styles.dropdownText}>{t("autoCleanTrash")}</span>
               <Dropdown
-                data={settingsItems}
+                data={settingsItems.map((item) => ({
+                  value: item.value,
+                  label: t(item.label),
+                }))}
                 setValue={setIsAutoClear}
                 value={isAutoClear}
                 wrapperStyle={styles.dropdown}
@@ -83,9 +96,12 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>Тема</span>
+              <span className={styles.dropdownText}>{t("theme")}</span>
               <Dropdown
-                data={themes}
+                data={themes.map((item) => ({
+                  value: item.value,
+                  label: t(item.label),
+                }))}
                 setValue={toggleTheme}
                 value={user.theme}
                 wrapperStyle={styles.dropdown}
@@ -95,9 +111,12 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>Размер шрифта</span>
+              <span className={styles.dropdownText}>{t("fontSize")}</span>
               <Dropdown
-                data={fontSizes}
+                data={fontSizes.map((item) => ({
+                  value: item.value,
+                  label: t(item.label),
+                }))}
                 setValue={toggleFontSize}
                 value={user.fontSize}
                 wrapperStyle={styles.dropdown}
@@ -107,11 +126,14 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               />
             </div>
             <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>Язык</span>
+              <span className={styles.dropdownText}>{t("language")}</span>
               <Dropdown
-                data={languages}
-                setValue={() => {}}
-                value={"ru"}
+                data={languages.map((item) => ({
+                  value: item.value,
+                  label: t(item.label),
+                }))}
+                setValue={toggleLanguage}
+                value={language}
                 wrapperStyle={styles.dropdown}
                 fontSize="calc(14px * var(--font-scale))"
                 marginHorizontal="8px"
@@ -126,7 +148,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
             color="blue"
             onPress={() => setIsExitModalOpen(true)}
           >
-            Выйти из аккаунта
+            {t("logout")}
           </Button>
           {user.role === "owner" && (
             <Button
@@ -134,7 +156,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               color="red"
               onPress={() => setIsDeleteModalOpen(true)}
             >
-              Удалить аккаунт
+              {t("deleteAccount")}
             </Button>
           )}
         </div>
@@ -142,7 +164,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
       </div>
       <Modal isVisible={isExitModalOpen} setIsVisible={setIsExitModalOpen}>
         <div className={styles.exitModal}>
-          <span className={styles.modalTitle}>Вы точно хотите выйти?</span>
+          <span className={styles.modalTitle}>{t("logoutConfirmation")}</span>
           <div className={styles.modalBtns}>
             <Button
               style={styles.modalBtn}
@@ -152,24 +174,24 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
                 setIsOpen(false);
               }}
             >
-              Да
+              {t("yes")}
             </Button>
             <Button
               style={styles.modalBtn}
               color="blue"
               onPress={() => setIsExitModalOpen(false)}
             >
-              Нет
+              {t("no")}
             </Button>
           </div>
         </div>
       </Modal>
       <Modal isVisible={isDeleteModalOpen} setIsVisible={setIsDeleteModalOpen}>
         <div className={styles.deleteModal}>
-          <span className={styles.modalTitle}>Удалить аккаунт?</span>
+          <span className={styles.modalTitle}>{t("confirmDeleteAccount")}</span>
           <div className={styles.confirmationWrapper}>
             <Input
-              label="Код подтверждения"
+              label={t("confirmationCode")}
               value={code}
               onChangeText={(code) => {
                 setCode(code);
@@ -183,7 +205,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               errorClassName={styles.inputError}
             />
             <Button style={styles.codeBtn} color="blue">
-              Отправить код
+              {t("sendCode")}
             </Button>
           </div>
           <div className={styles.modalBtns}>
@@ -192,14 +214,14 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               color="red"
               onPress={deleteAccount}
             >
-              Удалить
+              {t("delete")}
             </Button>
             <Button
               style={styles.modalCancelBtn}
               color="blue"
               onPress={() => setIsDeleteModalOpen(false)}
             >
-              Отменить
+              {t("cancelAction")}
             </Button>
           </div>
         </div>

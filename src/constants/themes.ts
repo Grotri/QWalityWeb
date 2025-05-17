@@ -3,10 +3,10 @@ import { IDropdownData } from "../components/atoms/Dropdown/types";
 export const themes: IDropdownData[] = [
   {
     value: "dark",
-    label: "Темная",
+    label: "themeDark",
   },
   {
     value: "light",
-    label: "Светлая",
+    label: "themeLight",
   },
 ];

@@ -27,6 +27,7 @@ import CameraSortModal from "../CameraSortModal";
 import CameraFilterModal from "../CameraFilterModal";
 import DefectSaveModal from "../DefectSaveModal";
 import useAuthStore from "../../../store/useAuthStore";
+import { useTranslation } from "react-i18next";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -42,6 +43,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   setSelectedDefect,
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
+  const { t } = useTranslation();
   const { deleteDefect } = useCamerasStore();
   const { user } = useAuthStore();
   const [activeSection, setActiveSection] = useState<string | false>(false);
@@ -150,7 +152,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                     <span className={styles.cameraTitle}>{camera.title}</span>
                   </div>
                   <span className={styles.defectText}>
-                    {defects.length}/100 дефектов
+                    {defects.length}/100 {t("defects")}
                   </span>
                   <span className={styles.defectText}>{defects.length}%</span>
                 </div>
@@ -166,10 +168,12 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                       }}
                     />
                     <span className={styles.stateName}>
-                      {camera.online ? "Online" : "Offline"}
+                      {camera.online ? t("online") : t("offline")}
                     </span>
                   </div>
-                  <span className={styles.uptime}>Аптайм {camera.uptime}</span>
+                  <span className={styles.uptime}>
+                    {t("uptime")} {camera.uptime}
+                  </span>
                 </div>
               </div>
             </CustomAccordionSummary>
@@ -186,7 +190,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                           }}
                         >
                           <SettingsIcon width={19} />
-                          <span>Настроить</span>
+                          <span>{t("settings")}</span>
                         </Button>
                       )}
                       {defects.length > 0 && (
@@ -202,7 +206,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                             }}
                           >
                             <SortIcon />
-                            <span>Сортировать</span>
+                            <span>{t("sort")}</span>
                           </Button>
                           <Button
                             style={clsx(
@@ -215,7 +219,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                             }}
                           >
                             <FilterIcon />
-                            <span>Фильтровать</span>
+                            <span>{t("filter")}</span>
                           </Button>
                         </>
                       )}
@@ -237,7 +241,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                       <Defect
                         key={defect.id}
                         defect={defect}
-                        textBtn={user.role !== "user" ? "Скрыть" : undefined}
+                        textBtn={user.role !== "user" ? t("hide") : undefined}
                         setSelectedDefect={setSelectedDefect}
                         onPress={() => deleteDefect(camera.id, defect.id)}
                         pressableIcon
@@ -245,7 +249,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                     ))
                   ) : (
                     <span className={styles.noDefects}>
-                      Дефектов не обнаружено
+                      {t("noDefectsFound")}
                     </span>
                   )}
                 </div>

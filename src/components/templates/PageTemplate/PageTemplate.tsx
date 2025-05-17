@@ -14,6 +14,8 @@ import { menuItems } from "../../../constants/menuItems";
 import { ERoutes } from "../../../router/routes";
 import Input from "../../atoms/Input/Input";
 import SettingsModal from "../../organisms/SettingsModal";
+import { useTranslation } from "react-i18next";
+import useAuthStore from "../../../store/useAuthStore";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   backPath,
@@ -27,6 +29,8 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
 }) => {
   const navigate = useNavigate();
+  const { user, language, setLanguage } = useAuthStore();
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
@@ -57,7 +61,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                 backPath && styles.titleWrapperShort
               )}
             >
-              <span className={styles.title}>{headerTitle}</span>
+              <span className={styles.title}>{t(headerTitle)}</span>
             </div>
           )}
           {hasMenu && (
@@ -86,7 +90,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                   )}
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                  Меню
+                  {t("menu")}
                 </span>
                 <div className={styles.menu}>
                   <LogoIcon />
@@ -101,7 +105,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                         }}
                       >
                         <Icon />
-                        <span className={styles.menuItemTitle}>{title}</span>
+                        <span className={styles.menuItemTitle}>{t(title)}</span>
                       </div>
                     ))}
                   </div>
@@ -112,7 +116,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
           {isMainPage && (
             <Input
               value={search || ""}
-              placeholder="Поиск..."
+              placeholder={t("searchPlaceholder")}
               onChangeText={(text: string) => {
                 if (setSearch) {
                   setSearch(text);
@@ -131,7 +135,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                 onClick={() => navigate(ERoutes.profile)}
               >
                 <ProfileIcon width={48} />
-                <span className={styles.mainPageIconTitle}>Профиль</span>
+                <span className={styles.mainPageIconTitle}>{t("profile")}</span>
               </div>
               <div
                 className={styles.mainPageIcon}
@@ -145,7 +149,9 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
                     isSettingsOpen && styles.settingsIconRotated
                   )}
                 />
-                <span className={styles.mainPageIconTitle}>Настройки</span>
+                <span className={styles.mainPageIconTitle}>
+                  {t("settingsLabel")}
+                </span>
               </div>
             </div>
           )}
@@ -153,6 +159,20 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
             isOpen={isSettingsOpen}
             setIsOpen={setIsSettingsOpen}
           />
+        </div>
+      )}
+      {!user.id && (
+        <div className={styles.languageToggle}>
+          <div
+            className={styles.highlight}
+            style={{ left: language === "ru" ? 0 : "50%" }}
+          />
+          <span className={styles.toggle} onClick={() => setLanguage("ru")}>
+            ru
+          </span>
+          <span className={styles.toggle} onClick={() => setLanguage("eng")}>
+            en
+          </span>
         </div>
       )}
       <main

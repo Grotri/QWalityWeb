@@ -14,9 +14,11 @@ import {
 import useCamerasStore from "../../../store/useCamerasStore";
 import useAccountStore from "../../../store/useAccountStore";
 import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
+import { useTranslation } from "react-i18next";
 
 const SubscriptionChange = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user, setUserField, logout } = useAuthStore();
   const { cameras } = useCamerasStore();
   const { accounts, clearAccounts } = useAccountStore();
@@ -34,28 +36,24 @@ const SubscriptionChange = () => {
     );
 
     if (hasTooManyAccounts) {
-      onError(
-        "Вы не можете перейти на этот тариф, так как у вас больше суб-аккаунтов, чем в лимите",
-        2000
-      );
+      onError(t("cannotSwitchPlanDueToSubAccounts"), 2000);
     } else if (hasTooManyCameras) {
-      onError(
-        "Вы не можете перейти на этот тариф, так как у вас больше камер, чем в лимите",
-        2000
-      );
+      onError(t("cannotSwitchPlanDueToCameras"), 2000);
     } else if (invalidAccounts.length > 0) {
       const rolesList = [...new Set(invalidAccounts.map((a) => a.role))].join(
         ", "
       );
       onError(
-        `Нельзя перейти на этот тариф, так как у вас есть аккаунты с ролями: ${rolesList}, которые не входят в разрешённые роли этого тарифа`,
+        `${t("cannotSwitchPlanDueToRoles")}: ${rolesList}, ${t(
+          "rolesNotAllowedInPlan"
+        )}`,
         3000
       );
     } else {
       if (sliderId === "0") {
         setUserField("subscription", sliderId);
         navigate(ERoutes.profile);
-        onSuccess("Вы успешно поменяли уровень подписки", 2000);
+        onSuccess(t("subscriptionLevelChanged"), 2000);
       } else {
         navigate(`${ERoutes.subscriptionEdit}${ERoutes.payment}/${sliderId}`);
       }
@@ -85,7 +83,7 @@ const SubscriptionChange = () => {
           logout(clearAccounts);
         }}
       >
-        Отменить подписку
+        {t("cancelSubscription")}
       </Button>
     </div>
   );

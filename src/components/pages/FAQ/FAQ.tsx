@@ -10,8 +10,10 @@ import {
 import { BottomIcon, MessageIcon } from "../../../assets/icons";
 import SupportContent from "../../atoms/SupportContent";
 import { supportLink } from "../../../constants/support";
+import { useTranslation } from "react-i18next";
 
 const FAQ = () => {
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState<string | false>(false);
 
   const handleSectionChange =
@@ -39,11 +41,11 @@ const FAQ = () => {
           </CustomAccordion>
         ))
       ) : (
-        <SupportContent message="Здесь пусто" />
+        <SupportContent message={t("emptyHere")} />
       )}
       <BottomFixIcon
         icon={<MessageIcon style={styles.messageIcon} />}
-        text="Обратиться в поддержку"
+        text={t("contactSupport")}
         onPress={() => window.open(supportLink, "_blank")}
       />
     </div>

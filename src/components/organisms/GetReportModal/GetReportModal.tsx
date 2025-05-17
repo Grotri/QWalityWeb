@@ -10,8 +10,10 @@ import { onError, onSuccess } from "../../../helpers/toast";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EErrors } from "../../../constants/errors";
+import { useTranslation } from "react-i18next";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
+  const { t } = useTranslation();
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
   const [type, setType] = useState<"report" | "log">("report");
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -24,17 +26,17 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
 
   const validateDates = (): boolean => {
     if (!startDate || !endDate) {
-      onError(EErrors.chooseDates);
+      onError(t(EErrors.chooseDates));
       return false;
     }
 
     if (endDate > new Date()) {
-      onError(EErrors.futureDate);
+      onError(t(EErrors.futureDate));
       return false;
     }
 
     if (startDate > endDate) {
-      onError(EErrors.timeDates);
+      onError(t(EErrors.timeDates));
       return false;
     }
 
@@ -44,14 +46,14 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const handleSave = () => {
     if (!validateDates()) return;
 
-    onSuccess(type === "log" ? "Лог скачан" : "Отчет скачан");
+    onSuccess(type === "log" ? t("logDownloaded") : t("reportDownloaded"));
     closeModal();
   };
 
   const handleDelete = () => {
     if (!validateDates()) return;
 
-    onSuccess(type === "log" ? "Лог удален" : "Отчет удален");
+    onSuccess(type === "log" ? t("logDeleted") : t("reportDeleted"));
     closeModal();
   };
 
@@ -71,12 +73,12 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
         <div className={styles.modal}>
           <div className={styles.crossIconWrapper}>
             <CrossIcon style={styles.crossIcon} onClick={closeModal} />
-            <span className={styles.modalTitle}>Получить отчет</span>
+            <span className={styles.modalTitle}>{t("getReport")}</span>
           </div>
           <div className={styles.modalContent}>
             <div className={styles.row}>
               <Radio
-                label="Отчет"
+                label={t("report")}
                 isChecked={type === "report"}
                 setIsChecked={() => {
                   setType("report");
@@ -84,7 +86,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
               />
               <div className={styles.empty} />
               <Radio
-                label="Лог"
+                label={t("log")}
                 isChecked={type === "log"}
                 setIsChecked={() => {
                   setType("log");
@@ -122,7 +124,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 style={styles.btnModal}
                 onPress={() => setIsSubModalOpened(true)}
               >
-                Удалить лог
+                {t("deleteLog")}
               </Button>
               <div className={styles.empty} />
               <Button
@@ -130,7 +132,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 style={styles.btnModal}
                 onPress={handleSave}
               >
-                Скачать
+                {t("download")}
               </Button>
             </div>
           </div>
@@ -138,7 +140,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
         {isSubModalOpened && (
           <div className={styles.modal}>
             <span className={styles.subModalTitle}>
-              Вы точно хотите удалить лог?
+              {t("confirmDeleteLog")}
             </span>
             <div className={styles.modalContent}>
               <div className={styles.row}>
@@ -147,7 +149,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                   style={styles.btnModalBold}
                   onPress={handleDelete}
                 >
-                  Да
+                  {t("yes")}
                 </Button>
                 <div className={styles.empty} />
                 <Button
@@ -157,7 +159,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                     setIsSubModalOpened(false);
                   }}
                 >
-                  Нет
+                  {t("no")}
                 </Button>
               </div>
             </div>

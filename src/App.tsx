@@ -1,10 +1,12 @@
+import "./i18n";
 import { FC, useEffect } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 import AppRouter from "./router";
 import useAuthStore from "./store/useAuthStore";
+import i18n from "./i18n";
 
 const App: FC = () => {
-  const { user } = useAuthStore();
+  const { user, language } = useAuthStore();
 
   useEffect(() => {
     const body = document.body;
@@ -19,6 +21,10 @@ const App: FC = () => {
     document.body.classList.remove("font-small", "font-default", "font-large");
     document.body.classList.add(`font-${user.fontSize}`);
   }, [user.fontSize]);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
 
   return (
     <>

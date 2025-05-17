@@ -4,8 +4,10 @@ import Button from "../../atoms/Button";
 import { useCost } from "../../../helpers/useCost";
 import styles from "./Payment.module.scss";
 import { onSuccess } from "../../../helpers/toast";
+import { useTranslation } from "react-i18next";
 
 const Payment = () => {
+  const { t } = useTranslation();
   const { subscriptionId } = useParams();
   const { setUserField } = useAuthStore();
   const subscriptionCost = useCost(subscriptionId || "0");
@@ -13,18 +15,18 @@ const Payment = () => {
   return (
     <div className={styles.wrapper}>
       <span className={styles.title}>
-        Вы собираетесь оплатить подписку за {subscriptionCost} рублей
+        {t("subscriptionPaymentIntro")} {subscriptionCost} {t("rubles")}
       </span>
       {subscriptionId && (
         <Button
           onPress={() => {
             setUserField("subscription", subscriptionId);
-            onSuccess("Подписка успешно оплачена");
+            onSuccess(t("subscriptionPaid"));
           }}
           style={styles.btn}
           color="blue"
         >
-          Оплатить
+          {t("pay")}
         </Button>
       )}
     </div>

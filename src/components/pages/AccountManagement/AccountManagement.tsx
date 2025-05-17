@@ -16,8 +16,10 @@ import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import useAuthStore from "../../../store/useAuthStore";
 import { ERoles } from "../../../constants/roles";
+import { useTranslation } from "react-i18next";
 
 const AccountManagement = () => {
+  const { t } = useTranslation();
   const {
     accounts,
     changeAccount,
@@ -69,7 +71,7 @@ const AccountManagement = () => {
       {isLoading ? (
         <SupportContent isLoading={isLoading} />
       ) : !isLoading && sections.length === 0 ? (
-        <SupportContent message="У вас нет управляемых аккаунтов" />
+        <SupportContent message={t("noManagedAccounts")} />
       ) : (
         sections.map((section) => {
           const index = accounts.findIndex((acc) => acc.id === section.id);
@@ -102,7 +104,7 @@ const AccountManagement = () => {
                 <div className={styles.content}>
                   <div className={styles.fields}>
                     <Input
-                      label="Логин"
+                      label={t("login")}
                       value={section.login}
                       onChangeText={(login) => {
                         changeAccountField(section.id, "login", login);
@@ -115,7 +117,7 @@ const AccountManagement = () => {
                       errorClassName={styles.inputError}
                     />
                     <InputPassword
-                      label="Пароль"
+                      label={t("password")}
                       value={section.password}
                       onChangeText={(password) => {
                         changeAccountField(section.id, "password", password);
@@ -131,13 +133,13 @@ const AccountManagement = () => {
                     <Dropdown
                       data={availableRoles.map((key) => ({
                         value: key,
-                        label: ERoles[key as keyof typeof ERoles],
+                        label: t(ERoles[key as keyof typeof ERoles]),
                       }))}
                       value={section.role}
                       setValue={(role) =>
                         changeAccountField(section.id, "role", role)
                       }
-                      label="Роль"
+                      label={t("role")}
                       controlHeight="24px"
                       marginHorizontal="10px"
                       marginVertical="6px"
@@ -155,7 +157,7 @@ const AccountManagement = () => {
                         })
                       }
                     >
-                      Изменить
+                      {t("edit")}
                     </Button>
                     <Button
                       color="red"
@@ -165,7 +167,7 @@ const AccountManagement = () => {
                         setActiveSection(false);
                       }}
                     >
-                      Удалить
+                      {t("delete")}
                     </Button>
                   </div>
                 </div>

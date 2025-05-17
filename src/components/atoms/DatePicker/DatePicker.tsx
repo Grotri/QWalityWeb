@@ -8,6 +8,7 @@ dayjs.locale("ru");
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { formatDate } from "../../../helpers/formatDate";
+import { useTranslation } from "react-i18next";
 
 const DatePicker: FC<IDatePicker> = ({
   date,
@@ -15,6 +16,7 @@ const DatePicker: FC<IDatePicker> = ({
   bgColor = "var(--dateAndListSelectsPopupBg)",
   height = "27px",
 }) => {
+  const { t } = useTranslation();
   const [show, setShow] = useState<boolean>(false);
   const [tempDate, setTempDate] = useState<Dayjs | null>(
     date ? dayjs(date) : null
@@ -48,8 +50,8 @@ const DatePicker: FC<IDatePicker> = ({
           onClose={() => setShow(false)}
           format="DD MMMM YYYY"
           localeText={{
-            cancelButtonLabel: "Отмена",
-            toolbarTitle: "Выбрать дату",
+            cancelButtonLabel: t("cancel"),
+            toolbarTitle: t("selectDate"),
           }}
           slotProps={{
             textField: { style: { display: "none" } },

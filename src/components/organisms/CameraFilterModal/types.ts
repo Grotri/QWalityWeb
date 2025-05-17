@@ -1,10 +1,10 @@
-import { EDefectFilterOptions } from "./enums";
+import { EDefectOptions } from "./enums";
 
 export interface ICameraFilter {
   isDateFilter: boolean;
   startDate: Date | null;
   endDate: Date | null;
-  option: keyof typeof EDefectFilterOptions;
+  option: keyof typeof EDefectOptions;
 }
 
 export interface ICameraFilterModal {

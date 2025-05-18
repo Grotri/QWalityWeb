@@ -11,6 +11,7 @@ import { BottomIcon, MessageIcon } from "../../../assets/icons";
 import SupportContent from "../../atoms/SupportContent";
 import { supportLink } from "../../../constants/support";
 import { useTranslation } from "react-i18next";
+import { formatAnswer } from "../../../helpers/formatAnswer";
 
 const FAQ = () => {
   const { t } = useTranslation();
@@ -31,11 +32,15 @@ const FAQ = () => {
             onChange={handleSectionChange(question.id)}
           >
             <CustomAccordionSummary expandIcon={<BottomIcon scale={2} />}>
-              <span className={styles.headerText}>{question.title}</span>
+              <span className={styles.headerText}>{t(question.title)}</span>
             </CustomAccordionSummary>
             <CustomAccordionDetails>
               <div className={styles.content}>
-                <span className={styles.contentText}>{question.answer}</span>
+                {formatAnswer(t(question.answer)).map((line, index) => (
+                  <span key={index} className={styles.contentText}>
+                    {line}
+                  </span>
+                ))}
               </div>
             </CustomAccordionDetails>
           </CustomAccordion>

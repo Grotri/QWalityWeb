@@ -3,38 +3,62 @@ import { IQuestionSection } from "../model/question";
 export const questions: IQuestionSection[] = [
   {
     id: "0",
-    title: "Вопрос 1",
-    answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis sollicitudin libero, ultrices cursus neque. Donec vel nibh vestibulum, auctor dolor sit amet, interdum odio. Donec quis mauris ultrices, sollicitudin purus sed, pretium justo. Curabitur et risus sem. Pellentesque aliquam dui sapien, sed ornare nulla pulvinar ac. In consectetur dui rutrum felis varius, sit amet ornare urna lacinia. Suspendisse dignissim eros ac felis rutrum, eget blandit erat condimentum. Proin eu lorem nisl. Donec euismod rutrum volutpat. Etiam ultrices erat nec nibh fringilla condimentum. Vivamus odio nibh, ultricies eu consectetur a, euismod id nisi. Cras bibendum mi non quam feugiat aliquam. Fusce ultrices at nulla eu posuere. Vestibulum quis tincidunt nibh.",
+    title: "question1",
+    answer: "answer1",
   },
   {
     id: "1",
-    title: "Как создать аккаунт?",
-    answer: "Ответ",
+    title: "question2",
+    answer: "answer2",
   },
   {
     id: "2",
-    title: "Как зайти в админ панель? ",
-    answer: "Ответ",
+    title: "question3",
+    answer: "answer3",
   },
   {
     id: "3",
-    title: "Где добавлять аккаунты?",
-    answer: "Ответ",
+    title: "question4",
+    answer: "answer4",
   },
   {
     id: "4",
-    title: "Как настраивать камеры?",
-    answer: "Ответ",
+    title: "question5",
+    answer: "answer5",
   },
   {
     id: "5",
-    title: "Что означают разные роли?",
-    answer: "Ответ",
+    title: "question6",
+    answer: "answer6",
   },
   {
     id: "6",
-    title: "Как удалить камеру?",
-    answer: "Ответ",
+    title: "question7",
+    answer: "answer7",
+  },
+  {
+    id: "7",
+    title: "question8",
+    answer: "answer8",
+  },
+  {
+    id: "8",
+    title: "question9",
+    answer: "answer9",
+  },
+  {
+    id: "9",
+    title: "question10",
+    answer: "answer10",
+  },
+  {
+    id: "10",
+    title: "question11",
+    answer: "answer11",
+  },
+  {
+    id: "11",
+    title: "question12",
+    answer: "answer12",
   },
 ];

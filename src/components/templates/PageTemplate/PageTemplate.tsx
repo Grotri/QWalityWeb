@@ -16,6 +16,7 @@ import Input from "../../atoms/Input/Input";
 import SettingsModal from "../../organisms/SettingsModal";
 import { useTranslation } from "react-i18next";
 import useAuthStore from "../../../store/useAuthStore";
+import { getToken } from "../../../api/token";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   backPath,
@@ -29,10 +30,13 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
 }) => {
   const navigate = useNavigate();
-  const { user, language, setLanguage } = useAuthStore();
+  const { language, setLanguage } = useAuthStore();
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+
+  const languages = ["ru", "eng", "fr"];
+  const selectedIndex = languages.indexOf(language);
 
   const handleOverlayClick = () => {
     setIsMenuOpen(false);
@@ -161,17 +165,23 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
           />
         </div>
       )}
-      {!user.id && (
+      {!getToken() && (
         <div className={styles.languageToggle}>
           <div
             className={styles.highlight}
-            style={{ left: language === "ru" ? 0 : "50%" }}
+            style={{
+              transform: `translateX(${selectedIndex * 100}%)`,
+              width: `${100 / languages.length}%`,
+            }}
           />
           <span className={styles.toggle} onClick={() => setLanguage("ru")}>
             ru
           </span>
           <span className={styles.toggle} onClick={() => setLanguage("eng")}>
             en
+          </span>
+          <span className={styles.toggle} onClick={() => setLanguage("fr")}>
+            fr
           </span>
         </div>
       )}

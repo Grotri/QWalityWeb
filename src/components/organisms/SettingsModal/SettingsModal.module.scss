@@ -8,6 +8,7 @@
   right: 12px;
   top: 100%;
   align-items: center;
+  max-width: 380px;
 }
 
 .wrapperVisible {
@@ -25,6 +26,7 @@
 .dropdown {
   width: 116px !important;
   text-align: start;
+  flex-shrink: 0;
 }
 
 .dropdownWrapper {
@@ -36,10 +38,11 @@
 }
 
 .dropdownText {
-  white-space: nowrap;
   font-size: calc(16px * var(--font-scale));
   line-height: calc(21px * var(--font-scale));
   font-weight: 600;
+  text-align: start;
+  word-break: break-word;
 }
 
 .btns {
@@ -167,6 +170,7 @@
 
 @media (max-width: 1439.89px) {
   .wrapper {
+    max-width: unset;
     -webkit-box-shadow: var(--settingsBoxShadow);
     -moz-box-shadow: var(--settingsBoxShadow);
     box-shadow: var(--settingsBoxShadow);

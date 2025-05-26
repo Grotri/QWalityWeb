@@ -6,7 +6,7 @@ export const fontSizes: IDropdownData[] = [
     label: "fontSmall",
   },
   {
-    value: "default",
+    value: "medium",
     label: "fontMedium",
   },
   {

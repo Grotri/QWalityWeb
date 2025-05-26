@@ -10,12 +10,12 @@ export interface UserNode {
   tin?: string;
 }
 
-export default (data: UserNode): IUser => ({
+export default (data: UserNode, isWithTestSubs?: boolean): IUser => ({
   id: data.id.toString(),
   inn: data.tin || "",
   login: data.login,
   password: "",
-  subscription: "3",
+  subscription: isWithTestSubs ? "3" : "",
   role: data.role,
   theme: data.color_theme,
   fontSize: data.font_size,

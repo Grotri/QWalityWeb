@@ -51,7 +51,7 @@ const App: FC = () => {
 
   useEffect(() => {
     if (getToken()) {
-      fetchUserInfo();
+      fetchUserInfo(true);
     }
   }, [fetchUserInfo]);
 

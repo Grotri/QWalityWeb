@@ -64,8 +64,11 @@ const Main: FC<{ search: string }> = ({ search }) => {
 
   useEffect(() => {
     setCameras([...camerasInfo.filter((c) => !c.deletedAt)]);
-    setIsAddCameraModalOpen(false);
   }, [camerasInfo]);
+
+  useEffect(() => {
+    setIsAddCameraModalOpen(false);
+  }, [camerasInfo.length]);
 
   return (
     <>

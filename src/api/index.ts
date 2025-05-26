@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getRefresh, getToken, setToken } from "./token";
+import { getRefresh, getToken, setRefresh, setToken } from "./token";
 import { forceLogout } from "./forceLogout";
 import { onError } from "../helpers/toast";
 import i18n from "../i18n";
@@ -10,6 +10,49 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+export const plainAxios = axios.create();
+
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+const subscribeTokenRefresh = (cb: (token: string) => void) => {
+  refreshSubscribers.push(cb);
+};
+
+const onRefreshed = (token: string) => {
+  refreshSubscribers.forEach((cb) => cb(token));
+  refreshSubscribers = [];
+};
+
+const refreshAccessToken = async (): Promise<string | null> => {
+  const refreshToken = getRefresh();
+  if (!refreshToken) return null;
+
+  try {
+    const res = await plainAxios.post(
+      "https://api.qwality.space/auth/refresh",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+
+    const newAccessToken = res.data.access_token;
+    const newRefreshToken = res.data.refresh_token;
+
+    setToken(newAccessToken);
+    if (newRefreshToken) {
+      setRefresh(newRefreshToken);
+    }
+
+    return newAccessToken;
+  } catch {
+    return null;
+  }
+};
 
 api.interceptors.request.use(
   (config) => {
@@ -29,27 +72,30 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = getRefresh();
 
-      if (!refreshToken) {
-        forceLogout();
-        return Promise.reject(error);
-      }
-
-      try {
-        const res = await api.post("/auth/refresh", {
-          refresh_token: refreshToken,
+      if (isRefreshing) {
+        return new Promise((resolve) => {
+          subscribeTokenRefresh((newToken) => {
+            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+            resolve(api(originalRequest));
+          });
         });
-
-        const newAccessToken = res.data.access_token;
-        setToken(newAccessToken);
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalRequest);
-      } catch (refreshError) {
-        onError(i18n.t("sessionExpired"));
-        forceLogout();
-        return Promise.reject(refreshError);
       }
+
+      isRefreshing = true;
+
+      const newToken = await refreshAccessToken();
+
+      isRefreshing = false;
+
+      if (newToken) {
+        onRefreshed(newToken);
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
+      }
+
+      onError(i18n.t("sessionExpired"));
+      forceLogout();
     }
 
     return Promise.reject(error);

@@ -3,6 +3,7 @@ import { matchPath, Navigate, useLocation } from "react-router-dom";
 import useAuthStore from "../../../store/useAuthStore";
 import { ERoutes } from "../../../router/routes";
 import { roleRestrictedRoutes } from "../../../router/roleRestrictions";
+import { getToken } from "../../../api/token";
 
 const PrivateRoute = ({
   element,
@@ -18,7 +19,7 @@ const PrivateRoute = ({
     matchPath({ path, end: true }, location.pathname)
   );
 
-  if (!user.id) {
+  if (!getToken()) {
     return <Navigate to={ERoutes.register} replace />;
   }
 

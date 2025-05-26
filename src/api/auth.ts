@@ -1,7 +1,7 @@
 import api from "./index";
 
 interface ILoginRequestParams {
-  email: string;
+  login: string;
   password: string;
   tin: string;
   type: "legal person";
@@ -18,8 +18,8 @@ interface IConfirmResetPassword {
   new_password: string;
 }
 
-export const loginRequest = async (email: string, password: string) => {
-  return await api.post("/auth/login", { email, password });
+export const loginRequest = async (login: string, password: string) => {
+  return await api.post("/auth/login", { login, password });
 };
 
 export const registerRequest = async (payload: ILoginRequestParams) => {

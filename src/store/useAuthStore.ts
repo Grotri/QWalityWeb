@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
 import { EErrors } from "../constants/errors";
 import { emailPattern, innPattern } from "../constants/patterns";
-import { v4 as uuidv4 } from "uuid";
 import { onError, onSuccess } from "../helpers/toast";
 import {
   IErrors,
@@ -18,17 +17,20 @@ import {
   resetPassword,
   sendCode,
 } from "../api/auth";
-import { getToken, setRefresh, setToken } from "../api/token";
+import { setRefresh, setToken } from "../api/token";
 import { forceLogout } from "../api/forceLogout";
 import { AxiosError } from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { ERoutes } from "../router/routes";
 import i18n from "../i18n";
+import { getUserInfo } from "../api/user";
+import convertUserInfo from "../utils/convertUserInfo";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
   errors: IErrors;
   language: TLanguage;
+  fetchUserInfo: () => Promise<void>;
   setLanguage: (lang: TLanguage) => void;
   setUserField: (field: keyof IUser, value: string) => void;
   setUser: (newUser: IUser) => void;
@@ -36,15 +38,8 @@ interface IUseAuthStore extends IStoreStatus {
   setErrorsField: (field: keyof IErrors, error: string) => void;
   clearErrors: () => void;
   validate: (code: string) => boolean;
-  login: (
-    email: string,
-    password: string,
-    addAccount: (account: IUser) => void
-  ) => Promise<void>;
-  register: (
-    code: string,
-    addAccount: (account: IUser) => void
-  ) => Promise<void>;
+  login: (login: string, password: string) => Promise<void>;
+  register: (code: string) => Promise<void>;
   logout: (clearAccounts: () => void) => void;
   sendRegisterCode: (email: string) => void;
   sendResetCode: (email: string) => void;
@@ -57,33 +52,45 @@ interface IUseAuthStore extends IStoreStatus {
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
-  const token = getToken();
   const storedLanguage = sessionStorage.getItem("language") as TLanguage | null;
-  const storedUser = sessionStorage.getItem("user");
 
   return {
     loading: false,
     error: null,
     errors: { ...initialErrors },
-    user: storedUser && token ? JSON.parse(storedUser) : { ...initialUser },
+    user: { ...initialUser },
     language: storedLanguage || "ru",
+
+    fetchUserInfo: async () => {
+      try {
+        set({ loading: true, error: null });
+        const res = await getUserInfo();
+        set({
+          user: convertUserInfo(res.data),
+          loading: false,
+          error: false,
+        });
+      } catch (error) {
+        console.log(error);
+        forceLogout();
+        set({ error, loading: false });
+      }
+    },
 
     setUserField: (field, value) =>
       set((state) => {
         const updatedUser = { ...state.user, [field]: value };
-        if (field === "subscription") {
-          sessionStorage.setItem("user", JSON.stringify(updatedUser));
-        }
+        // if (field === "subscription") {
+        //   sessionStorage.setItem("user", JSON.stringify(updatedUser));
+        // }
         return { user: updatedUser };
       }),
 
     setUser: (newUser) => {
-      sessionStorage.setItem("user", JSON.stringify(newUser));
       set({ user: { ...newUser } });
     },
 
     clearUser: () => {
-      sessionStorage.removeItem("user");
       set({ user: { ...initialUser } });
     },
 
@@ -120,45 +127,35 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       return Object.values(newErrors).every((error) => !error);
     },
 
-    register: async (code, addAccount) => {
-      const { user, validate } = get();
+    register: async (code) => {
+      const { user, validate, fetchUserInfo } = get();
 
       if (!validate(code)) {
         onError(i18n.t(EErrors.fields));
         return;
       }
 
-      set({ loading: true, error: null });
-
       try {
-        const newUser: IUser = {
-          id: uuidv4(),
+        const response = await registerRequest({
           login: user.login.trim(),
           password: user.password.trim(),
-          inn: user.inn?.trim(),
-          role: user.role,
-          theme: "dark",
-          fontSize: "default",
-        };
-
-        const response = await registerRequest({
-          email: newUser.login,
-          password: newUser.password,
-          tin: newUser.inn || "",
+          tin: user.inn?.trim() || "",
           type: "legal person",
           code: code.trim(),
         });
 
         if (response.status === 201) {
-          const loginData = await loginRequest(newUser.login, newUser.password);
+          const loginData = await loginRequest(
+            user.login.trim(),
+            user.password.trim()
+          );
           const { access_token, refresh_token } = loginData.data;
 
           setToken(access_token);
           setRefresh(refresh_token);
-          sessionStorage.setItem("user", JSON.stringify(newUser));
-          set({ user: newUser });
-          addAccount(newUser);
-          onSuccess(i18n.t("registrationSuccess"), 2000);
+
+          await fetchUserInfo();
+          onSuccess(i18n.t("registrationSuccess"));
         } else {
           onError(i18n.t("registrationFailed"));
         }
@@ -177,37 +174,20 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         } else {
           onError(i18n.t("unknownError"));
         }
-        set({ error });
-      } finally {
-        set({ loading: false });
       }
     },
 
-    login: async (email, password, addAccount) => {
-      set({ loading: true, error: null });
-
+    login: async (login, password) => {
       try {
-        const newUser: IUser = {
-          id: uuidv4(),
-          login: email,
-          password: password,
-          inn: "1111111111",
-          role: "owner",
-          theme: "dark",
-          fontSize: "default",
-          subscription: "2",
-        };
-
-        const data = await loginRequest(email, password);
+        const { fetchUserInfo } = get();
+        const data = await loginRequest(login, password);
         const { access_token, refresh_token } = data.data;
 
         setToken(access_token);
         setRefresh(refresh_token);
 
-        sessionStorage.setItem("user", JSON.stringify(newUser));
-        set({ user: newUser });
-        addAccount(newUser);
-        onSuccess(i18n.t("loginSuccess"), 2000);
+        await fetchUserInfo();
+        onSuccess(i18n.t("loginSuccess"));
       } catch (error) {
         console.log(error);
         if (error instanceof AxiosError) {
@@ -223,16 +203,12 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         } else {
           onError(i18n.t("unknownError"));
         }
-        set({ error });
-      } finally {
-        set({ loading: false });
       }
     },
 
     sendRegisterCode: async (email) => {
       if (email) {
         try {
-          set({ loading: true, error: null });
           await sendCode({ email });
           onSuccess(i18n.t("codeSentToEmail"));
         } catch (error) {
@@ -250,9 +226,6 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           } else {
             onError(i18n.t("unknownError"));
           }
-          set({ error });
-        } finally {
-          set({ loading: false });
         }
       } else {
         onError(i18n.t("enterEmailFirst"));
@@ -262,7 +235,6 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
     sendResetCode: async (email) => {
       if (email) {
         try {
-          set({ loading: true, error: null });
           await resetPassword({ email });
           onSuccess(i18n.t("codeSentToEmail"));
         } catch (error) {
@@ -280,9 +252,6 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
           } else {
             onError(i18n.t("unknownError"));
           }
-          set({ error });
-        } finally {
-          set({ loading: false });
         }
       } else {
         onError(i18n.t("enterEmailFirst"));
@@ -291,7 +260,6 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
     restorePassword: async (email, code, password, navigate) => {
       try {
-        set({ loading: true, error: null });
         await confirmResetPassword({ email, code, new_password: password });
         navigate(ERoutes.login);
         onSuccess(i18n.t("passwordChanged"), 5000);
@@ -310,9 +278,6 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
         } else {
           onError(i18n.t("unknownError"));
         }
-        set({ error });
-      } finally {
-        set({ loading: false });
       }
     },
 

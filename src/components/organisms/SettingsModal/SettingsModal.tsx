@@ -160,7 +160,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
             </Button>
           )}
         </div>
-        <span className={styles.version}>QWality Release v1.0.0</span>
+        <span className={styles.version}>QWality Release v1.1.0</span>
       </div>
       <Modal isVisible={isExitModalOpen} setIsVisible={setIsExitModalOpen}>
         <div className={styles.exitModal}>

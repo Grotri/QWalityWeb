@@ -302,7 +302,10 @@
 .toggle {
   color: var(--mainText);
   font-size: 20px;
-  padding: 12px;
+  padding: 12px 0;
+  width: 44px;
+  display: flex;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 4px;
@@ -312,11 +315,10 @@
 .highlight {
   position: absolute;
   top: 0;
-  width: 50%;
   height: 100%;
   background-color: var(--blue);
   border-radius: 8px;
-  transition: left 0.3s ease;
+  transition: transform 0.3s ease;
   z-index: 0;
 }
 

@@ -68,11 +68,12 @@ const AccountManagement = () => {
 
   return (
     <div className={styles.managerWrapper}>
-      {isLoading ? (
-        <SupportContent isLoading={isLoading} />
-      ) : !isLoading && sections.length === 0 ? (
+      {isLoading && <SupportContent isLoading={isLoading} />}
+      {!isLoading && !sections.length && (
         <SupportContent message={t("noManagedAccounts")} />
-      ) : (
+      )}
+      {!isLoading &&
+        !!sections.length &&
         sections.map((section) => {
           const index = accounts.findIndex((acc) => acc.id === section.id);
           const error = errors[index] || { login: "", password: "" };
@@ -118,6 +119,7 @@ const AccountManagement = () => {
                     />
                     <InputPassword
                       label={t("password")}
+                      placeholder="********"
                       value={section.password}
                       onChangeText={(password) => {
                         changeAccountField(section.id, "password", password);
@@ -174,8 +176,7 @@ const AccountManagement = () => {
               </CustomAccordionDetails>
             </CustomAccordion>
           );
-        })
-      )}
+        })}
     </div>
   );
 };

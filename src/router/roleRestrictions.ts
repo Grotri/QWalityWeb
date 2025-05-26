@@ -13,7 +13,7 @@ export const roleRestrictedRoutes: Record<string, string[]> = {
     ERoutes.admin,
     ERoutes.accountManagement,
   ],
-  ["administrator"]: [
+  ["admin"]: [
     ERoutes.subscriptionEdit,
     `${ERoutes.subscriptionEdit}${ERoutes.payment}/:subscriptionId`,
   ],

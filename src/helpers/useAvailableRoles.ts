@@ -11,7 +11,7 @@ export const useAvailableRoles = () => {
       ? ["owner"]
       : roleLimits === 2
       ? ["user", "owner"]
-      : ["user", "moderator", "administrator", "owner"];
+      : ["user", "moderator", "admin", "owner"];
 
   if (!currentRole) {
     return [];

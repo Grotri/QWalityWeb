@@ -9,4 +9,8 @@ export const languages: IDropdownData[] = [
     value: "eng",
     label: "english",
   },
+  {
+    value: "fr",
+    label: "french",
+  },
 ];

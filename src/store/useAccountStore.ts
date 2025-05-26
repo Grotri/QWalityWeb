@@ -5,6 +5,12 @@ import { onError, onSuccess, onWarning } from "../helpers/toast";
 import { IUser } from "../model/user";
 import { ERoles } from "../constants/roles";
 import i18n from "../i18n";
+import {
+  createSubAccount,
+  deleteSubAccount,
+  getSubAccounts,
+} from "../api/user";
+import convertSubAccounts from "../utils/convertSubAccounts";
 
 export interface IErrors {
   login: string;
@@ -14,8 +20,8 @@ export interface IErrors {
 interface IUseAccountStore extends IStoreStatus {
   accounts: IUser[];
   errors: IErrors[];
-  addAccount: (account: IUser) => void;
-  registerAccount: (account: IUser) => void;
+  fetchAccounts: () => Promise<void>;
+  registerAccount: (login: string, password: string, role: string) => void;
   changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
   refreshErrors: () => void;
@@ -30,29 +36,41 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   accounts: [],
   errors: [],
 
-  addAccount: (account) => {
+  fetchAccounts: async () => {
     try {
       set({ loading: true, error: null });
-      set((state) => ({
-        accounts: [...state.accounts, account],
-        errors: [...state.errors, { login: "", password: "" }],
+      const res = await getSubAccounts();
+      set({
+        accounts: convertSubAccounts(res.data),
         loading: false,
         error: false,
-      }));
+      });
     } catch (error) {
-      onError(i18n.t("failedToAddAccount"));
-      console.error(error);
+      console.log(error);
       set({ error, loading: false });
     }
   },
 
-  registerAccount: (account) => {
-    const currRole = i18n.t(ERoles[account.role as keyof typeof ERoles]);
+  registerAccount: async (login: string, password: string, role: string) => {
+    const currRole = i18n.t(ERoles[role as keyof typeof ERoles]);
 
     try {
       set({ loading: true, error: null });
+      const request = await createSubAccount({
+        login,
+        password,
+        role,
+      });
+      const newAccount: IUser = {
+        id: request.data.id.toString(),
+        login,
+        password: "",
+        role,
+        theme: "dark",
+        fontSize: "medium",
+      };
       set((state) => ({
-        accounts: [...state.accounts, account],
+        accounts: [...state.accounts, newAccount],
         errors: [...state.errors, { login: "", password: "" }],
         loading: false,
         error: false,
@@ -84,7 +102,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     return Object.values(newError).every((error) => !error);
   },
 
-  changeAccount: (index, newAccount) => {
+  changeAccount: async (index, newAccount) => {
     const { accounts, validate } = get();
     const oldAccount = accounts[index];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -93,6 +111,11 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
       if (validate(newAccount, index)) {
         try {
           set({ loading: true, error: null });
+          // await editAccount(newAccount.id, {
+          //   login: newAccount.login,
+          //   password: newAccount.password,
+          //   role: newAccount.role,
+          // });
           set((state) => ({
             accounts: state.accounts.map((account, i) =>
               i === index ? newAccount : account
@@ -121,13 +144,14 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
       return { errors: newErrors };
     }),
 
-  deleteAccount: (index) => {
+  deleteAccount: async (index) => {
     const { accounts, errors } = get();
     const userToDelete = accounts[index];
     const role = i18n.t(ERoles[userToDelete.role as keyof typeof ERoles]);
 
     try {
       set({ loading: true, error: null });
+      await deleteSubAccount(userToDelete.id);
       set({
         accounts: accounts.filter((account) => account.id !== userToDelete.id),
         errors: errors.filter((_, i) => i !== index),

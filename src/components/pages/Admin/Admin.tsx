@@ -3,7 +3,6 @@ import useAccountStore from "../../../store/useAccountStore";
 import { FormEvent, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { v4 as uuidv4 } from "uuid";
 import { onError } from "../../../helpers/toast";
 import styles from "./Admin.module.scss";
 import Input from "../../atoms/Input/Input";
@@ -13,7 +12,6 @@ import Slider from "../../atoms/Slider";
 import Dropdown from "../../atoms/Dropdown";
 import GetReportModal from "../../organisms/GetReportModal";
 import { ERoutes } from "../../../router/routes";
-import { IUser } from "../../../model/user";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { ERoles } from "../../../constants/roles";
@@ -48,16 +46,8 @@ const Admin = () => {
   const createSubAccount = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (accounts.length < accountLimits) {
-      const account: IUser = {
-        id: uuidv4(),
-        login: login.trim(),
-        password: password.trim(),
-        role,
-        theme: "dark",
-        fontSize: "default",
-      };
       if (validate()) {
-        registerAccount(account);
+        registerAccount(login.trim(), password.trim(), role);
         setLogin("");
         setPassword("");
       } else {

@@ -9,14 +9,12 @@ import Input from "../../atoms/Input/Input";
 import InputPassword from "../../atoms/InputPassword";
 import Button from "../../atoms/Button";
 import { ERoutes } from "../../../router/routes";
-import useAccountStore from "../../../store/useAccountStore";
 import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { login } = useAuthStore();
-  const { addAccount } = useAccountStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -38,7 +36,7 @@ const Login = () => {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      login(email.trim(), password.trim(), addAccount);
+      login(email.trim(), password.trim());
     } else {
       onError(t(EErrors.fields));
     }

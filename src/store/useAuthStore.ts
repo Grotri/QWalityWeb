@@ -137,7 +137,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
       try {
         const response = await registerRequest({
-          login: user.login.trim(),
+          email: user.login.trim(),
           password: user.password.trim(),
           tin: user.inn?.trim() || "",
           type: "legal person",

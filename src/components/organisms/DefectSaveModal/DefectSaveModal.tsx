@@ -3,7 +3,6 @@ import { IDefectSaveModal } from "./types";
 import { IDefect, initialDefect } from "../../../model/defect";
 import Modal from "../../atoms/Modal";
 import styles from "./DefectSaveModal.module.scss";
-import { convertISODate } from "../../../helpers/formatDate";
 import Button from "../../atoms/Button";
 import { onSuccess } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
@@ -24,7 +23,7 @@ const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
       <div className={styles.modal}>
         <span className={styles.modalTitle}>{t("wantDownloadImage")}</span>
         <span className={styles.name}>
-          {t("defect")} ({t(name)}) {convertISODate(date)}
+          {t("defect")} ({t(name)}) {date}
         </span>
         <div className={styles.btns}>
           <Button

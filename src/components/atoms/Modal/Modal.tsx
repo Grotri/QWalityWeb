@@ -2,7 +2,7 @@ import ReactModal from "@mui/material/Modal";
 import { IModal } from "./types";
 import { FC } from "react";
 import styles from "./Modal.module.scss";
-import { Backdrop, Fade } from "@mui/material";
+import { Backdrop } from "@mui/material";
 
 const Modal: FC<IModal> = ({ children, isVisible, setIsVisible, onClose }) => {
   const handleClose = () => {
@@ -28,9 +28,7 @@ const Modal: FC<IModal> = ({ children, isVisible, setIsVisible, onClose }) => {
         },
       }}
     >
-      <Fade in={isVisible}>
-        <div className={styles.modal}>{children}</div>
-      </Fade>
+      <div className={styles.modal}>{children}</div>
     </ReactModal>
   );
 };

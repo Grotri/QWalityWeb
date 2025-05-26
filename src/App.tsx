@@ -4,9 +4,15 @@ import { Bounce, ToastContainer } from "react-toastify";
 import AppRouter from "./router";
 import useAuthStore from "./store/useAuthStore";
 import i18n from "./i18n";
+import { getToken } from "./api/token";
+import useAccountStore from "./store/useAccountStore";
+import useCamerasStore from "./store/useCamerasStore";
+import { giveLisence } from "./api/license";
 
 const App: FC = () => {
-  const { user, language } = useAuthStore();
+  const { user, language, fetchUserInfo } = useAuthStore();
+  const { fetchAccounts } = useAccountStore();
+  const { fetchCameras, fetchDefects } = useCamerasStore();
 
   useEffect(() => {
     const body = document.body;
@@ -25,6 +31,29 @@ const App: FC = () => {
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language]);
+
+  useEffect(() => {
+    if (user.id) {
+      fetchCameras();
+      fetchAccounts();
+      // TODO: удалить
+      if (user.role === "owner") {
+        giveLisence();
+      }
+
+      const intervalId = setInterval(() => {
+        fetchDefects();
+      }, 10000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [fetchAccounts, fetchCameras, fetchDefects, user.id, user.role]);
+
+  useEffect(() => {
+    if (getToken()) {
+      fetchUserInfo();
+    }
+  }, [fetchUserInfo]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useEffect, useState } from "react";
+import { FC, SyntheticEvent, useState } from "react";
 import { ICameraAccordion } from "./types";
 import useCamerasStore from "../../../store/useCamerasStore";
 import { ESortOptions } from "../CameraSortModal/enums";
@@ -28,6 +28,7 @@ import CameraFilterModal from "../CameraFilterModal";
 import DefectSaveModal from "../DefectSaveModal";
 import useAuthStore from "../../../store/useAuthStore";
 import { useTranslation } from "react-i18next";
+import { formatUptime } from "../../../helpers/formatUptime";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -44,9 +45,8 @@ const CameraAccordion: FC<ICameraAccordion> = ({
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
   const { t } = useTranslation();
-  const { deleteDefect } = useCamerasStore();
+  const { activeSection, setActiveSection, deleteDefect } = useCamerasStore();
   const { user } = useAuthStore();
-  const [activeSection, setActiveSection] = useState<string | false>(false);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
   const [sortModalCameraId, setSortModalCameraId] = useState<string | null>(
     null
@@ -113,10 +113,6 @@ const CameraAccordion: FC<ICameraAccordion> = ({
     }
   };
 
-  useEffect(() => {
-    setActiveSection(false);
-  }, [sections.length]);
-
   return (
     <div className={styles.wrapper}>
       {sections.map((camera) => {
@@ -131,6 +127,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
           ? filterDefects(sortedDefects, filterOption)
           : sortedDefects;
         const pagedDefects = getPagedDefects(filteredDefects, page);
+        const uptime = formatUptime(camera.uptime);
 
         return (
           <CustomAccordion
@@ -172,7 +169,10 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                     </span>
                   </div>
                   <span className={styles.uptime}>
-                    {t("uptime")} {camera.uptime}
+                    {t("uptime")} {uptime[0]}
+                    {t("day")} {uptime[1]}
+                    {t("hour")} {uptime[2]}
+                    {t("minute")}
                   </span>
                 </div>
               </div>

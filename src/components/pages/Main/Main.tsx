@@ -16,10 +16,11 @@ import useAuthStore from "../../../store/useAuthStore";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
 import { onError } from "../../../helpers/toast";
 import { useTranslation } from "react-i18next";
+import SupportContent from "../../atoms/SupportContent";
 
 const Main: FC<{ search: string }> = ({ search }) => {
   const { t } = useTranslation();
-  const { cameras: camerasInfo } = useCamerasStore();
+  const { cameras: camerasInfo, loading, error } = useCamerasStore();
   const cameraLimits = useCameraLimits();
   const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
@@ -67,89 +68,99 @@ const Main: FC<{ search: string }> = ({ search }) => {
   }, [camerasInfo]);
 
   return (
-    <div className={styles.wrapper}>
-      {sections.map((section, index) => {
-        const filteredCameras = section.cameras.filter((camera) =>
-          camera.title.toLowerCase().includes(search.toLowerCase())
-        );
-        return (
-          <CustomAccordion
-            key={section.id}
-            expanded={activeSection === section.id}
-            onChange={handleSectionChange(section.id)}
-          >
-            <CustomAccordionSummary
-              expandIcon={
-                <BottomIcon scale={2.5} stroke={1.5} style={styles.arrowIcon} />
-              }
-            >
-              <div className={styles.header}>
-                <span className={styles.headerText}>{section.title}</span>
-              </div>
-            </CustomAccordionSummary>
-            <CustomAccordionDetails>
-              {filteredCameras.length === 0 ? (
-                <div className={styles.emptyList}>
-                  <span className={styles.emptyText}>
-                    {!section.cameras.length
-                      ? t("noCamerasInCategory")
-                      : t("noCamerasFound")}
-                  </span>
-                </div>
-              ) : (
-                <CameraAccordion
-                  sections={filteredCameras}
-                  selectedCamera={selectedCamera}
-                  setSelectedCamera={setSelectedCamera}
-                  isHistoryModalOpen={isHistoryModalOpen}
-                  setIsHistoryModalOpen={setIsHistoryModalOpen}
-                  isSortCameraModalOpen={
-                    index === 0
-                      ? isSortCameraModalOpen
-                      : isSortOflCameraModalOpen
+    <>
+      {loading && <SupportContent isLoading={loading} />}
+      {!loading && error && <SupportContent type="error" message={error} />}
+      {!loading && !error && (
+        <div className={styles.wrapper}>
+          {sections.map((section, index) => {
+            const filteredCameras = section.cameras.filter((camera) =>
+              camera.title.toLowerCase().includes(search.toLowerCase())
+            );
+            return (
+              <CustomAccordion
+                key={section.id}
+                expanded={activeSection === section.id}
+                onChange={handleSectionChange(section.id)}
+              >
+                <CustomAccordionSummary
+                  expandIcon={
+                    <BottomIcon
+                      scale={2.5}
+                      stroke={1.5}
+                      style={styles.arrowIcon}
+                    />
                   }
-                  setIsSortCameraModalOpen={
-                    index === 0
-                      ? setIsSortCameraModalOpen
-                      : setIsSortOflCameraModalOpen
-                  }
-                  isFilterCameraModalOpen={
-                    index === 0
-                      ? isFilterCameraModalOpen
-                      : isFilterCameraOflModalOpen
-                  }
-                  setIsFilterCameraModalOpen={
-                    index === 0
-                      ? setIsFilterCameraModalOpen
-                      : setIsFilterCameraOflModalOpen
-                  }
-                  selectedDefect={selectedDefect}
-                  setSelectedDefect={setSelectedDefect}
-                />
-              )}
-            </CustomAccordionDetails>
-          </CustomAccordion>
-        );
-      })}
-      <AddCameraModal
-        isOpen={isAddCameraModalOpen}
-        setIsOpen={setIsAddCameraModalOpen}
-      />
-      {user.role !== "user" && (
-        <BottomFixIcon
-          icon={<PlusIcon />}
-          text={t("addCamera")}
-          onPress={() => {
-            if (cameras.length < cameraLimits) {
-              setIsAddCameraModalOpen(true);
-            } else {
-              onError(t("camerasLimitReached"));
-            }
-          }}
-          customBtn={styles.bottomBtn}
-        />
+                >
+                  <div className={styles.header}>
+                    <span className={styles.headerText}>{section.title}</span>
+                  </div>
+                </CustomAccordionSummary>
+                <CustomAccordionDetails>
+                  {filteredCameras.length === 0 ? (
+                    <div className={styles.emptyList}>
+                      <span className={styles.emptyText}>
+                        {!section.cameras.length
+                          ? t("noCamerasInCategory")
+                          : t("noCamerasFound")}
+                      </span>
+                    </div>
+                  ) : (
+                    <CameraAccordion
+                      sections={filteredCameras}
+                      selectedCamera={selectedCamera}
+                      setSelectedCamera={setSelectedCamera}
+                      isHistoryModalOpen={isHistoryModalOpen}
+                      setIsHistoryModalOpen={setIsHistoryModalOpen}
+                      isSortCameraModalOpen={
+                        index === 0
+                          ? isSortCameraModalOpen
+                          : isSortOflCameraModalOpen
+                      }
+                      setIsSortCameraModalOpen={
+                        index === 0
+                          ? setIsSortCameraModalOpen
+                          : setIsSortOflCameraModalOpen
+                      }
+                      isFilterCameraModalOpen={
+                        index === 0
+                          ? isFilterCameraModalOpen
+                          : isFilterCameraOflModalOpen
+                      }
+                      setIsFilterCameraModalOpen={
+                        index === 0
+                          ? setIsFilterCameraModalOpen
+                          : setIsFilterCameraOflModalOpen
+                      }
+                      selectedDefect={selectedDefect}
+                      setSelectedDefect={setSelectedDefect}
+                    />
+                  )}
+                </CustomAccordionDetails>
+              </CustomAccordion>
+            );
+          })}
+          <AddCameraModal
+            isOpen={isAddCameraModalOpen}
+            setIsOpen={setIsAddCameraModalOpen}
+          />
+          {user.role !== "user" && (
+            <BottomFixIcon
+              icon={<PlusIcon />}
+              text={t("addCamera")}
+              onPress={() => {
+                if (cameras.length < cameraLimits) {
+                  setIsAddCameraModalOpen(true);
+                } else {
+                  onError(t("camerasLimitReached"));
+                }
+              }}
+              customBtn={styles.bottomBtn}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

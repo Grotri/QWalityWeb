@@ -6,4 +6,5 @@ export interface IDefectItem {
   onPress?: () => void;
   setSelectedDefect?: (defect: IDefect) => void;
   pressableIcon?: boolean;
+  isInTrashBin?: boolean;
 }

@@ -1,7 +1,7 @@
 import api from "./index";
 
 interface ILoginRequestParams {
-  login: string;
+  email: string;
   password: string;
   tin: string;
   type: "legal person";

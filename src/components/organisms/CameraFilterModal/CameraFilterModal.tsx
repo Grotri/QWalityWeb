@@ -22,8 +22,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   const [isDateFilter, setIsDateFilter] = useState<boolean>(true);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [option, setOption] =
-    useState<keyof typeof EDefectOptions>("missingElement");
+  const [option, setOption] = useState<keyof typeof EDefectOptions>("scratch");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -32,7 +31,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
     }
     setStartDate(null);
     setEndDate(null);
-    setOption("missingElement");
+    setOption("scratch");
   };
 
   const handleApply = () => {
@@ -112,12 +111,10 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
               labelStyle={styles.labelStyle}
             />
             <Dropdown
-              data={Object.entries(EDefectOptions).map(
-                ([key, value]) => ({
-                  value: key,
-                  label: t(value),
-                })
-              )}
+              data={Object.entries(EDefectOptions).map(([key, value]) => ({
+                value: key,
+                label: t(value),
+              }))}
               value={option}
               setValue={(item) =>
                 setOption(item as keyof typeof EDefectOptions)

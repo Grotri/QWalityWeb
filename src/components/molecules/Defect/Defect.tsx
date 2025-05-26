@@ -2,7 +2,6 @@ import { FC } from "react";
 import { IDefectItem } from "./types";
 import Button from "../../atoms/Button";
 import styles from "./Defect.module.scss";
-import { convertISODate } from "../../../helpers/formatDate";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
@@ -12,9 +11,10 @@ const Defect: FC<IDefectItem> = ({
   onPress,
   setSelectedDefect,
   pressableIcon = false,
+  isInTrashBin = false,
 }) => {
   const { t } = useTranslation();
-  const { name, date } = defect;
+  const { name, date, deletedAt } = defect;
 
   const clickDefect = () => {
     if (setSelectedDefect) {
@@ -39,7 +39,9 @@ const Defect: FC<IDefectItem> = ({
         )}
         <div className={styles.info}>
           <span className={styles.itemName}>{t(name)}</span>
-          <span className={styles.itemDate}>{convertISODate(date)}</span>
+          <span className={styles.itemDate}>
+            {isInTrashBin && deletedAt ? deletedAt : date}
+          </span>
         </div>
       </div>
       {textBtn && (

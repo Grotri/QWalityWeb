@@ -18,5 +18,5 @@ export const initialCameraFilter: ICameraFilter = {
   isDateFilter: true,
   startDate: null,
   endDate: null,
-  option: "missingElement",
+  option: "scratch",
 };

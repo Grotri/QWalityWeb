@@ -15,6 +15,7 @@ import { ICamera } from "../../../model/camera";
 import { onError } from "../../../helpers/toast";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
 import { useTranslation } from "react-i18next";
+import { parseCustomDate } from "../../../helpers/formatDate";
 
 const TrashBin = () => {
   const { t } = useTranslation();
@@ -46,9 +47,9 @@ const TrashBin = () => {
     .map((camera) => ({ type: "camera", data: camera, cameraId: camera.id }));
 
   const trashItems = [...deletedCameras, ...deletedDefects].sort((a, b) => {
-    const dateA = new Date(a.data.deletedAt ?? 0).getTime();
-    const dateB = new Date(b.data.deletedAt ?? 0).getTime();
-    return dateB - dateA;
+    const timeA = a.data.deletedAt ? parseCustomDate(a.data.deletedAt) : 0;
+    const timeB = b.data.deletedAt ? parseCustomDate(b.data.deletedAt) : 0;
+    return timeB - timeA;
   });
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const TrashBin = () => {
                 defect={item.data as IDefect}
                 textBtn={user.role !== "user" ? t("restore") : undefined}
                 onPress={() => recoverDefect(item.cameraId, item.data.id)}
+                isInTrashBin
               />
             );
           } else {

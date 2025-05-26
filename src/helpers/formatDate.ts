@@ -20,3 +20,11 @@ export const convertISODate = (isoDate: string): string => {
 
   return `${hours}:${minutes}:${seconds} ${day}.${month}.${year}`;
 };
+
+export const parseCustomDate = (dateStr: string) => {
+  const [time, date] = dateStr.split(" ");
+  const [hours, minutes, seconds] = time.split(":").map(Number);
+  const [day, month, year] = date.split(".").map(Number);
+
+  return new Date(year, month - 1, day, hours, minutes, seconds).getTime();
+};

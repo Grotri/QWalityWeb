@@ -3,6 +3,7 @@ export interface IDefect {
   name: string;
   date: string;
   deletedAt?: string;
+  photo?: string;
 }
 
 export const initialDefect: IDefect = {

@@ -6,25 +6,31 @@ export const formatDate = (date: Date) => {
   });
 };
 
-export const convertISODate = (isoDate: string): string => {
+export const parseCustomDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.getTime();
+};
+
+export const formatISOToCustomDate = (
+  isoDate: string,
+  isMoscowTime?: boolean
+): string => {
   const date = new Date(isoDate);
+  const offsetMs = 3 * 60 * 60 * 1000;
+  const localDate = new Date(date.getTime() + (isMoscowTime ? offsetMs : 0));
 
-  const pad = (num: number) => String(num).padStart(2, "0");
-
-  const hours = pad(date.getHours());
-  const minutes = pad(date.getMinutes());
-  const seconds = pad(date.getSeconds());
-  const day = pad(date.getDate());
-  const month = pad(date.getMonth() + 1);
-  const year = date.getFullYear();
+  const hours = localDate.getHours().toString().padStart(2, "0");
+  const minutes = localDate.getMinutes().toString().padStart(2, "0");
+  const seconds = localDate.getSeconds().toString().padStart(2, "0");
+  const day = localDate.getDate().toString().padStart(2, "0");
+  const month = (localDate.getMonth() + 1).toString().padStart(2, "0");
+  const year = localDate.getFullYear();
 
   return `${hours}:${minutes}:${seconds} ${day}.${month}.${year}`;
 };
 
-export const parseCustomDate = (dateStr: string) => {
-  const [time, date] = dateStr.split(" ");
-  const [hours, minutes, seconds] = time.split(":").map(Number);
-  const [day, month, year] = date.split(".").map(Number);
-
-  return new Date(year, month - 1, day, hours, minutes, seconds).getTime();
+export const convertISOToMoscow = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  date.setHours(date.getHours() + 3);
+  return date.toISOString();
 };

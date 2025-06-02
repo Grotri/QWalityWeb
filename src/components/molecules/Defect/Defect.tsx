@@ -4,6 +4,7 @@ import Button from "../../atoms/Button";
 import styles from "./Defect.module.scss";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+import { formatISOToCustomDate } from "../../../helpers/formatDate";
 
 const Defect: FC<IDefectItem> = ({
   defect,
@@ -40,7 +41,9 @@ const Defect: FC<IDefectItem> = ({
         <div className={styles.info}>
           <span className={styles.itemName}>{t(name)}</span>
           <span className={styles.itemDate}>
-            {isInTrashBin && deletedAt ? deletedAt : date}
+            {isInTrashBin && deletedAt
+              ? formatISOToCustomDate(deletedAt)
+              : date}
           </span>
         </div>
       </div>

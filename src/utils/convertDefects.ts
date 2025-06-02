@@ -3,13 +3,12 @@ import { IDefect } from "../model/defect";
 export interface Defect {
   confidence: number;
   defect_id: number;
-  defect_percent: number;
+  deleted_at: string | null;
   download_image_url: string;
   inspection_id: number;
   label: string;
   product_id: number;
   timestamp: string;
-  uptime: string;
 }
 
 export interface DefectNode {
@@ -23,4 +22,5 @@ export default (dataDefects: DefectNode): IDefect[] =>
     name: defect.label,
     date: defect.timestamp,
     photo: defect.download_image_url,
+    deletedAt: defect.deleted_at || undefined,
   }));

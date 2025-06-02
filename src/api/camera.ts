@@ -9,7 +9,11 @@ interface IEditCameraParams {
   name: string;
   camera_url: string;
   status: string;
-  deleted_at?: string;
+}
+
+interface IpermanentlyDeleteCamerasByRangeParams {
+  start_date: string;
+  end_date: string;
 }
 
 export const createCamera = async (payload: ICreateCameraParams) => {
@@ -22,4 +26,14 @@ export const getCameras = async () => {
 
 export const changeCamera = async (id: string, payload: IEditCameraParams) => {
   return await api.patch(`/cameras/${id}`, payload);
+};
+
+export const permanentlyDeleteCamerasByRange = async (
+  params: IpermanentlyDeleteCamerasByRangeParams
+) => {
+  return await api.delete("/cameras/permanently/range", { data: params });
+};
+
+export const permanentlyDeleteCameras = async () => {
+  return await api.delete("/cameras/permanently/all");
 };

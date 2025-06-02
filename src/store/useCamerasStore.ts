@@ -5,11 +5,20 @@ import { ICamera } from "../model/camera";
 import { onError, onSuccess, onWarning } from "../helpers/toast";
 import { linkPattern } from "../constants/patterns";
 import i18n from "../i18n";
-import { createCamera, getCameras } from "../api/camera";
+import {
+  createCamera,
+  getCameras,
+  permanentlyDeleteCameras,
+  permanentlyDeleteCamerasByRange,
+} from "../api/camera";
 import convertCameras from "../utils/convertCameras";
 import convertCamera from "../utils/convertCamera";
-import { getDefects } from "../api/defects";
-import { convertISODate, parseCustomDate } from "../helpers/formatDate";
+import {
+  getDefects,
+  permanentlyDeleteDefects,
+  permanentlyDeleteDefectsByRange,
+} from "../api/defects";
+import { parseCustomDate } from "../helpers/formatDate";
 import convertDefects, { DefectNode } from "../utils/convertDefects";
 
 interface IErrors {
@@ -289,15 +298,19 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     }
   },
 
-  clearTrashBin: () => {
+  clearTrashBin: async () => {
     const { cameras } = get();
     try {
       set({ loading: true, error: null });
+      await permanentlyDeleteDefects();
+      await permanentlyDeleteCameras();
       set({
-        cameras: cameras.map((c) => ({
-          ...c,
-          defects: c.defects.filter((d) => !d.deletedAt),
-        })),
+        cameras: cameras
+          .filter((camera) => !camera.deletedAt)
+          .map((camera) => ({
+            ...camera,
+            defects: camera.defects.filter((defect) => !defect.deletedAt),
+          })),
         loading: false,
         error: false,
       });
@@ -309,7 +322,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     }
   },
 
-  clearTrashBinByDates: (startDate, endDate) => {
+  clearTrashBinByDates: async (startDate, endDate) => {
     const { cameras } = get();
 
     if (!startDate || !endDate) {
@@ -329,19 +342,40 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     end.setHours(23, 59, 59, 999);
 
     try {
-      set({ loading: true, error: null });
+      set({ error: null });
 
       let foundSomething = false;
 
-      const updatedCameras = cameras.map((camera) => ({
-        ...camera,
-        defects: camera.defects.filter((defect) => {
-          if (!defect.deletedAt) return true;
+      const filteredCameras = cameras
+        .map((camera) => {
+          const filteredDefects = camera.defects.filter((defect) => {
+            if (!defect.deletedAt) return true;
 
-          const defectTimestamp = parseCustomDate(defect.deletedAt);
+            const defectTimestamp = parseCustomDate(defect.deletedAt);
+            const shouldDelete =
+              defectTimestamp >= start.getTime() &&
+              defectTimestamp <= end.getTime();
+
+            if (shouldDelete) {
+              foundSomething = true;
+              return false;
+            }
+
+            return true;
+          });
+
+          return {
+            ...camera,
+            defects: filteredDefects,
+          };
+        })
+        .filter((camera) => {
+          if (!camera.deletedAt) return true;
+
+          const deletedTimestamp = parseCustomDate(camera.deletedAt);
           const shouldDelete =
-            defectTimestamp >= start.getTime() &&
-            defectTimestamp <= end.getTime();
+            deletedTimestamp >= start.getTime() &&
+            deletedTimestamp <= end.getTime();
 
           if (shouldDelete) {
             foundSomething = true;
@@ -349,18 +383,24 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
           }
 
           return true;
-        }),
-      }));
+        });
 
       if (!foundSomething) {
         onWarning(i18n.t("noDefectsFoundInPeriod"));
-        set({ loading: false });
         return;
       }
 
+      await permanentlyDeleteCamerasByRange({
+        start_date: start.toISOString(),
+        end_date: end.toISOString(),
+      });
+      await permanentlyDeleteDefectsByRange({
+        start_date: start.toISOString(),
+        end_date: end.toISOString(),
+      });
+
       set({
-        cameras: updatedCameras,
-        loading: false,
+        cameras: filteredCameras,
         error: false,
       });
 
@@ -368,7 +408,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     } catch (error) {
       onError(i18n.t("failedToClearTrashForPeriod"));
       console.error(error);
-      set({ error, loading: false });
+      set({ error });
     }
   },
 

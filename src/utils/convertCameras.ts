@@ -4,9 +4,12 @@ import convertDefects, { DefectNode } from "./convertDefects";
 interface CameraNode {
   camera_url: string;
   created_at: string;
+  deleted_at: string | null;
   id: number;
+  max_defects: number;
   name: string;
   status: string;
+  uptime: string;
 }
 
 export default (
@@ -20,13 +23,10 @@ export default (
       id: camera.id.toString(),
       online: camera.status === "active",
       title: camera.name,
-      uptime:
-        defectNode &&
-        defectNode.defects.length > 0 &&
-        defectNode.defects[0].uptime
-          ? defectNode.defects[0].uptime
-          : "0 day, 0:0:0",
+      uptime: camera.uptime,
       defects: defectNode ? convertDefects(defectNode) : [],
       link: camera.camera_url,
+      deletedAt: camera.deleted_at || undefined,
+      maxDefects: camera.max_defects || 0,
     };
   });

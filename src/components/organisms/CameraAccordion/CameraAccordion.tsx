@@ -149,9 +149,14 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                     <span className={styles.cameraTitle}>{camera.title}</span>
                   </div>
                   <span className={styles.defectText}>
-                    {defects.length}/100 {t("defects")}
+                    {defects.length}/{camera.maxDefects} {t("defects")}
                   </span>
-                  <span className={styles.defectText}>{defects.length}%</span>
+                  <span className={styles.defectText}>
+                    {camera.maxDefects
+                      ? Math.floor((defects.length / camera.maxDefects) * 100)
+                      : 0}
+                    %
+                  </span>
                 </div>
                 <div className={styles.line} />
                 <div className={styles.stateWrapper}>

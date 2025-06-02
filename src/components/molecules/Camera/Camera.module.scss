@@ -24,11 +24,20 @@
   flex-shrink: 0;
 }
 
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
 .itemName {
   font-size: calc(16px * var(--font-scale));
   line-height: calc(24px * var(--font-scale));
   font-weight: 600;
   word-break: break-word;
+}
+
+.itemDate {
+  line-height: calc(20px * var(--font-scale));
 }
 
 .btn {
@@ -63,5 +72,9 @@
   .itemName {
     font-size: calc(14px * var(--font-scale));
     line-height: calc(18px * var(--font-scale));
+  }
+
+  .itemDate {
+    font-size: calc(12px * var(--font-scale));
   }
 }

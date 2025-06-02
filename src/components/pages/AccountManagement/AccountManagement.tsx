@@ -68,8 +68,8 @@ const AccountManagement = () => {
 
   return (
     <div className={styles.managerWrapper}>
-      {isLoading && <SupportContent isLoading={isLoading} />}
-      {!isLoading && !sections.length && (
+      {(!user.id || isLoading) && <SupportContent isLoading={isLoading} />}
+      {user.id && !isLoading && !sections.length && (
         <SupportContent message={t("noManagedAccounts")} />
       )}
       {!isLoading &&

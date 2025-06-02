@@ -19,12 +19,11 @@ import SupportContent from "../../atoms/SupportContent";
 const Profile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user, setUser } = useAuthStore();
+  const { user, setUser, loading, error } = useAuthStore();
   const [userInfo, setUserInfo] = useState<IUser>({ ...initialUser });
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
   const [code, setCode] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cancel = () => {
     setIsEditMode(false);
@@ -74,17 +73,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     setUserInfo({ ...user });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
   }, [user]);
 
   return (
     <>
-      {(isLoading || !userInfo.id) && <SupportContent isLoading={isLoading} />}
-      {!isLoading && userInfo.id && (
+      {(loading || !userInfo.id) && <SupportContent isLoading={loading} />}
+      {!loading && error && <SupportContent type="error" message={error} />}
+      {!loading && !error && userInfo.id && (
         <form className={styles.profileWrapper} onSubmit={saveChanges}>
           <ProfileIcon />
           <div className={styles.card}>

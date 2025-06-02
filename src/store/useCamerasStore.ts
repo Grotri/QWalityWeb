@@ -15,8 +15,10 @@ import convertCameras from "../utils/convertCameras";
 import convertCamera from "../utils/convertCamera";
 import {
   getDefects,
+  moveDefectToTrash,
   permanentlyDeleteDefects,
   permanentlyDeleteDefectsByRange,
+  restoreDefectFromTrash,
 } from "../api/defects";
 import { parseCustomDate } from "../helpers/formatDate";
 import convertDefects, { DefectNode } from "../utils/convertDefects";
@@ -79,6 +81,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
   fetchDefects: async () => {
     try {
       const resDefects = await getDefects();
+      set({ error: null });
       set((state) => ({
         cameras: state.cameras.map((camera) => {
           const defectNode = resDefects.data.find(
@@ -87,10 +90,6 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
           return {
             ...camera,
             defects: defectNode ? convertDefects(defectNode) : camera.defects,
-            uptime:
-              defectNode && defectNode.defects.length > 0
-                ? defectNode.defects[0].uptime
-                : camera.uptime,
           };
         }),
         error: false,
@@ -244,38 +243,35 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     }
   },
 
-  deleteDefect: (cameraId, defectId) => {
+  deleteDefect: async (cameraId, defectId) => {
     const { cameras } = get();
-    const now = convertISODate(new Date().toISOString());
-
     try {
-      set({ loading: true, error: null });
+      const requestRes = await moveDefectToTrash(defectId);
       set({
         cameras: cameras.map((c) =>
           c.id === cameraId
             ? {
                 ...c,
                 defects: c.defects.map((d) =>
-                  d.id === defectId ? { ...d, deletedAt: now } : d
+                  d.id === defectId
+                    ? { ...d, deletedAt: requestRes.data.deleted_at }
+                    : d
                 ),
               }
             : c
         ),
-        loading: false,
-        error: false,
       });
       onSuccess(i18n.t("defectMovedToTrash"));
     } catch (error) {
       onError(i18n.t("failedToDeleteDefect"));
       console.error(error);
-      set({ error, loading: false });
     }
   },
 
-  recoverDefect: (cameraId, defectId) => {
+  recoverDefect: async (cameraId, defectId) => {
     const { cameras } = get();
     try {
-      set({ loading: true, error: null });
+      await restoreDefectFromTrash(defectId);
       set({
         cameras: cameras.map((c) =>
           c.id === cameraId
@@ -287,14 +283,11 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
               }
             : c
         ),
-        loading: false,
-        error: false,
       });
       onSuccess(i18n.t("defectRecovered"));
     } catch (error) {
       onError(i18n.t("failedToRestoreDefect"));
       console.error(error);
-      set({ error, loading: false });
     }
   },
 

@@ -20,7 +20,13 @@ import SupportContent from "../../atoms/SupportContent";
 
 const Main: FC<{ search: string }> = ({ search }) => {
   const { t } = useTranslation();
-  const { cameras: camerasInfo, loading, error } = useCamerasStore();
+  const {
+    cameras: camerasInfo,
+    loading,
+    error,
+    fetchDefects,
+    fetchCameras,
+  } = useCamerasStore();
   const cameraLimits = useCameraLimits();
   const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
@@ -70,15 +76,32 @@ const Main: FC<{ search: string }> = ({ search }) => {
     setIsAddCameraModalOpen(false);
   }, [camerasInfo.length]);
 
+  useEffect(() => {
+    if (user.id) {
+      const defectsInterval = setInterval(() => {
+        fetchDefects();
+      }, 10000);
+
+      const camerasInterval = setInterval(() => {
+        fetchCameras(true);
+      }, 60000);
+
+      return () => {
+        clearInterval(defectsInterval);
+        clearInterval(camerasInterval);
+      };
+    }
+  }, [fetchDefects, fetchCameras, user.id, user.role]);
+
   return (
     <>
-      {loading && <SupportContent isLoading={loading} />}
+      {(!user.id || loading) && <SupportContent isLoading={loading} />}
       {!loading && error && <SupportContent type="error" message={error} />}
-      {!loading && !error && (
+      {!loading && !error && user.id && (
         <div className={styles.wrapper}>
           {sections.map((section, index) => {
             const filteredCameras = section.cameras.filter((camera) =>
-              camera.title.toLowerCase().includes(search.toLowerCase())
+              camera.title.toLowerCase().includes(search.trim().toLowerCase())
             );
             return (
               <CustomAccordion

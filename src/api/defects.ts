@@ -9,6 +9,14 @@ export const getDefects = async () => {
   return await api.get("/defects");
 };
 
+export const moveDefectToTrash = async (id: string) => {
+  return await api.delete(`/defects/${id}/soft`);
+};
+
+export const restoreDefectFromTrash = async (id: string) => {
+  return await api.patch(`/defects/${id}/restore`);
+};
+
 export const permanentlyDeleteDefectsByRange = async (
   params: IPermanentlyDeleteDefectsByRangeParams
 ) => {

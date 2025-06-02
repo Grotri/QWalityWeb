@@ -55,7 +55,6 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     const currRole = i18n.t(ERoles[role as keyof typeof ERoles]);
 
     try {
-      set({ loading: true, error: null });
       const request = await createSubAccount({
         login,
         password,
@@ -72,14 +71,11 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
       set((state) => ({
         accounts: [...state.accounts, newAccount],
         errors: [...state.errors, { login: "", password: "" }],
-        loading: false,
-        error: false,
       }));
       onSuccess(`${currRole} ${i18n.t("created")}`);
     } catch (error) {
       onError(i18n.t("failedToCreateAccount"));
       console.error(error);
-      set({ error, loading: false });
     }
   },
 
@@ -110,7 +106,6 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     if (JSON.stringify(oldAccountData) !== JSON.stringify(newAccount)) {
       if (validate(newAccount, index)) {
         try {
-          set({ loading: true, error: null });
           // await editAccount(newAccount.id, {
           //   login: newAccount.login,
           //   password: newAccount.password,
@@ -120,14 +115,11 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
             accounts: state.accounts.map((account, i) =>
               i === index ? newAccount : account
             ),
-            loading: false,
-            error: false,
           }));
           onSuccess(i18n.t("accountDataChanged"));
         } catch (error) {
           onError(i18n.t("failedToChangeData"));
           console.error(error);
-          set({ error, loading: false });
         }
       } else {
         onError(i18n.t("fillFormCorrectlyFirst"));
@@ -150,19 +142,15 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     const role = i18n.t(ERoles[userToDelete.role as keyof typeof ERoles]);
 
     try {
-      set({ loading: true, error: null });
       await deleteSubAccount(userToDelete.id);
       set({
         accounts: accounts.filter((account) => account.id !== userToDelete.id),
         errors: errors.filter((_, i) => i !== index),
-        loading: false,
-        error: false,
       });
       onSuccess(`${role} ${userToDelete.login} ${i18n.t("deleted")}`);
     } catch (error) {
       onError(i18n.t("failedToDeleteAccount"));
       console.error(error);
-      set({ error, loading: false });
     }
   },
 

@@ -28,6 +28,18 @@ export const changeCamera = async (id: string, payload: IEditCameraParams) => {
   return await api.patch(`/cameras/${id}`, payload);
 };
 
+export const moveCameraToTrash = async (id: string) => {
+  return await api.delete(`/cameras/${id}/soft`);
+};
+
+export const restoreCameraFromTrash = async (id: string) => {
+  return await api.patch(`/cameras/${id}/restore`);
+};
+
+export const deleteCameraDefects = async (id: string) => {
+  return await api.post(`/cameras/${id}/soft-clean`);
+};
+
 export const permanentlyDeleteCamerasByRange = async (
   params: IpermanentlyDeleteCamerasByRangeParams
 ) => {

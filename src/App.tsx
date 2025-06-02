@@ -7,12 +7,11 @@ import i18n from "./i18n";
 import { getToken } from "./api/token";
 import useAccountStore from "./store/useAccountStore";
 import useCamerasStore from "./store/useCamerasStore";
-import { giveLisence } from "./api/license";
 
 const App: FC = () => {
   const { user, language, fetchUserInfo } = useAuthStore();
   const { fetchAccounts } = useAccountStore();
-  const { fetchCameras, fetchDefects } = useCamerasStore();
+  const { fetchCameras } = useCamerasStore();
 
   useEffect(() => {
     const body = document.body;
@@ -36,18 +35,8 @@ const App: FC = () => {
     if (user.id) {
       fetchCameras();
       fetchAccounts();
-      // TODO: удалить
-      if (user.role === "owner") {
-        giveLisence();
-      }
-
-      const intervalId = setInterval(() => {
-        fetchDefects();
-      }, 10000);
-
-      return () => clearInterval(intervalId);
     }
-  }, [fetchAccounts, fetchCameras, fetchDefects, user.id, user.role]);
+  }, [fetchAccounts, fetchCameras, user.id]);
 
   useEffect(() => {
     if (getToken()) {

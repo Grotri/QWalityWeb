@@ -5,10 +5,6 @@ export const formats = [
   },
   {
     id: "1",
-    name: "Word",
-  },
-  {
-    id: "2",
-    name: "Excel",
+    name: "CSV",
   },
 ];

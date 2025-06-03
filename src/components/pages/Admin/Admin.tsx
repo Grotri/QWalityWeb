@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAccountStore from "../../../store/useAccountStore";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { onError } from "../../../helpers/toast";
@@ -16,11 +16,17 @@ import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { ERoles } from "../../../constants/roles";
 import { useTranslation } from "react-i18next";
+import useSensivityStore from "../../../store/useSensivityStore";
+import useAuthStore from "../../../store/useAuthStore";
+import { CircularProgress } from "@mui/material";
 
 const Admin = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { accounts, registerAccount } = useAccountStore();
+  const { user } = useAuthStore();
+  const { accounts, registerAccount, loading: accLoading } = useAccountStore();
+  const { sensivity, editSensivity, getSensivity, loading } =
+    useSensivityStore();
   const availableRoles = useAvailableRoles();
   const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
@@ -28,7 +34,8 @@ const Admin = () => {
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
   const [role, setRole] = useState<string>("user");
   const [isMainModalOpened, setIsMainModalOpened] = useState<boolean>(false);
-  const [confidence, setConfidence] = useState<number>(0.75);
+  const [confidence, setConfidence] = useState<number>(0);
+  const [userInteracted, setUserInteracted] = useState<boolean>(false);
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
@@ -58,11 +65,41 @@ const Admin = () => {
     }
   };
 
+  useEffect(() => {
+    if (sensivity === null && user.id) {
+      getSensivity();
+    }
+  }, [getSensivity, sensivity, user.id]);
+
+  useEffect(() => {
+    setConfidence(sensivity === null ? 0 : sensivity);
+  }, [sensivity]);
+
+  useEffect(() => {
+    if (!userInteracted) return;
+
+    const timeout = setTimeout(() => {
+      editSensivity(confidence);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [confidence, editSensivity, userInteracted]);
+
   return (
     <div className={styles.adminWrapper}>
       <div className={styles.sliderWrapper}>
         <span className={styles.subTitle}>{t("networkConfidence")}</span>
-        <Slider value={confidence} onChange={setConfidence} />
+        {loading || sensivity === null ? (
+          <CircularProgress size="20px" />
+        ) : (
+          <Slider
+            value={confidence}
+            onChange={(value) => {
+              setConfidence(value);
+              setUserInteracted(true);
+            }}
+          />
+        )}
       </div>
       <form className={styles.infoWrapper} onSubmit={createSubAccount}>
         <span className={styles.subTitle}>{t("subAccountRegistration")}</span>
@@ -122,9 +159,13 @@ const Admin = () => {
         >
           {t("manageAccounts")}
         </Button>
-        <span className={styles.statistics}>
-          {accounts.length}/{accountLimits} {t("accountsCount")}
-        </span>
+        {accLoading || !accounts.length ? (
+          <CircularProgress size="20px" />
+        ) : (
+          <span className={styles.statistics}>
+            {accounts.length}/{accountLimits} {t("accountsCount")}
+          </span>
+        )}
       </form>
       <GetReportModal
         isOpen={isMainModalOpened}

@@ -247,5 +247,8 @@
     "minute": "p",
     "unavailableCode": "L'envoi du code est temporairement indisponible",
     "accountDeleted": "Compte supprimé avec succès",
-    "accountDeleteError": "Une erreur s'est produite lors de la suppression du compte"
+    "accountDeleteError": "Une erreur s'est produite lors de la suppression du compte",
+    "getSensivityError": "Une erreur s'est produite lors de la réception de la sensibilité du réseau neuronal",
+    "editSensivityError": "Une erreur s'est produite lors de la modification de la sensibilité du réseau neuronal",
+    "editSensivitySuccess": "La sensibilité du réseau neuronal a été éditée avec succès"
 }

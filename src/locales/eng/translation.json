@@ -247,5 +247,8 @@
     "minute": "m",
     "unavailableCode": "Sending the code is temporarily unavailable",
     "accountDeleted": "Account successfully deleted",
-    "accountDeleteError": "An error occurred when deleting the account"
+    "accountDeleteError": "An error occurred when deleting the account",
+    "getSensivityError": "An error occurred while getting the sensitivity of the neural network",
+    "editSensivityError": "An error occurred while editing the sensitivity of the neural network",
+    "editSensivitySuccess": "Neural network sensitivity has been successfully edited"
 }

@@ -25,6 +25,7 @@ import { ERoutes } from "../router/routes";
 import i18n from "../i18n";
 import { getUserInfo } from "../api/user";
 import convertUserInfo from "../utils/convertUserInfo";
+import { confirmDeleteAccount, sendDeleteAccountCode } from "../api/client";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -49,10 +50,12 @@ interface IUseAuthStore extends IStoreStatus {
     password: string,
     navigate: NavigateFunction
   ) => void;
+  sendDeleteCode: () => void;
+  deleteAccount: (code: string, onClose: () => void) => void;
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
-  const storedLanguage = sessionStorage.getItem("language") as TLanguage | null;
+  const storedLanguage = localStorage.getItem("language") as TLanguage | null;
 
   return {
     loading: false,
@@ -81,7 +84,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       set((state) => {
         const updatedUser = { ...state.user, [field]: value };
         // if (field === "subscription") {
-        //   sessionStorage.setItem("user", JSON.stringify(updatedUser));
+        //   localStorage.setItem("user", JSON.stringify(updatedUser));
         // }
         return { user: updatedUser };
       }),
@@ -281,9 +284,54 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
       }
     },
 
+    sendDeleteCode: async () => {
+      try {
+        await sendDeleteAccountCode();
+        onSuccess(i18n.t("codeSentToEmail"));
+      } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
+          } else {
+            onError(i18n.t("codeSendError"));
+          }
+        } else {
+          onError(i18n.t("unknownError"));
+        }
+      }
+    },
+
+    deleteAccount: async (code, onClose) => {
+      try {
+        await confirmDeleteAccount(code);
+        onClose();
+        onSuccess(i18n.t("accountDeleted"));
+      } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
+          } else {
+            onError(i18n.t("accountDeleteError"));
+          }
+        } else {
+          onError(i18n.t("unknownError"));
+        }
+      }
+    },
+
     setLanguage: (lang) => {
       i18n.changeLanguage(lang);
-      sessionStorage.setItem("language", lang);
+      localStorage.setItem("language", lang);
       set({ language: lang });
     },
 

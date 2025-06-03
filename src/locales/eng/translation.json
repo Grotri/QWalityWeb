@@ -245,5 +245,7 @@
     "day": "d",
     "hour": "h",
     "minute": "m",
-    "unavailableCode": "Sending the code is temporarily unavailable"
+    "unavailableCode": "Sending the code is temporarily unavailable",
+    "accountDeleted": "Account successfully deleted",
+    "accountDeleteError": "An error occurred when deleting the account"
 }

@@ -5,6 +5,8 @@ import { ISubscription, subscriptions } from "../../../constants/subscriptions";
 import { useNavigate } from "react-router-dom";
 import { ERoutes } from "../../../router/routes";
 import useAuthStore from "../../../store/useAuthStore";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebase";
 
 const Subscription: FC = () => {
   const navigate = useNavigate();
@@ -27,8 +29,10 @@ const Subscription: FC = () => {
                   ERoutes.payment
                 }/${slider.id.toString()}`
               );
+              logEvent(analytics, "client_has_registered");
             } else {
               setUserField("subscription", "0");
+              logEvent(analytics, "extended_subscription_selected");
             }
           }}
         />

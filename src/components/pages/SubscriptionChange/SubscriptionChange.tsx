@@ -15,6 +15,8 @@ import useCamerasStore from "../../../store/useCamerasStore";
 import useAccountStore from "../../../store/useAccountStore";
 import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
 import { useTranslation } from "react-i18next";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebase";
 
 const SubscriptionChange = () => {
   const navigate = useNavigate();
@@ -72,7 +74,12 @@ const SubscriptionChange = () => {
             description={slider.description}
             radioLabels={slider.radioLabels}
             price={slider.price}
-            onPress={() => handleChangeSubscription(slider.id.toString())}
+            onPress={() => {
+              handleChangeSubscription(slider.id.toString());
+              if (slider.id !== 0) {
+                logEvent(analytics, "extended_pricing_plan_selected");
+              }
+            }}
           />
         ))}
       </div>

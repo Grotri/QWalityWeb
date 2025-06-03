@@ -15,6 +15,8 @@ import { ERoles } from "../../../constants/roles";
 import { supportLink } from "../../../constants/support";
 import { useTranslation } from "react-i18next";
 import SupportContent from "../../atoms/SupportContent";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebase";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -148,7 +150,10 @@ const Profile = () => {
                 <Button
                   style={styles.btn}
                   color="blue"
-                  onPress={() => navigate(ERoutes.subscriptionEdit)}
+                  onPress={() => {
+                    navigate(ERoutes.subscriptionEdit);
+                    logEvent(analytics, "updating_the_tariff");
+                  }}
                 >
                   {t("manageSubscription")}
                 </Button>
@@ -157,7 +162,10 @@ const Profile = () => {
                 <Button
                   style={styles.btn}
                   color="blue"
-                  onPress={() => navigate(ERoutes.admin)}
+                  onPress={() => {
+                    navigate(ERoutes.admin);
+                    logEvent(analytics, "went_into_admin_panel");
+                  }}
                 >
                   {t("adminPanel")}
                 </Button>

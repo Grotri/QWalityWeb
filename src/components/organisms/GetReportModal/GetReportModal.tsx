@@ -11,6 +11,8 @@ import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EErrors } from "../../../constants/errors";
 import { useTranslation } from "react-i18next";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebase";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
@@ -47,6 +49,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
     if (!validateDates()) return;
 
     onSuccess(type === "log" ? t("logDownloaded") : t("reportDownloaded"));
+    logEvent(analytics, type === "log" ? "log_requested" : "report_requested");
     closeModal();
   };
 

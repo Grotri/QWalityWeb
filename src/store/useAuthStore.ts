@@ -26,6 +26,8 @@ import i18n from "../i18n";
 import { getUserInfo } from "../api/user";
 import convertUserInfo from "../utils/convertUserInfo";
 import { confirmDeleteAccount, sendDeleteAccountCode } from "../api/client";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../firebase";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -159,6 +161,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
 
           await fetchUserInfo(false);
           onSuccess(i18n.t("registrationSuccess"));
+          logEvent(analytics, "client_has_registered");
         } else {
           onError(i18n.t("registrationFailed"));
         }

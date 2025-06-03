@@ -245,5 +245,7 @@
     "day": "j",
     "hour": "h",
     "minute": "p",
-    "unavailableCode": "L'envoi du code est temporairement indisponible"
+    "unavailableCode": "L'envoi du code est temporairement indisponible",
+    "accountDeleted": "Compte supprimé avec succès",
+    "accountDeleteError": "Une erreur s'est produite lors de la suppression du compte"
 }

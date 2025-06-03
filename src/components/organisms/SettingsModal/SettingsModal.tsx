@@ -18,7 +18,15 @@ import { TFontSize, TLanguage, TTheme } from "../../../model/user";
 import { useTranslation } from "react-i18next";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
-  const { user, setUser, language, setLanguage, logout } = useAuthStore();
+  const {
+    user,
+    setUser,
+    language,
+    setLanguage,
+    sendDeleteCode,
+    deleteAccount,
+    logout,
+  } = useAuthStore();
   const { clearAccounts } = useAccountStore();
   const { t } = useTranslation();
 
@@ -41,13 +49,17 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
     setLanguage(value as TLanguage);
   };
 
-  const deleteAccount = () => {
+  const onCloseModal = () => {
+    logout(clearAccounts);
+    setIsOpen(false);
+  };
+
+  const handleDeleteAccount = () => {
     if (!code.trim()) {
       setError(t(EErrors.required));
       onError(t("enterCodeFirst"));
     } else {
-      logout(clearAccounts);
-      setIsOpen(false);
+      deleteAccount(code, onCloseModal);
     }
   };
 
@@ -204,7 +216,11 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
               labelClassName={styles.inputLabel}
               errorClassName={styles.inputError}
             />
-            <Button style={styles.codeBtn} color="blue">
+            <Button
+              style={styles.codeBtn}
+              color="blue"
+              onPress={sendDeleteCode}
+            >
               {t("sendCode")}
             </Button>
           </div>
@@ -212,7 +228,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
             <Button
               style={clsx(styles.modalCancelBtn, styles.modalDeleteBtn)}
               color="red"
-              onPress={deleteAccount}
+              onPress={handleDeleteAccount}
             >
               {t("delete")}
             </Button>

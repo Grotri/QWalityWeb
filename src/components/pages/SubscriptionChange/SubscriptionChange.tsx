@@ -15,13 +15,11 @@ import useCamerasStore from "../../../store/useCamerasStore";
 import useAccountStore from "../../../store/useAccountStore";
 import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
 import { useTranslation } from "react-i18next";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "../../../firebase";
 
 const SubscriptionChange = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user, setUserField, logout } = useAuthStore();
+  const { user, handleDemoLicense, logout } = useAuthStore();
   const { cameras } = useCamerasStore();
   const { accounts, clearAccounts } = useAccountStore();
 
@@ -53,9 +51,10 @@ const SubscriptionChange = () => {
       );
     } else {
       if (sliderId === "0") {
-        setUserField("subscription", sliderId);
-        navigate(ERoutes.profile);
-        onSuccess(t("subscriptionLevelChanged"), 2000);
+        handleDemoLicense(() => {
+          navigate(ERoutes.profile);
+          onSuccess(t("subscriptionLevelChanged"), 2000);
+        });
       } else {
         navigate(`${ERoutes.subscriptionEdit}${ERoutes.payment}/${sliderId}`);
       }
@@ -75,9 +74,6 @@ const SubscriptionChange = () => {
             radioLabels={slider.radioLabels}
             price={slider.price}
             onPress={() => {
-              if (slider.id !== 0 && user.subscription === "0") {
-                logEvent(analytics, "updated_to_extended_pricing_plan");
-              }
               handleChangeSubscription(slider.id.toString());
             }}
           />

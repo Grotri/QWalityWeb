@@ -10,7 +10,7 @@ import { analytics } from "../../../firebase";
 
 const Subscription: FC = () => {
   const navigate = useNavigate();
-  const { setUserField } = useAuthStore();
+  const { handleDemoLicense } = useAuthStore();
 
   return (
     <div className={styles.wrapper}>
@@ -29,10 +29,10 @@ const Subscription: FC = () => {
                   ERoutes.payment
                 }/${slider.id.toString()}`
               );
-              logEvent(analytics, "extended_subscription_selected");
             } else {
-              setUserField("subscription", "0");
-              logEvent(analytics, "demo_subscription_selected");
+              handleDemoLicense(() => {
+                logEvent(analytics, "demo_subscription_selected");
+              });
             }
           }}
         />

@@ -1,14 +1,9 @@
 import api from "./index";
 
-interface IBuyLisenceParams {
-  licenseType: string;
-  paymentMethod: string;
-}
-
-export const buyLisence = async (payload: IBuyLisenceParams) => {
-  return await api.post("/lisences", payload);
+export const buyLicense = async (tariff_id: number) => {
+  return await api.post("/licenses", { tariff_id });
 };
 
-export const getLisences = async () => {
-  return await api.get("/lisences");
+export const getCurrentLicense = async () => {
+  return await api.get("/licenses");
 };

@@ -432,7 +432,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     } catch (err) {
       console.error(err);
       set({ photoLoading: false });
-      onWarning("Ошибка при скачивании изображения");
+      onError(i18n.t("downloadError"));
     } finally {
       onClose();
     }

@@ -6,12 +6,14 @@ import styles from "./PaymentChange.module.scss";
 import { onSuccess } from "../../../helpers/toast";
 import { ERoutes } from "../../../router/routes";
 import { useTranslation } from "react-i18next";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../../firebase";
 
 const PaymentChange = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { subscriptionId } = useParams();
-  const { setUserField } = useAuthStore();
+  const { handleLicense } = useAuthStore();
   const subscriptionCost = useCost(subscriptionId || "0");
 
   return (
@@ -22,10 +24,12 @@ const PaymentChange = () => {
       {subscriptionId && (
         <Button
           onPress={() => {
-            setUserField("subscription", subscriptionId);
-            navigate(ERoutes.profile);
-            onSuccess(t("subscriptionPaid"), 2000);
-            onSuccess(t("subscriptionLevelChanged"), 2000);
+            handleLicense(subscriptionId, () => {
+              navigate(ERoutes.profile);
+              onSuccess(t("subscriptionPaid"), 2000);
+              onSuccess(t("subscriptionLevelChanged"), 2000);
+              logEvent(analytics, "updated_to_extended_pricing_plan");
+            });
           }}
           style={styles.btn}
           color="blue"

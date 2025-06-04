@@ -16,6 +16,7 @@ import { themes } from "../../../constants/themes";
 import { languages } from "../../../constants/languages";
 import { TFontSize, TLanguage, TTheme } from "../../../model/user";
 import { useTranslation } from "react-i18next";
+import { editAccount } from "../../../api/user";
 
 const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   const {
@@ -39,10 +40,12 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
 
   const toggleTheme = (value: string) => {
     setUser({ ...user, theme: value as TTheme });
+    editAccount(user.id, { color_theme: value });
   };
 
   const toggleFontSize = (value: string) => {
     setUser({ ...user, fontSize: value as TFontSize });
+    editAccount(user.id, { font_size: value });
   };
 
   const toggleLanguage = (value: string) => {
@@ -73,87 +76,91 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <div className={clsx(styles.wrapper, isOpen && styles.wrapperVisible)}>
-        {user.role !== "user" && (
-          <div className={styles.dropdowns}>
-            <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>
-                {t("autoDeleteDefects")}
-              </span>
-              <Dropdown
-                data={settingsItems.map((item) => ({
-                  value: item.value,
-                  label: t(item.label),
-                }))}
-                setValue={setIsAutoDelete}
-                value={isAutoDelete}
-                wrapperStyle={styles.dropdown}
-                fontSize="calc(14px * var(--font-scale))"
-                marginHorizontal="8px"
-                marginVertical="4px"
-              />
-            </div>
-            <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>{t("autoCleanTrash")}</span>
-              <Dropdown
-                data={settingsItems.map((item) => ({
-                  value: item.value,
-                  label: t(item.label),
-                }))}
-                setValue={setIsAutoClear}
-                value={isAutoClear}
-                wrapperStyle={styles.dropdown}
-                fontSize="calc(14px * var(--font-scale))"
-                marginHorizontal="8px"
-                marginVertical="4px"
-              />
-            </div>
-            <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>{t("theme")}</span>
-              <Dropdown
-                data={themes.map((item) => ({
-                  value: item.value,
-                  label: t(item.label),
-                }))}
-                setValue={toggleTheme}
-                value={user.theme}
-                wrapperStyle={styles.dropdown}
-                fontSize="calc(14px * var(--font-scale))"
-                marginHorizontal="8px"
-                marginVertical="4px"
-              />
-            </div>
-            <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>{t("fontSize")}</span>
-              <Dropdown
-                data={fontSizes.map((item) => ({
-                  value: item.value,
-                  label: t(item.label),
-                }))}
-                setValue={toggleFontSize}
-                value={user.fontSize}
-                wrapperStyle={styles.dropdown}
-                fontSize="calc(14px * var(--font-scale))"
-                marginHorizontal="8px"
-                marginVertical="4px"
-              />
-            </div>
-            <div className={styles.dropdownWrapper}>
-              <span className={styles.dropdownText}>{t("language")}</span>
-              <Dropdown
-                data={languages.map((item) => ({
-                  value: item.value,
-                  label: t(item.label),
-                }))}
-                setValue={toggleLanguage}
-                value={language}
-                wrapperStyle={styles.dropdown}
-                fontSize="calc(14px * var(--font-scale))"
-                marginHorizontal="8px"
-                marginVertical="4px"
-              />
-            </div>
+        <div className={styles.dropdowns}>
+          {user.role !== "user" && (
+            <>
+              <div className={styles.dropdownWrapper}>
+                <span className={styles.dropdownText}>
+                  {t("autoDeleteDefects")}
+                </span>
+                <Dropdown
+                  data={settingsItems.map((item) => ({
+                    value: item.value,
+                    label: t(item.label),
+                  }))}
+                  setValue={setIsAutoDelete}
+                  value={isAutoDelete}
+                  wrapperStyle={styles.dropdown}
+                  fontSize="calc(14px * var(--font-scale))"
+                  marginHorizontal="8px"
+                  marginVertical="4px"
+                />
+              </div>
+              <div className={styles.dropdownWrapper}>
+                <span className={styles.dropdownText}>
+                  {t("autoCleanTrash")}
+                </span>
+                <Dropdown
+                  data={settingsItems.map((item) => ({
+                    value: item.value,
+                    label: t(item.label),
+                  }))}
+                  setValue={setIsAutoClear}
+                  value={isAutoClear}
+                  wrapperStyle={styles.dropdown}
+                  fontSize="calc(14px * var(--font-scale))"
+                  marginHorizontal="8px"
+                  marginVertical="4px"
+                />
+              </div>
+            </>
+          )}
+          <div className={styles.dropdownWrapper}>
+            <span className={styles.dropdownText}>{t("theme")}</span>
+            <Dropdown
+              data={themes.map((item) => ({
+                value: item.value,
+                label: t(item.label),
+              }))}
+              setValue={toggleTheme}
+              value={user.theme}
+              wrapperStyle={styles.dropdown}
+              fontSize="calc(14px * var(--font-scale))"
+              marginHorizontal="8px"
+              marginVertical="4px"
+            />
           </div>
-        )}
+          <div className={styles.dropdownWrapper}>
+            <span className={styles.dropdownText}>{t("fontSize")}</span>
+            <Dropdown
+              data={fontSizes.map((item) => ({
+                value: item.value,
+                label: t(item.label),
+              }))}
+              setValue={toggleFontSize}
+              value={user.fontSize}
+              wrapperStyle={styles.dropdown}
+              fontSize="calc(14px * var(--font-scale))"
+              marginHorizontal="8px"
+              marginVertical="4px"
+            />
+          </div>
+          <div className={styles.dropdownWrapper}>
+            <span className={styles.dropdownText}>{t("language")}</span>
+            <Dropdown
+              data={languages.map((item) => ({
+                value: item.value,
+                label: t(item.label),
+              }))}
+              setValue={toggleLanguage}
+              value={language}
+              wrapperStyle={styles.dropdown}
+              fontSize="calc(14px * var(--font-scale))"
+              marginHorizontal="8px"
+              marginVertical="4px"
+            />
+          </div>
+        </div>
         <div className={styles.btns}>
           <Button
             style={styles.btn}
@@ -172,7 +179,7 @@ const SettingsModal: FC<ISettingsModal> = ({ isOpen, setIsOpen }) => {
             </Button>
           )}
         </div>
-        <span className={styles.version}>QWality Release v1.1.0</span>
+        <span className={styles.version}>QWality Release v1.2.0</span>
       </div>
       <Modal isVisible={isExitModalOpen} setIsVisible={setIsExitModalOpen}>
         <div className={styles.exitModal}>

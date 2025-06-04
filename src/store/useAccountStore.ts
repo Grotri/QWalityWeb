@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
 import { EErrors } from "../constants/errors";
@@ -8,6 +9,7 @@ import i18n from "../i18n";
 import {
   createSubAccount,
   deleteSubAccount,
+  editAccount,
   getSubAccounts,
 } from "../api/user";
 import convertSubAccounts from "../utils/convertSubAccounts";
@@ -88,11 +90,10 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
 
     const newError: IErrors = {
       login: !login.trim() ? i18n.t(EErrors.required) : "",
-      password: !password.trim()
-        ? i18n.t(EErrors.required)
-        : password.trim().length < 8
-        ? i18n.t(EErrors.password)
-        : "",
+      password:
+        password.trim() && password.trim().length < 8
+          ? i18n.t(EErrors.password)
+          : "",
     };
 
     const newErrors = [...errors];
@@ -104,19 +105,32 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   changeAccount: async (index, newAccount) => {
     const { accounts, validate } = get();
     const oldAccount = accounts[index];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { inn, subscription, ...oldAccountData } = oldAccount;
-    if (JSON.stringify(oldAccountData) !== JSON.stringify(newAccount)) {
+
+    const updatedData: Partial<IUser> = {};
+
+    if (newAccount.login !== oldAccount.login) {
+      updatedData.login = newAccount.login;
+    }
+    if (newAccount.password && newAccount.password !== oldAccount.password) {
+      updatedData.password = newAccount.password;
+    }
+    if (newAccount.role !== oldAccount.role) {
+      updatedData.role = newAccount.role;
+    }
+
+    const {
+      inn: oldInn,
+      subscription: oldSubscription,
+      ...oldAccountData
+    } = oldAccount;
+    const { inn, subscription, ...newAccountData } = newAccount;
+    if (JSON.stringify(oldAccountData) !== JSON.stringify(newAccountData)) {
       if (validate(newAccount, index)) {
         try {
-          // await editAccount(newAccount.id, {
-          //   login: newAccount.login,
-          //   password: newAccount.password,
-          //   role: newAccount.role,
-          // });
+          await editAccount(newAccount.id, updatedData);
           set((state) => ({
             accounts: state.accounts.map((account, i) =>
-              i === index ? newAccount : account
+              i === index ? { ...newAccount, password: "" } : account
             ),
           }));
           onSuccess(i18n.t("accountDataChanged"));

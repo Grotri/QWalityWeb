@@ -75,10 +75,10 @@ const SubscriptionChange = () => {
             radioLabels={slider.radioLabels}
             price={slider.price}
             onPress={() => {
-              handleChangeSubscription(slider.id.toString());
-              if (slider.id !== 0) {
-                logEvent(analytics, "extended_pricing_plan_selected");
+              if (slider.id !== 0 && user.subscription === "0") {
+                logEvent(analytics, "updated_to_extended_pricing_plan");
               }
+              handleChangeSubscription(slider.id.toString());
             }}
           />
         ))}

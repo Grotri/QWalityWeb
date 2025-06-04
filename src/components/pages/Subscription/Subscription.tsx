@@ -29,10 +29,10 @@ const Subscription: FC = () => {
                   ERoutes.payment
                 }/${slider.id.toString()}`
               );
-              logEvent(analytics, "client_has_registered");
+              logEvent(analytics, "extended_subscription_selected");
             } else {
               setUserField("subscription", "0");
-              logEvent(analytics, "extended_subscription_selected");
+              logEvent(analytics, "demo_subscription_selected");
             }
           }}
         />

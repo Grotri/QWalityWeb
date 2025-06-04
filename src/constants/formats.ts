@@ -1,10 +1,10 @@
 export const formats = [
   {
-    id: "0",
+    id: "pdf",
     name: "PDF",
   },
   {
-    id: "1",
+    id: "csv",
     name: "CSV",
   },
 ];

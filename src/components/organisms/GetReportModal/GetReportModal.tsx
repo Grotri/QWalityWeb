@@ -6,21 +6,21 @@ import styles from "./GetReportModal.module.scss";
 import Dropdown from "../../atoms/Dropdown";
 import { formats } from "../../../constants/formats";
 import Button from "../../atoms/Button";
-import { onError, onSuccess } from "../../../helpers/toast";
+import { onError } from "../../../helpers/toast";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EErrors } from "../../../constants/errors";
 import { useTranslation } from "react-i18next";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "../../../firebase";
+import useReportsAndLogsStore from "../../../store/useReportsAndLogsStore";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
+  const { getReport, getLog, deleteLog } = useReportsAndLogsStore();
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
   const [type, setType] = useState<"report" | "log">("report");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [format, setFormat] = useState<string>("0");
+  const [format, setFormat] = useState<string>("pdf");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -48,16 +48,21 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const handleSave = () => {
     if (!validateDates()) return;
 
-    onSuccess(type === "log" ? t("logDownloaded") : t("reportDownloaded"));
-    logEvent(analytics, type === "log" ? "log_requested" : "report_requested");
-    closeModal();
+    if (startDate && endDate) {
+      if (type === "report") {
+        getReport(startDate, endDate, format, closeModal);
+      } else if (type === "log") {
+        getLog(startDate, endDate, format, closeModal);
+      }
+    }
   };
 
   const handleDelete = () => {
     if (!validateDates()) return;
 
-    onSuccess(type === "log" ? t("logDeleted") : t("reportDeleted"));
-    closeModal();
+    if (startDate && endDate) {
+      deleteLog(startDate, endDate, closeModal);
+    }
   };
 
   useEffect(() => {
@@ -65,7 +70,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
       setType("report");
       setStartDate(null);
       setEndDate(null);
-      setFormat("0");
+      setFormat("pdf");
       setIsSubModalOpened(false);
     }
   }, [isOpen]);
@@ -76,7 +81,9 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
         <div className={styles.modal}>
           <div className={styles.crossIconWrapper}>
             <CrossIcon style={styles.crossIcon} onClick={closeModal} />
-            <span className={styles.modalTitle}>{t("getReport")}</span>
+            <span className={styles.modalTitle}>
+              {type === "log" ? t("getLog") : t("getReport")}
+            </span>
           </div>
           <div className={styles.modalContent}>
             <div className={styles.row}>

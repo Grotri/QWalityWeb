@@ -41,6 +41,7 @@ interface IUseCamerasStore extends IStoreStatus {
   cameras: ICamera[];
   errors: IErrors;
   activeSection: string | false;
+  photoLoading: boolean;
   setActiveSection: (section: string | false) => void;
   setErrorsField: (field: keyof IErrors, error: string) => void;
   refreshErrors: () => void;
@@ -56,10 +57,16 @@ interface IUseCamerasStore extends IStoreStatus {
   recoverDefect: (cameraId: string, defectId: string) => void;
   clearTrashBin: () => void;
   clearTrashBinByDates: (startDate: Date | null, endDate: Date | null) => void;
+  downloadDefectImage: (
+    photoUrl: string,
+    id: string,
+    onClose: () => void
+  ) => void;
 }
 
 const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
   loading: false,
+  photoLoading: false,
   error: null,
   activeSection: false,
   cameras: [],
@@ -402,6 +409,33 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
 
   refreshErrors: () => {
     set({ errors: { ...initialErrors } });
+  },
+
+  downloadDefectImage: async (photoUrl, id, onClose) => {
+    try {
+      set({ photoLoading: true });
+      const response = await fetch(photoUrl, { mode: "cors" });
+      if (!response.ok) throw new Error("Не удалось скачать");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `defect_${id}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+      a.remove();
+      set({ photoLoading: false });
+    } catch (err) {
+      console.error(err);
+      set({ photoLoading: false });
+      onWarning("Ошибка при скачивании изображения");
+    } finally {
+      onClose();
+    }
   },
 }));
 

@@ -13,6 +13,8 @@ import {
   getSubAccounts,
 } from "../api/user";
 import convertSubAccounts from "../utils/convertSubAccounts";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../firebase";
 
 export interface IErrors {
   login: string;
@@ -75,6 +77,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
         errors: [...state.errors, { login: "", password: "" }],
       }));
       onSuccess(`${currRole} ${i18n.t("created")}`);
+      logEvent(analytics, "subaccount_created");
     } catch (error) {
       onError(i18n.t("failedToCreateAccount"));
       console.error(error);

@@ -257,5 +257,6 @@
     "getSensivityError": "An error occurred while getting the sensitivity of the neural network",
     "editSensivityError": "An error occurred while editing the sensitivity of the neural network",
     "editSensivitySuccess": "Neural network sensitivity has been successfully edited",
-    "noPhoto": "The image is missing"
+    "noPhoto": "The image is missing",
+    "downloadError": "Error when downloading the image"
 }

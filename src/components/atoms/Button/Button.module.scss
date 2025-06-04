@@ -1,0 +1,79 @@
+.btn {
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+  background-color: transparent;
+  user-select: none;
+}
+
+.btn_welcomeBlue {
+  background-color: var(--welcomeScreenSubBtn);
+
+  &:hover {
+    background-color: var(--welcomeScreenSubBtn-hover);
+  }
+}
+
+.btn_welcomeBrightBlue {
+  background-color: var(--welcomeScreenContrastBtn);
+
+  &:hover {
+    background-color: var(--welcomeScreenContrastBtn-hover);
+  }
+}
+
+.btn_red {
+  background-color: var(--red);
+
+  &:hover {
+    background-color: var(--red-hover);
+  }
+}
+
+.btn_blue {
+  background-color: var(--anyBtnOnBgSubScreen);
+
+  &:hover {
+    background-color: var(--anyBtnOnBgSubScreen-hover);
+  }
+}
+
+.btn_darkBlue {
+  background-color: var(--darkBlueBtnBg);
+
+  &:hover {
+    background-color: var(--darkBlue-hover);
+  }
+}
+
+.btn_edge {
+  background-color: var(--edgeBtnBg);
+
+  &:hover {
+    background-color: var(--edgeBtnBg-hover);
+  }
+}
+
+.btn_management {
+  background-color: var(--textFieldInFolderBg);
+
+  &:hover {
+    background-color: var(--textFieldInFolderBg-hover);
+  }
+}
+
+.btn_blueTransparent {
+  background-color: var(--blueTransparent);
+
+  &:hover {
+    background-color: var(--blueTransparent-hover);
+  }
+}
+
+.btn_modal {
+  background-color: var(--modalBtns);
+
+  &:hover {
+    background-color: var(--modalBtns-hover);
+  }
+}

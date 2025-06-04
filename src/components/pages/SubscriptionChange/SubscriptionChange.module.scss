@@ -1,0 +1,69 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  width: 100%;
+  height: 85%;
+  align-items: center;
+}
+
+.cards {
+  width: 100%;
+  height: 100%;
+  max-height: 800px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 28px;
+  gap: 28px;
+}
+
+.cancelBtn {
+  border-radius: 14px;
+  height: 38px;
+  width: 22%;
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(22px * var(--font-scale));
+  font-weight: 900;
+  color: var(--welcomeScreenSubText);
+}
+
+@media (max-width: 1439.89px) {
+  .wrapper {
+    margin: 40px 0;
+    height: unset;
+    gap: 60px;
+  }
+
+  .cards {
+    height: unset;
+    max-height: unset;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 60px;
+    padding: 0 80px;
+  }
+
+  .cancelBtn {
+    width: 50%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .cards {
+    gap: 40px;
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .cards {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding: 0 28px;
+    gap: 28px;
+  }
+
+  .cancelBtn {
+    width: 70%;
+  }
+}

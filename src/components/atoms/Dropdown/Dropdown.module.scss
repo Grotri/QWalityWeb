@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
+  color: var(--subTextMainScreenPopup);
+  margin-left: 8px;
+}

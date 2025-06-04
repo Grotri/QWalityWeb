@@ -1,0 +1,241 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerMain {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.cameraNameWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 30%;
+}
+
+.cameraName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.cameraIcon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.cameraTitle {
+  font-size: calc(24px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.defectText {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+}
+
+.line {
+  height: 70%;
+  width: 3px;
+  background-color: var(--splitBar);
+  border-radius: 8px;
+}
+
+.stateWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.state {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.stateName,
+.uptime {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+}
+
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--subFolderBg);
+  padding: 20px;
+  border-radius: 0 0 12px 12px;
+}
+
+.settingsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.settingsIcons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  span,
+  svg path {
+    transition: 0.3s;
+  }
+
+  &:hover {
+    span {
+      color: var(--supportTransparentText);
+    }
+
+    svg path {
+      stroke: var(--supportTransparentText);
+    }
+  }
+}
+
+.activeIcon {
+  span {
+    color: var(--brightBlue);
+  }
+
+  svg path {
+    stroke: var(--brightBlue);
+  }
+
+  &:hover {
+    span {
+      color: var(--welcomeScreenContrastBtn-hover);
+    }
+
+    svg path {
+      stroke: var(--welcomeScreenContrastBtn-hover);
+    }
+  }
+}
+
+.horizontalLine {
+  height: 2px;
+  border-radius: 8px;
+  width: 32%;
+  background-color: var(--subDropdownListBgTransparent);
+}
+
+.defects {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.noDefects {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
+  font-weight: 600;
+  color: var(--sectionTransparentText);
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 767.89px) {
+  .headerMain {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cameraNameWrapper {
+    width: -webkit-fill-available;
+    width: -moz-available;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .cameraTitle {
+    font-size: calc(20px * var(--font-scale));
+    line-height: calc(24px * var(--font-scale));
+  }
+
+  .settingsIcons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .icon {
+    gap: 4px;
+  }
+
+  .horizontalLine {
+    width: 50%;
+  }
+
+  .contentWrapper {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .defects {
+    gap: 10px;
+  }
+
+  .cameraIcon svg {
+    width: 32px;
+    height: auto;
+  }
+
+  .defectText,
+  .stateName,
+  .uptime {
+    font-size: calc(14px * var(--font-scale));
+    line-height: calc(18px * var(--font-scale));
+  }
+
+  .contentWrapper {
+    padding: 12px;
+  }
+
+  .icon span {
+    font-size: calc(12px * var(--font-scale));
+  }
+
+  .settingsIcons {
+    gap: 4px;
+  }
+
+  .arrowIcon {
+    width: 25px;
+    height: auto;
+  }
+
+  .noDefects {
+    line-height: calc(16px * var(--font-scale));
+  }
+}

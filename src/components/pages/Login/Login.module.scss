@@ -1,0 +1,94 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: calc(36px * var(--font-scale));
+  color: var(--welcomeScreenSubText);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.input {
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 600;
+}
+
+.loginBtn {
+  width: 90%;
+  margin-top: 28px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+.loginBtnText {
+  font-size: calc(28px * var(--font-scale));
+  color: var(--subTextMainScreenPopup);
+  font-weight: 600;
+}
+
+.forgotBtnText {
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(32px * var(--font-scale));
+  color: var(--subTextMainScreenPopup);
+  text-decoration: underline;
+  transition: 0.3s;
+  margin-top: 8px;
+
+  &:hover {
+    color: var(--mainText);
+  }
+}
+
+@media (max-width: 1439.89px) {
+  .wrapper {
+    margin: 120px 0;
+  }
+
+  .form {
+    width: 44%;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .wrapper {
+    margin: 120px 0 40px 0;
+  }
+
+  .title {
+    font-size: calc(32px * var(--font-scale));
+  }
+
+  .loginBtn {
+    width: 100%;
+  }
+
+  .loginBtnText {
+    font-size: calc(24px * var(--font-scale));
+  }
+}

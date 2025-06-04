@@ -1,0 +1,17 @@
+.wrapper {
+  flex: 1;
+  cursor: pointer;
+}
+
+.datePicker {
+  display: flex;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.date {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+  font-weight: 600;
+}

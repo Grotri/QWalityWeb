@@ -1,0 +1,15 @@
+export enum ERoutes {
+  main = "/",
+  register = "/register",
+  login = "/login",
+  passwordRecovery = "/password-recovery",
+  subscription = "/subscription",
+  subscriptionEdit = "/subscription-edit",
+  profile = "/profile",
+  admin = "/admin",
+  accountManagement = "/account-management",
+  support = "/support",
+  trashBin = "/trash-bin",
+  accessDenied = "/access-denied",
+  payment = "/payment",
+}

@@ -1,0 +1,117 @@
+.card {
+  width: 100%;
+  height: 100%;
+  background-color: var(--subScreenPopupBg);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px;
+  gap: 20px;
+  transition: 0.3s;
+  cursor: default;
+
+  &:hover {
+    -webkit-box-shadow: 0px 0px 21px 0px var(--subScreenPopupBg);
+    -moz-box-shadow: 0px 0px 21px 0px var(--subScreenPopupBg);
+    box-shadow: 0px 0px 21px 0px var(--subScreenPopupBg);
+  }
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-size: calc(28px * var(--font-scale));
+  line-height: calc(37px * var(--font-scale));
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.line {
+  height: 3px;
+  width: 50%;
+  background-color: var(--darkBlueTransparent);
+  border-radius: 5px;
+  margin-bottom: 17px;
+}
+
+.description {
+  font-size: calc(22px * var(--font-scale));
+  line-height: calc(29px * var(--font-scale));
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.radios {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  padding: 0 48px;
+}
+
+.radio {
+  cursor: default !important;
+}
+
+.subInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+  padding: 0 48px;
+}
+
+.price {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+  font-weight: 700;
+  color: var(--codeTransparentText);
+}
+
+.btn {
+  width: 100%;
+  height: 32px;
+  border-radius: 8px;
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
+  font-weight: 700;
+  color: var(--mainText);
+}
+
+.choosenBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blue);
+}
+
+@media (max-width: 1439.89px) {
+  .card {
+    gap: 120px;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .card {
+    gap: 100px;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .radios {
+    padding: 0 32px;
+  }
+
+  .subInfo {
+    padding: 0 32px;
+  }
+}

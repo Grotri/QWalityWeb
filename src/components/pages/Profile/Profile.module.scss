@@ -1,0 +1,154 @@
+.profileWrapper {
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--folderOrHighlightedSectionBg);
+  border-radius: 12px;
+  padding: 12px;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.cardPoint {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardPointTitle {
+  color: var(--sectionTransparentText);
+  font-size: calc(12px * var(--font-scale));
+  padding-left: 4px;
+}
+
+.cardPointData {
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(24px * var(--font-scale));
+  font-weight: 600;
+  padding-left: 4px;
+}
+
+.formInput {
+  margin-top: 4px;
+  width: 66%;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.input {
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 600;
+}
+
+.btn {
+  min-width: 80%;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--mainText);
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
+  font-weight: 700;
+  padding: 0 12px;
+}
+
+.confirmationWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: -16px;
+  margin-bottom: 12px;
+}
+
+.confirmation {
+  gap: 2px;
+}
+
+.confirmationInput {
+  height: 32px;
+  border-radius: 8px;
+}
+
+.confirmationInputLabel {
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--codeTransparentText);
+  margin-left: 4px;
+}
+
+.error {
+  margin-left: 4px;
+  font-size: calc(12px * var(--font-scale));
+}
+
+.codeBtn {
+  height: 33px;
+  border-radius: 8px;
+  margin-top: 19px;
+  color: var(--mainText);
+  font-size: 14px;
+}
+
+.supportTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.supportText,
+.supportTextUnderlined {
+  font-size: calc(14px * var(--font-scale));
+  line-height: calc(19px * var(--font-scale));
+  color: var(--supportTransparentText);
+  cursor: default;
+}
+
+.supportTextUnderlined {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 1439.89px) {
+  .profileWrapper {
+    width: 40%;
+    margin: 120px 0;
+  }
+}
+
+@media (max-width: 1023.89px) {
+  .profileWrapper {
+    width: 58%;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: calc(16px * var(--font-scale));
+    height: 36px;
+  }
+
+  .confirmationInputLabel {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .profileWrapper {
+    margin: 120px 0 40px 0;
+  }
+}
+
+@media (max-width: 424.89px) {
+  .profileWrapper {
+    width: 78%;
+  }
+
+  .formInput {
+    width: 100%;
+  }
+}

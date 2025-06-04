@@ -1,0 +1,46 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.pageText {
+  padding: 1px 2px;
+  font-weight: 600;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--supportTransparentText);
+  }
+}
+
+.pageTextActive {
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--mainText);
+    cursor: default;
+  }
+}
+
+.dots {
+  text-decoration: none;
+  cursor: default;
+
+  &:hover {
+    color: var(--mainText);
+  }
+}
+
+.rightIcon {
+  transform: scaleX(-1);
+}
+
+.iconDisabled {
+  cursor: default;
+
+  svg path {
+    stroke: var(--supportTransparentText);
+  }
+}

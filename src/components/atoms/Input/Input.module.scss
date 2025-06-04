@@ -1,0 +1,69 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
+  color: var(--subTextMainScreenPopup);
+  margin-left: 8px;
+}
+
+.input-wrapper {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: var(--textFieldInFolderBg);
+  border-radius: 12px;
+  width: 100%;
+  gap: 12px;
+  height: 40px;
+  padding: 0 8px;
+
+  .icon-right {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .input {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    color: var(--mainText);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: var(--supportTransparentText);
+    }
+  }
+
+  .input[type="number"]::-webkit-inner-spin-button,
+  .input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus,
+  .input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px var(--blue3) inset;
+    box-shadow: 0 0 0px 1000px var(--blue3) inset;
+    -webkit-text-fill-color: var(--mainText);
+    transition: background-color 9999s ease-out;
+  }
+}
+
+.error-message {
+  color: var(--error);
+  margin-left: 8px;
+  line-height: calc(16px * var(--font-scale));
+}
+
+.error {
+  border-bottom: 2px solid var(--error);
+}

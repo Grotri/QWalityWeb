@@ -1,0 +1,121 @@
+.modals {
+  display: flex;
+  flex-direction: column;
+  width: 32vw;
+  gap: 12px;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  background-color: var(--subScreenPopupBg);
+  padding: 12px;
+  width: 100%;
+  gap: 12px;
+}
+
+.crossIconWrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.crossIcon {
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+}
+
+.modalTitle {
+  font-size: calc(20px * var(--font-scale));
+  line-height: calc(27px * var(--font-scale));
+  font-weight: 700;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.empty {
+  width: 16px;
+}
+
+.dash {
+  width: 16px;
+  height: 3px;
+  border-radius: 50px;
+  background-color: var(--dashBg);
+}
+
+.flex {
+  flex: 1;
+}
+
+.btnModal,
+.btnModalBold {
+  flex: 1;
+  border-radius: 8px;
+  height: 27px;
+  color: var(--mainText);
+  font-size: calc(16px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+  font-weight: 600;
+}
+
+.btnModalBold {
+  font-weight: 700;
+}
+
+.subModalTitle {
+  font-size: calc(18px * var(--font-scale));
+  line-height: calc(21px * var(--font-scale));
+  font-weight: 700;
+}
+
+@media (max-width: 1023.89px) {
+  .modals {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 767.89px) {
+  .modals {
+    width: 68vw;
+  }
+
+  .row {
+    gap: 12px;
+  }
+
+  .modalContent {
+    padding: 0 12px;
+  }
+
+  .btnModal {
+    font-size: calc(14px * var(--font-scale));
+  }
+}
+
+@media (max-width: 424.89px) {
+  .modals {
+    width: 90vw;
+  }
+
+  .modalContent {
+    padding: 0;
+  }
+}

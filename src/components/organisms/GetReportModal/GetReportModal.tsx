@@ -6,7 +6,7 @@ import styles from "./GetReportModal.module.scss";
 import Dropdown from "../../atoms/Dropdown";
 import { formats } from "../../../constants/formats";
 import Button from "../../atoms/Button";
-import { onError, onSuccess } from "../../../helpers/toast";
+import { onError } from "../../../helpers/toast";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EErrors } from "../../../constants/errors";
@@ -15,7 +15,7 @@ import useReportsAndLogsStore from "../../../store/useReportsAndLogsStore";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
-  const { getReport, getLog } = useReportsAndLogsStore();
+  const { getReport, getLog, deleteLog } = useReportsAndLogsStore();
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
   const [type, setType] = useState<"report" | "log">("report");
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -60,8 +60,9 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const handleDelete = () => {
     if (!validateDates()) return;
 
-    onSuccess(type === "log" ? t("logDeleted") : t("reportDeleted"));
-    closeModal();
+    if (startDate && endDate) {
+      deleteLog(startDate, endDate, closeModal);
+    }
   };
 
   useEffect(() => {
@@ -133,7 +134,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 style={styles.btnModal}
                 onPress={() => setIsSubModalOpened(true)}
               >
-                {type === "log" ? t("deleteLog") : t("deleteReport")}
+                {t("deleteLog")}
               </Button>
               <div className={styles.empty} />
               <Button
@@ -149,9 +150,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
         {isSubModalOpened && (
           <div className={styles.modal}>
             <span className={styles.subModalTitle}>
-              {type === "log"
-                ? t("confirmDeleteLog")
-                : t("confirmDeleteReport")}
+              {t("confirmDeleteLog")}
             </span>
             <div className={styles.modalContent}>
               <div className={styles.row}>

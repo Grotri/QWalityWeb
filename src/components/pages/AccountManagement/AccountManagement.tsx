@@ -52,15 +52,20 @@ const AccountManagement = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     const filteredAccounts = accounts.filter((acc) =>
       availableRoles.includes(acc.role)
     );
-    setSections([...filteredAccounts]);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, [accounts, user.role]);
+
+    if (sections.length !== filteredAccounts.length) {
+      setIsLoading(true);
+      setSections([...filteredAccounts]);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    } else {
+      setSections([...filteredAccounts]);
+    }
+  }, [accounts]);
 
   useEffect(() => {
     refreshErrors();

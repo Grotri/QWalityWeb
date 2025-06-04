@@ -1,9 +1,11 @@
 import api from "./index";
 
 interface ICreateSubAccountParams {
-  login: string;
-  password: string;
-  role: string;
+  login?: string;
+  role?: string;
+  password?: string;
+  color_theme?: string;
+  font_size?: string;
 }
 
 export const getUserInfo = async () => {
@@ -18,11 +20,10 @@ export const getSubAccounts = async () => {
   return await api.get("/users");
 };
 
-export const editAccountRole = async (id: string, newRole: string) => {
-  return await api.patch(`/users/${id}/role`, { role: newRole });
-};
-
-export const editAccount = async (id: string, payload: ICreateSubAccountParams) => {
+export const editAccount = async (
+  id: string,
+  payload: ICreateSubAccountParams
+) => {
   return await api.patch(`/users/${id}`, payload);
 };
 

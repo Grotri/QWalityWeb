@@ -86,6 +86,7 @@
     "subscriptionPaymentIntro": "Vous êtes sur le point de payer un abonnement pour",
     "rubles": "roubles",
     "subscriptionPaid": "Abonnement payé avec succès",
+    "subscriptionPaidError": "Une erreur s'est produite lors du paiement de l'abonnement",
     "profileDataChanged": "Données du profil modifiées",
     "emailOrLoginChange": "E-mail / identifiant",
     "editData": "Modifier les données",

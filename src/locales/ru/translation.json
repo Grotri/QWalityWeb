@@ -86,6 +86,7 @@
     "subscriptionPaymentIntro": "Вы собираетесь оплатить подписку за",
     "rubles": "рублей",
     "subscriptionPaid": "Подписка успешно оплачена",
+    "subscriptionPaidError": "Произошла ошибка при оплате подписки",
     "profileDataChanged": "Данные профиля изменены",
     "emailOrLoginChange": "Электронная почта / логин",
     "editData": "Изменить данные",

@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern, innPattern } from "../../../constants/patterns";
-import { onError, onInfo, onSuccess, onWarning } from "../../../helpers/toast";
+import { onError, onWarning } from "../../../helpers/toast";
 import styles from "./Profile.module.scss";
 import { ProfileIcon } from "../../../assets/icons";
 import Input from "../../atoms/Input/Input";
@@ -19,7 +19,7 @@ import SupportContent from "../../atoms/SupportContent";
 const Profile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user, setUser, loading, error } = useAuthStore();
+  const { user, loading, error, sendEditCode, changeClient } = useAuthStore();
   const [userInfo, setUserInfo] = useState<IUser>({ ...initialUser });
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
   const [code, setCode] = useState<string>("");
@@ -60,10 +60,10 @@ const Profile = () => {
     };
     if (JSON.stringify(user) !== JSON.stringify(newProfile)) {
       if (validate()) {
-        setIsEditMode(false);
-        setCode("");
-        setUser(newProfile);
-        onSuccess(t("profileDataChanged"));
+        changeClient(newProfile, code, () => {
+          setIsEditMode(false);
+          setCode("");
+        });
       } else {
         onError(t(EErrors.fields));
       }
@@ -184,7 +184,7 @@ const Profile = () => {
                 <Button
                   style={styles.codeBtn}
                   color="darkBlue"
-                  onPress={() => onInfo(t("unavailableCode"))}
+                  onPress={sendEditCode}
                 >
                   {t("sendCode")}
                 </Button>

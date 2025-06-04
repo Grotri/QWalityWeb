@@ -25,7 +25,12 @@ import { ERoutes } from "../router/routes";
 import i18n from "../i18n";
 import { getUserInfo } from "../api/user";
 import convertUserInfo from "../utils/convertUserInfo";
-import { confirmDeleteAccount, sendDeleteAccountCode } from "../api/client";
+import {
+  confirmDeleteAccount,
+  editClient,
+  sendDeleteAccountCode,
+  sendUpdateClientCode,
+} from "../api/client";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -52,6 +57,8 @@ interface IUseAuthStore extends IStoreStatus {
   ) => void;
   sendDeleteCode: () => void;
   deleteAccount: (code: string, onClose: () => void) => void;
+  sendEditCode: () => void;
+  changeClient: (newAccount: IUser, code: string, onClose: () => void) => void;
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => {
@@ -322,6 +329,57 @@ const useAuthStore = create<IUseAuthStore>((set, get) => {
             onError(`${i18n.t("error")}: ` + error.response.data.error);
           } else {
             onError(i18n.t("accountDeleteError"));
+          }
+        } else {
+          onError(i18n.t("unknownError"));
+        }
+      }
+    },
+
+    sendEditCode: async () => {
+      try {
+        await sendUpdateClientCode();
+        onSuccess(i18n.t("codeSentToEmail"));
+      } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
+          } else {
+            onError(i18n.t("codeSendError"));
+          }
+        } else {
+          onError(i18n.t("unknownError"));
+        }
+      }
+    },
+
+    changeClient: async (newAccount, code, onClose) => {
+      const { setUser } = get();
+      try {
+        await editClient({
+          email: newAccount.login,
+          tin: newAccount.inn || "",
+          code,
+        });
+        setUser(newAccount);
+        onClose();
+        onSuccess(i18n.t("profileDataChanged"));
+      } catch (error) {
+        console.log(error);
+        if (error instanceof AxiosError) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            onError(`${i18n.t("error")}: ` + error.response.data.error);
+          } else {
+            onError(i18n.t("failedToChangeData"));
           }
         } else {
           onError(i18n.t("unknownError"));
